@@ -1,7 +1,9 @@
 // Liquid type and decorative bubbles share the site's GSAP motion preferences.
 export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
   const textTargets = [...document.querySelectorAll('.chapter h1, .chapter h2, .chapter > p, .difference h2, .difference-heading > p, .benefit h3, .benefit p, .ritual h2, .ritual-content > p, .product-copy h2, .product-description, .faq-intro h2, .faq-intro > p, .closing h2, .footer-heading, .footer-callout > p')];
-  const visualWords = new Map();
+  const visualLetters = new Map();
+  const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('en', { granularity: 'grapheme' }) : null;
+  const splitLetters = text => segmenter ? [...segmenter.segment(text)].map(item => item.segment) : Array.from(text);
 
   // Preserve the original semantic heading/paragraph once for assistive technology.
   // Visual spans keep existing emphasis and <br> behavior, including mobile breaks.
@@ -23,16 +25,21 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
         if (/^\s+$/.test(part)) { fragment.append(document.createTextNode(part)); return; }
         const word = document.createElement('span');
         word.className = 'flow-word';
-        const ink = document.createElement('span');
-        ink.className = 'flow-ink';
-        ink.textContent = part;
-        word.append(ink); fragment.append(word);
+        for (const character of splitLetters(part)) {
+          const ink = document.createElement('span');
+          ink.className = 'flow-ink flow-letter';
+          ink.textContent = character;
+          word.append(ink);
+        }
+        fragment.append(word);
       });
       node.replaceWith(fragment);
     }
     element.append(accessible, visual);
     element.classList.add('liquid-text');
-    visualWords.set(element, [...element.querySelectorAll('.flow-ink')]);
+    element.dataset.flowUnits = 'letters';
+    if (!element.closest('.chapter')) element.dataset.aos = 'water-letters';
+    visualLetters.set(element, [...element.querySelectorAll('.flow-letter')]);
   }
 
   // Attach chapter reveals to the existing reversible scroll timeline.
@@ -43,11 +50,11 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
     const heading = chapter.querySelector('h2');
     const paragraph = chapter.querySelector(':scope > p');
     for (const [target, offset] of [[heading, 0], [paragraph, .025]]) {
-      const words = visualWords.get(target);
+      const words = visualLetters.get(target);
       if (!words?.length) continue;
-      storyTimeline.fromTo(words, { '--waterline': '112%', yPercent: 48, x: -5, skewY: 3, backgroundPosition: '180% 50%' }, {
-        '--waterline': '-18%', yPercent: 0, x: 0, skewY: 0, backgroundPosition: '-70% 50%',
-        duration: .092, stagger: { amount: .035 }, ease: 'power2.out',
+      storyTimeline.fromTo(words, { '--waterline': '112%', yPercent: i => 46 + Math.sin(i * .55) * 14, x: -5, rotation: i => Math.sin(i * .6) * 5, backgroundPosition: '180% 50%', force3D: false }, {
+        '--waterline': '-18%', yPercent: 0, x: 0, rotation: 0, backgroundPosition: '-70% 50%', force3D: false,
+        duration: .082, stagger: { amount: .068 }, ease: 'power2.out',
       }, chapterStarts[index] + offset);
     }
   });
@@ -103,18 +110,28 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
     ));
     updateFooterMotion();
     const timelines = [];
+    const aosTimelines = new Map();
+    const startAosReveal = element => {
+      if (element.classList.contains('aos-animate') && element.dataset.flowState === 'waiting') aosTimelines.get(element)?.play();
+    };
+    const aosChanges = new MutationObserver(records => records.forEach(({ target }) => startAosReveal(target)));
     const playReveal = (element, immediate = false) => {
-      const words = visualWords.get(element);
+      const words = visualLetters.get(element);
       const isHeading = /^H[1-3]$/.test(element.tagName);
+      element.dataset.flowState = 'waiting';
       const timeline = gsap.timeline({ paused: !immediate,
         onStart: () => element.dataset.flowState = 'revealing',
         onComplete: () => { element.dataset.flowState = 'complete'; gsap.set(words, { clearProps: 'clipPath,transform,backgroundPosition' }); },
       });
-      timeline.fromTo(words, { '--waterline': '112%', yPercent: isHeading ? 52 : 32, x: -6, skewY: 3, backgroundPosition: '180% 50%' }, {
-        '--waterline': '-18%', yPercent: 0, x: 0, skewY: 0, backgroundPosition: '-70% 50%',
-        duration: isHeading ? 1.05 : .85, stagger: { amount: isHeading ? .32 : .22 }, ease: 'power3.out',
+      timeline.fromTo(words, { '--waterline': '112%', yPercent: i => (isHeading ? 55 : 35) + Math.sin(i * .55) * 13, x: -5, rotation: i => Math.sin(i * .55) * 5, backgroundPosition: '180% 50%', force3D: false }, {
+        '--waterline': '-18%', yPercent: 0, x: 0, rotation: 0, backgroundPosition: '-70% 50%', force3D: false,
+        duration: isHeading ? 1 : .75, stagger: { amount: isHeading ? Math.min(.8, words.length * .028) : .48 }, ease: 'power3.out',
       });
-      if (!immediate) ScrollTrigger.create({ trigger: element, start: 'top 90%', once: true, onEnter: () => timeline.play() });
+      if (!immediate) {
+        aosTimelines.set(element, timeline);
+        aosChanges.observe(element, { attributes: true, attributeFilter: ['class'] });
+        startAosReveal(element);
+      }
       timelines.push(timeline);
     };
     for (const element of textTargets) {
@@ -124,14 +141,17 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
     }
     return () => {
       footerTweens.forEach(tween => tween.kill()); footerTweens = [];
+      aosChanges.disconnect();
       timelines.forEach(timeline => timeline.kill());
       textTargets.forEach(element => { element.dataset.flowState = 'complete'; });
     };
   });
+  window.AOS.init({ startEvent: 'aqua:letters-ready', offset: 65, once: true, disableMutationObserver: true, throttleDelay: 50 });
+  document.dispatchEvent(new Event('aqua:letters-ready'));
 
   return {
     textCount: textTargets.length,
-    refresh() { ScrollTrigger.refresh(); },
+    refresh() { ScrollTrigger.refresh(); window.AOS.refreshHard(); },
     destroy() { media.revert(); fieldVisibility.disconnect(); fieldSize.disconnect(); document.removeEventListener('visibilitychange', visibility); },
   };
 }

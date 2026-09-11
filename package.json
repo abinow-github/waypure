@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "test": "node tests/browser.mjs && node tests/water-effects.mjs"
+    "test": "node tests/browser.mjs && node tests/water-effects.mjs && node tests/responsive.mjs"
   },
   "dependencies": {
+    "aos": "^2.3.4",
     "gsap": "https://registry.npmjs.org/gsap/-/gsap-3.12.5.tgz",
     "three": "https://registry.npmjs.org/three/-/three-0.167.1.tgz"
   },

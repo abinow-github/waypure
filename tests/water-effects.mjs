@@ -24,6 +24,10 @@ try {
   assert.notEqual(await target.locator('.flow-ink').first().evaluate(el => getComputedStyle(el).clipPath), 'none', 'Offscreen text begins with a wave clip');
   await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; document.querySelector('#difference').scrollIntoView(); });
   await page.waitForFunction(() => document.querySelector('.difference h2').dataset.flowState === 'revealing');
+  assert(await target.evaluate(el=>el.classList.contains('aos-animate')), 'AOS triggers the liquid reveal');
+  assert(await target.locator('.flow-letter').count()>30, 'Section heading animates individual letters');
+  const positions = await target.locator('.flow-letter').evaluateAll(letters=>letters.map(el=>getComputedStyle(el).transform));
+  assert(new Set(positions).size>1, 'Letters flow with independent staggered positions');
   await page.screenshot({ path: 'test-results/liquid-reveal-in-motion.png' });
   await page.waitForFunction(() => document.querySelector('.difference h2').dataset.flowState === 'complete');
   assert.equal(await target.locator('.flow-ink').first().evaluate(el => getComputedStyle(el).clipPath), 'none', 'Revealed text stays fully readable');
