@@ -1,0 +1,56 @@
+import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
+import { mkdir } from 'node:fs/promises';
+await mkdir('test-results', { recursive: true });
+const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--enable-webgl'] });
+const failures = [];
+const base = process.env.TEST_URL || 'http://127.0.0.1:3000';
+try {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 960 } });
+  await page.route('**/scene.js', route => route.abort());
+  page.on('pageerror', error => failures.push(error.message));
+  page.on('response', response => { if (response.status() >= 400) failures.push(`${response.status()} ${response.url()}`); });
+  await page.goto(base, { waitUntil: 'networkidle' });
+  await page.locator('.scene-wrap.is-fallback').waitFor();
+  await page.waitForFunction(() => document.querySelector('h1').dataset.flowState === 'complete');
+  assert(await page.getByRole('heading', { name: 'Pure water. Beautifully simple.', exact: true }).isVisible(), 'Heading has one clean accessible name');
+  await page.screenshot({ path: 'test-results/liquid-hero-desktop.png' });
+  const heroBubble = page.locator('.experience-sticky > .bubble-field .rising-bubble').first();
+  assert.equal(await heroBubble.evaluate(el => getComputedStyle(el).animationPlayState), 'running');
+  const bubbleBefore = await heroBubble.evaluate(el => getComputedStyle(el).transform);
+  await page.waitForFunction(previous => getComputedStyle(document.querySelector('.experience-sticky > .bubble-field .rising-bubble')).transform !== previous, bubbleBefore, {timeout:15000});
+  assert.notEqual(await heroBubble.evaluate(el => getComputedStyle(el).transform), bubbleBefore, 'Background bubbles actually move');
+  const target = page.locator('.difference h2');
+  assert.notEqual(await target.locator('.flow-ink').first().evaluate(el => getComputedStyle(el).clipPath), 'none', 'Offscreen text begins with a wave clip');
+  await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; document.querySelector('#difference').scrollIntoView(); });
+  await page.waitForFunction(() => document.querySelector('.difference h2').dataset.flowState === 'revealing');
+  await page.screenshot({ path: 'test-results/liquid-reveal-in-motion.png' });
+  await page.waitForFunction(() => document.querySelector('.difference h2').dataset.flowState === 'complete');
+  assert.equal(await target.locator('.flow-ink').first().evaluate(el => getComputedStyle(el).clipPath), 'none', 'Revealed text stays fully readable');
+  assert.equal(await heroBubble.evaluate(el => getComputedStyle(el).animationPlayState), 'paused', 'Offscreen bubbles pause');
+  await page.screenshot({ path: 'test-results/liquid-difference-desktop.png' });
+  await page.evaluate(() => document.querySelector('#footer').scrollIntoView());
+  await page.waitForFunction(() => document.querySelector('.footer-heading').dataset.flowState === 'complete');
+  const wave = page.locator('.footer-wave-front');
+  const waveBefore = await wave.evaluate(el => getComputedStyle(el).transform);
+  await page.waitForFunction(previous => getComputedStyle(document.querySelector('.footer-wave-front')).transform !== previous, waveBefore, {timeout:10000});
+  assert.notEqual(await wave.evaluate(el => getComputedStyle(el).transform), waveBefore, 'Footer water surface moves');
+  await page.screenshot({ path: 'test-results/liquid-footer-desktop.png' });
+  await page.locator('.footer-cta').click();
+  assert(await page.locator('#enquiry-dialog').isVisible(), 'Footer CTA works above the water layers');
+  await page.keyboard.press('Escape');
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: width === 390 ? 844 : 700 });
+    await page.evaluate(() => document.querySelector('#footer').scrollIntoView());
+    await page.waitForTimeout(700);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `No footer overflow at ${width}px`);
+    await page.screenshot({ path: `test-results/liquid-footer-${width}.png` });
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.waitForTimeout(300);
+  assert.equal(await wave.evaluate(el => getComputedStyle(el).animationName), 'none');
+  assert.equal(await page.locator('.footer-heading .flow-ink').first().evaluate(el => getComputedStyle(el).clipPath), 'none');
+  assert.equal(await page.locator('.water-footer .rising-bubble').first().evaluate(el => getComputedStyle(el).opacity), '0');
+  assert.deepEqual(failures, []);
+  console.log('PASS: liquid text reveal/completion, accessible headings, moving bubbles, offscreen pause, moving footer waves, footer enquiry CTA, mobile footer, reduced motion, and local route.');
+} finally { await browser.close(); }
