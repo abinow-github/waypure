@@ -1,4 +1,5 @@
 import { createWaterEffects } from './water-effects.js';
+import { createInterface } from './interface.js';
 const { gsap, ScrollTrigger } = window;
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
@@ -10,6 +11,7 @@ const progressBar = document.querySelector('.scroll-progress span');
 const sceneWrap = document.querySelector('#scene-wrap');
 const waterLabel = document.querySelector('#water-label');
 let targetProgress = 0, smoothProgress = 0, activeChapter = 0, scene = null, previousTime = 0, staticRendered = false;
+let siteInterface;
 let viewportHeight = innerHeight, experienceHeight = experience.offsetHeight;
 const clamp = (n, a = 0, b = 1) => Math.max(a, Math.min(b, n));
 const chapterPositions = [0, .31, .61, .92];
@@ -41,14 +43,14 @@ function updateScroll() {
 function goToChapter(index) {
   if (reduceMotion.matches) { document.querySelector('#difference').scrollIntoView({ behavior: 'auto' }); return; }
   const top = experience.getBoundingClientRect().top + scrollY;
-  window.scrollTo({ top: top + (experienceHeight - viewportHeight) * chapterPositions[index], behavior: 'smooth' });
+  siteInterface.scrollTo(top + (experienceHeight - viewportHeight) * chapterPositions[index]);
 }
 document.querySelectorAll('[data-chapter]').forEach(button => button.addEventListener('click', event => {
   event.preventDefault(); goToChapter(Number(button.dataset.chapter)); closeMenu();
 }));
 document.querySelector('[data-next-chapter]').addEventListener('click', () => {
   if (activeChapter < 3 && !reduceMotion.matches) goToChapter(activeChapter + 1);
-  else document.querySelector('#difference').scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+  else siteInterface.scrollTo(document.querySelector('#difference'));
 });
 window.addEventListener('scroll', updateScroll, { passive: true });
 window.addEventListener('resize', measure, { passive: true });
@@ -70,10 +72,19 @@ gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
     gsap.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 91%', once: true } });
   });
   if (scrollY < 100) gsap.fromTo('.chapter-0 > :not(.liquid-text)', { opacity: .85, y: 18 }, { opacity: 1, y: 0, duration: .9, stagger: .06, ease: 'power3.out' });
-  gsap.to('.water-caustics', { xPercent: 4, yPercent: 3, rotation: -7, scale: 1.12, duration: 13, yoyo: true, repeat: -1, ease: 'sine.inOut' });
-  gsap.to('.water-light', { rotation: 5, opacity: .35, duration: 11, yoyo: true, repeat: -1, ease: 'sine.inOut' });
-  gsap.to('.water-orb', { y: -24, x: 7, duration: 5, stagger: 1.3, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+  const ambientTweens = [
+    gsap.to('.water-caustics', { xPercent: 4, yPercent: 3, rotation: -7, scale: 1.12, duration: 13, yoyo: true, repeat: -1, ease: 'sine.inOut' }),
+    gsap.to('.water-light', { rotation: 5, opacity: .35, duration: 11, yoyo: true, repeat: -1, ease: 'sine.inOut' }),
+    gsap.to('.water-orb', { y: -24, x: 7, duration: 5, stagger: 1.3, yoyo: true, repeat: -1, ease: 'sine.inOut' }),
+    gsap.to('.banner-current', { xPercent: 1.5, yPercent: -1, duration: 9, repeat: -1, yoyo: true, ease: 'sine.inOut' }),
+  ];
+  let heroVisible = true;
+  const pauseAmbient = () => ambientTweens.forEach(tween => tween.paused(!heroVisible || document.hidden));
+  const heroObserver = new IntersectionObserver(([entry]) => { heroVisible = entry.isIntersecting; pauseAmbient(); });
+  heroObserver.observe(experience);
+  document.addEventListener('visibilitychange', pauseAmbient);
   gsap.to('.ritual-art', { y: -22, rotation: 2, ease: 'none', scrollTrigger: { trigger: '.ritual', start: 'top bottom', end: 'bottom top', scrub: 1.2 } });
+  return () => { heroObserver.disconnect(); document.removeEventListener('visibilitychange', pauseAmbient); };
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
 
@@ -82,9 +93,11 @@ const form = document.querySelector('#enquiry-form');
 const formView = document.querySelector('#enquiry-form-view');
 const successView = document.querySelector('#enquiry-success');
 let enquiryUrl = null;
-document.querySelectorAll('.enquire-button').forEach(button => button.addEventListener('click', () => {
-  closeMenu(); dialog.showModal(); document.body.style.overflow = 'hidden';
-}));
+function openEnquiry() {
+  closeMenu(); siteInterface?.stop(); dialog.showModal(); document.body.style.overflow = 'hidden';
+}
+siteInterface = createInterface({ gsap, ScrollTrigger, reduceMotion, dialog, openEnquiry });
+document.querySelectorAll('.enquire-button').forEach(button => button.addEventListener('click', openEnquiry));
 function closeDialog() { dialog.close(); }
 document.querySelector('.dialog-close').addEventListener('click', closeDialog);
 dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeDialog(); } });
@@ -128,11 +141,11 @@ function renderChapters(progress) {
   progressBar.style.width = `${progress * 100}%`;
   sceneWrap.dataset.stage = String(stage);
 }
-let rafId = 0;
 function frame(time) {
+  if (document.hidden) return;
   const dt = Math.min((time - previousTime) / 1000 || .016, .25);
   previousTime = time;
-  smoothProgress += (targetProgress - smoothProgress) * (1 - Math.exp(-dt * 9));
+  smoothProgress += (targetProgress - smoothProgress) * (1 - Math.exp(-dt * (document.documentElement.dataset.smoothScroll === 'enabled' ? 16 : 9)));
   if (Math.abs(targetProgress - smoothProgress) < .00005) smoothProgress = targetProgress;
   const inView = scrollY < experienceHeight + 100;
   if (inView) {
@@ -142,14 +155,12 @@ function frame(time) {
       staticRendered = Boolean(scene);
     }
   }
-  rafId = requestAnimationFrame(frame);
 }
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) cancelAnimationFrame(rafId);
-  else { previousTime = performance.now(); rafId = requestAnimationFrame(frame); }
+  if (!document.hidden) previousTime = 0;
 });
 measure();
-rafId = requestAnimationFrame(frame);
+gsap.ticker.add(time => frame(time * 1000));
 import('./scene.js').then(async ({ createScene }) => {
   scene = await createScene(document.querySelector('#product-canvas'));
   scene.resize(); scene.update(smoothProgress, 0, .016);

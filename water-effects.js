@@ -106,7 +106,7 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
     // compositor startup when the footer first enters the viewport.
     footerTweens = [...footer.querySelectorAll('.footer-wave')].map((wave, index) => gsap.fromTo(wave,
       { xPercent: index === 1 ? -50 : 0 },
-      { xPercent: index === 1 ? 0 : -50, duration: [23, 19, 15][index], repeat: -1, ease: 'none', paused: true }
+      { xPercent: index === 1 ? 0 : -50, duration: [23, 15][index], repeat: -1, ease: 'none', paused: true }
     ));
     updateFooterMotion();
     const timelines = [];

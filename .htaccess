@@ -1,0 +1,33 @@
+# Transfer less data while keeping development edits immediately revalidatable.
+# Precompressed vendor files also work with XAMPP's default deflate-disabled setup.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP:Accept-Encoding} gzip [NC]
+  RewriteCond %{HTTP:Accept-Encoding} !gzip\s*;\s*q=0(?:\.0*)?(?:,|$) [NC]
+  RewriteCond %{REQUEST_FILENAME}.gz -s
+  RewriteRule ^vendor/(three\.module|lenis\.min)\.js$ vendor/$1.js.gz [L]
+</IfModule>
+<FilesMatch "\.js\.gz$">
+  ForceType application/javascript
+  <IfModule mod_headers.c>
+    Header set Content-Encoding gzip
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </IfModule>
+  <IfModule mod_env.c>
+    SetEnv no-gzip 1
+  </IfModule>
+</FilesMatch>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "(three\.module|lenis\.min)\.js(\.gz)?$">
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+  <FilesMatch "\.(js|css|svg|webp|png)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(ttf|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

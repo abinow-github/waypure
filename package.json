@@ -5,14 +5,17 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "test": "node tests/browser.mjs && node tests/water-effects.mjs && node tests/responsive.mjs"
+    "build:vendor": "node scripts/build-vendor.mjs",
+    "test": "node tests/browser.mjs && node tests/water-effects.mjs && node tests/responsive.mjs && node tests/interface.mjs"
   },
   "dependencies": {
     "aos": "^2.3.4",
     "gsap": "https://registry.npmjs.org/gsap/-/gsap-3.12.5.tgz",
+    "lenis": "1.3.24",
     "three": "https://registry.npmjs.org/three/-/three-0.167.1.tgz"
   },
   "devDependencies": {
+    "esbuild": "0.25.12",
     "playwright": "https://registry.npmjs.org/playwright/-/playwright-1.61.1.tgz"
   }
 }

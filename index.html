@@ -3,20 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#edf7ff">
+  <meta name="theme-color" content="#edf9f5">
   <meta name="description" content="Meet Aqua Royal. A considered approach to everyday hydration. Explore our water purifier in an interactive 3D experience.">
   <title>Aqua Royal — A little purity. A lot of life.</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preload" href="assets/manrope-variable.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="modulepreload" href="scene.js">
+  <script>document.documentElement.classList.add('booting');setTimeout(function(){document.documentElement.classList.remove('booting')},1600);</script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="water-theme.css">
   <link rel="stylesheet" href="water-effects.css">
+  <link rel="stylesheet" href="fresh-water.css">
   <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
   <script defer src="vendor/gsap.min.js"></script>
   <script defer src="vendor/ScrollTrigger.min.js"></script>
   <script defer src="vendor/aos.js"></script>
+  <script defer src="vendor/lenis.min.js"></script>
+  <script defer src="preloader.js"></script>
   <script type="module" src="app.js"></script>
 </head>
 <body>
+  <div class="water-preloader" aria-hidden="true"><div class="preloader-mark"><svg viewBox="0 0 64 80"><defs><clipPath id="loader-drop"><path d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/></clipPath></defs><path class="loader-outline" d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/><g clip-path="url(#loader-drop)"><path class="loader-fill" d="M-64 42Q-48 30-32 42T0 42T32 42T64 42T96 42V90H-64Z"/></g><path class="loader-shine" d="M19 49c0 9 5 14 13 14"/></svg><span class="preloader-ripple"></span></div><span class="preloader-wordmark">aqua<span>royal</span></span><span class="preloader-caption">A LITTLE REFRESH.</span></div>
   <a class="skip-link" href="#details">Skip to product details</a>
   <header class="header">
     <a class="brand" href="#home" aria-label="Aqua Royal home"><svg viewBox="0 0 32 38" aria-hidden="true"><path d="M16 2C13 9 3 17 3 24a13 13 0 0 0 26 0C29 17 19 9 16 2Z" fill="currentColor"/><path d="M10 23c0 5 3 8 8 8" fill="none" stroke="#f6f5ef" stroke-width="2" stroke-linecap="round"/></svg><span>aqua<span class="brand-royal">royal</span><small>A BETTER EVERYDAY</small></span></a>
@@ -30,13 +37,14 @@
       <div class="experience-sticky">
         <div class="water-atmosphere" aria-hidden="true"><div class="water-light"></div><div class="water-caustics"></div><div class="water-ripple ripple-one"></div><div class="water-ripple ripple-two"></div><div class="water-ripple ripple-three"></div><div class="water-orb orb-one"></div><div class="water-orb orb-two"></div><div class="water-orb orb-three"></div></div>
         <div class="ambient-circle circle-one"></div><div class="ambient-circle circle-two"></div>
+        <div class="banner-current" aria-hidden="true"><svg viewBox="0 0 1440 900" preserveAspectRatio="none"><path d="M-120 750C230 1070 700 540 1030 650S1430 760 1590 350"/><path d="M-120 768C230 1088 700 558 1030 668S1430 778 1590 368"/><path d="M-120 793C230 1113 700 583 1030 693S1430 803 1590 393"/></svg></div>
         <div class="hero-watermark" aria-hidden="true">every drop matters.</div>
         <div class="chapter chapter-0 is-active" data-step="0">
           <div class="eyebrow"><span class="tiny-drop">◒</span> A NEW WAVE OF EVERYDAY LIVING</div>
           <h1>Pure water.<br><em>Beautifully</em><br>simple<span class="coral">.</span></h1>
           <p>Clarity in every drop. Care in every detail.<br>Meet Aqua Royal — designed to make <br>the everyday feel extraordinary.</p>
           <a class="pill-button dark" href="#journey" data-chapter="1">Let it flow <span class="button-icon">↘</span></a>
-          <div class="hero-note"><span class="note-line"></span> OCEAN BLUE. BEAUTIFULLY YOU.</div>
+          <div class="hero-note"><span class="note-line"></span> A LITTLE CALM. IN EVERY DROP.</div>
         </div>
         <div class="chapter chapter-1" data-step="1" inert aria-hidden="true">
           <div class="eyebrow"><span class="step-number">01 /</span> A FRESH BEGINNING</div>
@@ -58,7 +66,7 @@
         </div>
         <div class="scene-wrap" id="scene-wrap" role="img" aria-label="A blue and ivory Aqua Royal water purifier. Scrolling fills the tank and pours water into a glass.">
           <div class="scene-halo"></div>
-          <img class="product-fallback" src="assets/purifier-render.png" alt="Blue transparent water tank with an ivory base and front tap" width="520" height="640">
+          <img class="product-fallback" src="assets/purifier-render.webp" alt="Blue transparent water tank with an ivory base and front tap" width="520" height="640">
           <canvas id="product-canvas" aria-hidden="true"></canvas>
           <div class="product-plinth" aria-hidden="true"><span></span><span></span><span></span></div>
           <div class="product-label"><span class="live-dot"></span><span>AQUA ROYAL<small>The Original Series</small></span></div>
@@ -82,7 +90,7 @@
     </section>
     <section class="ritual" aria-label="Daily hydration inspiration"><div class="ritual-lines" aria-hidden="true"><span></span><span></span><span></span></div><div class="ritual-content reveal"><span class="eyebrow">A MOMENT FOR YOURSELF</span><h2>Pause.<br>Pour.<br><em>Feel good.</em></h2><p>Sometimes, a better day<br>starts with a glass of water.</p></div><div class="ritual-art" aria-hidden="true"><div class="sun-disc"></div><div class="water-glass"><div class="glass-water"></div><span class="glass-highlight"></span></div><div class="glass-shadow"></div><div class="little-spark">✳</div><span class="ritual-note">your daily<br><em>fresh start.</em></span></div><span class="ritual-footer">MAKE ROOM FOR THE LITTLE THINGS.</span></section>
     <section class="product-section section-space" id="details">
-      <div class="product-portrait reveal"><div class="portrait-ring"></div><span class="eyebrow">YOUR COUNTERTOP’S NEW COMPANION</span><img src="assets/purifier-render.png" alt="Aqua Royal Original purifier in ocean blue and warm ivory" width="520" height="640" loading="lazy"><span class="portrait-caption">AQUA ROYAL ORIGINAL <span>↗</span></span></div>
+      <div class="product-portrait reveal"><div class="portrait-ring"></div><span class="eyebrow">YOUR COUNTERTOP’S NEW COMPANION</span><img src="assets/purifier-render.webp" alt="Aqua Royal Original purifier in ocean blue and warm ivory" width="520" height="640" loading="lazy"><span class="portrait-caption">AQUA ROYAL ORIGINAL <span>↗</span></span></div>
       <div class="product-copy reveal"><div class="eyebrow"><span class="live-dot"></span> MEET YOUR EVERYDAY ESSENTIAL</div><h2>Good water.<br><em>Great company.</em></h2><p class="product-description">Say hello to Aqua Royal Original. A beautiful, uncomplicated addition to the place you call home.</p><div class="finish"><span class="finish-swatch"></span><span>Ocean blue / Warm ivory</span></div><dl class="product-specs"><div><dt>Design</dt><dd>Countertop purifier</dd></div><div><dt>Tank</dt><dd>Transparent blue</dd></div><div><dt>Dispensing</dt><dd>Front-access tap</dd></div><div><dt>Made for</dt><dd>Your everyday ritual</dd></div></dl><button class="pill-button dark enquire-button">Make it yours <span class="button-icon">↗</span></button><p class="product-footnote">Get in touch for specifications, pricing & availability.</p></div>
     </section>
     <section class="faq-section section-space" id="questions"><div class="faq-intro reveal"><span class="eyebrow">A LITTLE MORE CLARITY</span><h2>Glad you<br><em>asked.</em></h2><p>The little things you might<br>be wondering about.</p></div><div class="faq-list reveal"><details><summary>Is this the right purifier for my home?<span>+</span></summary><p>The best choice depends on your source water and its quality. Ask for the model’s confirmed filtration specifications and check whether they suit your water before purchasing.</p></details><details><summary>How much space will it need?<span>+</span></summary><p>Aqua Royal has a countertop design. Request the exact dimensions, capacity, and recommended clearance to make sure it fits your space.</p></details><details><summary>How do I care for my purifier?<span>+</span></summary><p>Follow the supplied model-specific instructions for tank cleaning, filter replacement, and safe use. Ask for the maintenance schedule when you enquire.</p></details><details><summary>How can I find out about price and availability?<span>+</span></summary><p>Use “Make it yours” to prepare a product enquiry with your location and any questions. You can download your enquiry to share with your preferred Aqua Royal retailer.</p></details></div></section>
@@ -91,13 +99,16 @@
   <footer class="water-footer" id="footer">
     <div class="footer-water" aria-hidden="true">
       <svg class="footer-wave footer-wave-back" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 64C120 16 240 16 360 64S600 112 720 64S960 16 1080 64S1320 112 1440 64V160H0Z"/></svg>
-      <svg class="footer-wave footer-wave-mid" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 64C120 16 240 16 360 64S600 112 720 64S960 16 1080 64S1320 112 1440 64V160H0Z"/></svg>
       <svg class="footer-wave footer-wave-front" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 64C120 16 240 16 360 64S600 112 720 64S960 16 1080 64S1320 112 1440 64V160H0Z"/></svg>
       <div class="footer-caustics"></div>
     </div>
     <div class="footer-top"><div><span class="eyebrow">A LITTLE PURITY. A LOT OF LIFE.</span><h2 class="footer-heading">Good things.<br><em>Keep flowing.</em></h2></div><div class="footer-callout"><p>From the first glass of the morning to the last sip of the day. Make a little room for better water.</p><button class="pill-button footer-cta enquire-button">Find your fresh start <span>↗</span></button></div></div>
     <div class="footer-bottom"><a class="footer-brand" href="#home">aqua<span>royal</span><span class="coral">.</span></a><p>A little purity. A lot of life.</p><span>© <span id="year">2026</span> Aqua Royal</span><button class="footer-contact enquire-button">Let’s talk ↗</button></div>
   </footer>
+  <nav class="floating-contact" aria-label="Contact Aqua Royal">
+    <a class="contact-drop contact-call" href="#enquiry-dialog" data-contact="call" aria-label="Call Aqua Royal"><svg class="contact-shell" viewBox="0 0 64 80" aria-hidden="true"><defs><clipPath id="call-drop"><path d="M32 3C26 18 6 35 6 51a26 26 0 0 0 52 0C58 35 38 18 32 3Z"/></clipPath></defs><path class="contact-surface" d="M32 3C26 18 6 35 6 51a26 26 0 0 0 52 0C58 35 38 18 32 3Z"/><g clip-path="url(#call-drop)"><g class="contact-fill"><path class="contact-wave" d="M-64 36Q-48 24-32 36T0 36T32 36T64 36T96 36V100H-64Z"/></g></g><path class="contact-shine" d="M14 53c0 10 7 16 15 16"/></svg><svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8.2 3.5 2 4.5-2.4 2a15 15 0 0 0 6.2 6.2l2-2.4 4.5 2v3.5c0 .8-.7 1.5-1.5 1.4C10.5 20.1 3.9 13.5 3.3 5c-.1-.8.6-1.5 1.4-1.5Z"/></svg><span class="contact-tooltip">Let’s talk <span>Call us ↗</span></span></a>
+    <a class="contact-drop contact-whatsapp" href="#enquiry-dialog" data-contact="whatsapp" aria-label="WhatsApp Aqua Royal"><svg class="contact-shell" viewBox="0 0 64 80" aria-hidden="true"><defs><clipPath id="whatsapp-drop"><path d="M32 3C26 18 6 35 6 51a26 26 0 0 0 52 0C58 35 38 18 32 3Z"/></clipPath></defs><path class="contact-surface" d="M32 3C26 18 6 35 6 51a26 26 0 0 0 52 0C58 35 38 18 32 3Z"/><g clip-path="url(#whatsapp-drop)"><g class="contact-fill"><path class="contact-wave" d="M-64 36Q-48 24-32 36T0 36T32 36T64 36T96 36V100H-64Z"/></g></g><path class="contact-shine" d="M14 53c0 10 7 16 15 16"/></svg><svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3 20.5l1.4-4.7a8.5 8.5 0 1 1 16.1-4.2Z"/><path d="m8.3 7.7 1.5 2.6-1 1.1a10 10 0 0 0 3.7 3.1l1-1.2 2.6 1.3c-.1 1.5-1.3 2.2-2.6 1.9-3.6-.8-6.7-3.8-7-6.7-.1-1.1.6-1.9 1.8-2.1Z"/></svg><span class="contact-tooltip">A fresh conversation <span>WhatsApp ↗</span></span></a>
+  </nav>
   <dialog id="enquiry-dialog" aria-labelledby="enquiry-title"><button class="dialog-close" aria-label="Close enquiry">×</button><div id="enquiry-form-view"><span class="eyebrow">YOUR NEXT FRESH START</span><h2 id="enquiry-title">Meet your<br><em>daily essential.</em></h2><p>Prepare an enquiry to share with your Aqua Royal retailer. Your details stay in this browser.</p><form id="enquiry-form"><label>Your name<input name="name" autocomplete="name" required maxlength="100" placeholder="Full name"></label><label>Email address<input name="email" type="email" autocomplete="email" required maxlength="150" placeholder="you@example.com"></label><label>City<input name="city" autocomplete="address-level2" required maxlength="100" placeholder="Where will your purifier live?"></label><label>Anything you’d like to know?<textarea name="message" rows="2" maxlength="1500" placeholder="Pricing, availability, specifications…"></textarea></label><button class="pill-button dark" type="submit">Prepare my enquiry <span>↗</span></button></form></div><div id="enquiry-success" hidden><span class="success-mark">✓</span><span class="eyebrow">ONE STEP CLOSER</span><h2>Your enquiry<br>is <em>ready.</em></h2><p>Download it and share it with your preferred retailer. Nothing has been sent automatically.</p><a id="download-enquiry" class="pill-button dark" download="aqua-royal-enquiry.txt">Download enquiry <span>↓</span></a><button class="text-button" id="edit-enquiry">Edit details</button></div></dialog>
   <noscript><style>.experience{height:100svh;min-height:660px}.experience-sticky{position:relative}.chapter:not(.chapter-0),.chapter-nav,.scroll-prompt{display:none}</style><div class="noscript-note">Explore Aqua Royal below. Enable JavaScript for the interactive water experience.</div></noscript>
 </body>

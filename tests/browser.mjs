@@ -71,6 +71,8 @@ await page.locator('.menu-toggle').click();
 assert(await page.locator('#mobile-nav').isVisible());
 await page.locator('#mobile-nav a[href="#difference"]').click();
 assert.equal(await page.locator('#mobile-nav').isVisible(),false);
+await page.waitForFunction(() => !document.documentElement.classList.contains('lenis-scrolling'));
+assert(await page.locator('#difference').evaluate(el => el.getBoundingClientRect().top < innerHeight), 'Mobile navigation finishes at its destination');
 await stage(.66);
 await page.screenshot({path:'test-results/mobile-pour.png'});
 await page.emulateMedia({reducedMotion:'reduce'});

@@ -1,0 +1,56 @@
+/* A soft sea-glass accent, with navy type and the ocean-blue product. */
+:root{--sea-glass:#bde6d8;--sea-mist:#e8f6ef;--sea-deep:#287061}
+::selection{background:#c4eadb;color:#092c58}
+.header{background:linear-gradient(110deg,#f9fcff85,#edfaf35c);border-bottom-color:#579d9220}
+.brand>svg{color:#287466}.nav-cta{border-color:#98c9bb;background:#f9fffc9c}
+.water-atmosphere{background:radial-gradient(ellipse at 83% 26%,#b3e3ceba 0%,#c6eee04d 28%,transparent 53%),radial-gradient(ellipse at 70% 87%,#8fcfe8a6,transparent 55%),linear-gradient(115deg,#f7fcfa 12%,#eef9f5 46%,#caeae6 100%)}
+.water-atmosphere:after{background:linear-gradient(90deg,#f7fcfac9 0%,#f4faf52b 44%,transparent 68%)}
+.scene-halo{background:radial-gradient(ellipse,#ffffffc7 0%,#d9f6e98a 42%,#b3e7d100 72%)}
+.chapter-0>.eyebrow{width:max-content;max-width:100%;border:1px solid #76b6a438;border-radius:30px;background:#effcf481;padding:10px 13px;margin-top:-10px;box-shadow:0 3px 16px #26735e04}
+.chapter-0 .tiny-drop{color:#41987d}.hero-note{color:#477e72}.hero-note .note-line{width:22px;height:22px;border-radius:50%;border:1px solid #8bbdae;background:#d8eee38c;position:relative;flex:none}
+.hero-note .note-line:after{content:'';position:absolute;inset:6px;border-radius:50% 50% 50% 10%;background:#6caf99;transform:rotate(135deg)}
+.banner-current{position:absolute;inset:0;pointer-events:none;opacity:.8}.banner-current svg{width:100%;height:100%;fill:none;stroke:#ffffffc7;stroke-width:1}.banner-current path:nth-child(2){stroke:#68b99b4d}.banner-current path:nth-child(3){stroke:#ffffff73}
+.water-ripple{border-color:#eefff2b3}.product-plinth{background:radial-gradient(ellipse,#70bd9e26,transparent 68%)}
+.live-dot{background:#499e87;box-shadow:0 0 0 4px #499e8712}
+.product-label{border-color:#f5fff6b8;background:#f4fff36e}.ticker{background:#0d3847}.ticker i{color:#bce5d4}
+.art-drop svg{fill:#84c7b3;filter:drop-shadow(7px 12px 12px #6caf9929)}.art-drop .drop-shine{stroke:#f0fff6}.art-ring{border-color:#bdddd2}.art-flow span:nth-child(2){border-color:#93c9b5}.art-sun span{color:#93c9b5}
+.product-portrait{background:radial-gradient(ellipse at 48% 30%,#f0fff4 0%,#d1eee2 47%,#b8dfdf 100%);border-color:#d2eadd}
+.closing{background:radial-gradient(ellipse at 70% 70%,#c9e9da,#eef9f3 65%)}.success-mark{background:#d9f1e5;color:#327b64}
+.water-footer{background:#e8f6ef}.footer-wave-back path{fill:#9bcdbb}.footer-heading em{color:#b3e3d0}.footer-top .eyebrow{color:#a2d3c1}
+
+/* Liquid rises inside the button without moving its label or changing layout. */
+.pill-button,.nav-cta{position:relative;isolation:isolate;overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s,border-color .35s,background-color .35s}
+.pill-button:before,.nav-cta:before{content:'';position:absolute;z-index:-1;inset:-160% -25% -90%;border-radius:44% 46% 0 0;background:linear-gradient(135deg,#347f79,#165671);transform:translateY(78%) rotate(-8deg);transition:transform .75s cubic-bezier(.2,.75,.2,1);pointer-events:none}
+.pill-button:after,.nav-cta:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 20%,#ffffff20 47%,transparent 67%);transform:translateX(-120%);transition:transform .85s;pointer-events:none}
+.nav-cta:before,.footer-cta:before{background:linear-gradient(135deg,#e1f7ec,#b9e2d4)}
+.pill-button:is(:hover,:focus-visible),.nav-cta:is(:hover,:focus-visible){transform:translateY(-3px);box-shadow:0 12px 24px #1c6b6b1f;border-color:#74b29e}
+.pill-button:is(:hover,:focus-visible):before,.nav-cta:is(:hover,:focus-visible):before{transform:translateY(22%) rotate(5deg)}
+.pill-button:is(:hover,:focus-visible):after,.nav-cta:is(:hover,:focus-visible):after{transform:translateX(120%)}
+.pill-button>span:last-child,.nav-cta>span,.back-top>span,.scroll-arrow{transition:transform .45s var(--ease),background-color .35s,box-shadow .35s}
+.pill-button:is(:hover,:focus-visible)>span:last-child{transform:rotate(-18deg);box-shadow:0 0 0 5px #ffffff18}
+.nav-cta:is(:hover,:focus-visible)>span{transform:translate(2px,-2px)}
+.pill-button:active,.nav-cta:active{transform:translateY(0) scale(.98)}
+.back-top:is(:hover,:focus-visible)>span,.scroll-prompt:is(:hover,:focus-visible) .scroll-arrow{background:#d0eddf;color:#092c58;transform:translateY(-3px);box-shadow:0 0 0 5px #8ac3ac1f}
+.chapter-nav button{transition:background-color .3s;border-radius:8px}.chapter-nav button:is(:hover,:focus-visible){background:#94ccb630}
+.menu-toggle,.dialog-close{border-radius:50%;transition:background-color .3s,transform .3s}.menu-toggle:hover,.dialog-close:hover{background:#a7d9c640;transform:rotate(5deg)}
+.footer-contact,.text-button,.desktop-nav a{transition:color .3s,text-decoration-color .3s;text-underline-offset:7px;text-decoration:underline;text-decoration-color:transparent}.footer-contact:hover{color:#b6e8d4;text-decoration-color:#b6e8d4}.text-button:hover,.desktop-nav a:hover{color:#337c68;text-decoration-color:#a7d9c6}
+
+/* Fixed contact droplets: inline SVG keeps edges sharp without image requests. */
+.floating-contact{position:fixed;right:max(17px,env(safe-area-inset-right));bottom:115px;z-index:35;display:flex;flex-direction:column;gap:8px}
+.contact-drop{position:relative;display:block;width:62px;height:76px;color:#164a63;transition:transform .4s var(--ease);filter:drop-shadow(0 5px 9px #0a494321)}
+.contact-shell{display:block;width:100%;height:100%;overflow:visible}.contact-surface{fill:#f0fafaff;stroke:#a3cbd4;stroke-width:1}.contact-whatsapp .contact-surface{fill:#e9f8ef;stroke:#9bcbb9}
+.contact-shine{fill:none;stroke:#ffffffcc;stroke-width:2;stroke-linecap:round}.contact-icon{position:absolute;width:24px;height:24px;left:calc(50% - 12px);top:38px;transition:transform .5s var(--ease);pointer-events:none}.contact-whatsapp{color:#2d775f}
+.contact-fill{transform:translateY(56px);transition:transform .65s cubic-bezier(.2,.75,.2,1)}.contact-wave{fill:#b2e0df;animation:contact-water 1.8s linear infinite;animation-play-state:paused}.contact-whatsapp .contact-wave{fill:#9dd5b9}
+.contact-drop:is(:hover,:focus-visible){transform:translateY(-4px)}.contact-drop:is(:hover,:focus-visible) .contact-fill{transform:translateY(-15px)}.contact-drop:is(:hover,:focus-visible) .contact-wave{animation-play-state:running}.contact-drop:is(:hover,:focus-visible) .contact-icon{transform:rotate(-9deg) scale(1.06)}
+.contact-tooltip{position:absolute;right:calc(100% + 13px);top:20px;min-width:max-content;background:#f5fffb;border:1px solid #c8e7dc;border-radius:12px;padding:12px 16px;color:#173f54;font-size:11px;line-height:1.5;opacity:0;visibility:hidden;transform:translateX(7px);transition:opacity .25s,transform .3s,visibility .25s;pointer-events:none;box-shadow:0 6px 25px #123e4110}.contact-tooltip>span{display:block;font-size:9px;color:#45816d;margin-top:3px}.contact-drop:is(:hover,:focus-visible) .contact-tooltip{opacity:1;visibility:visible;transform:translateX(0)}
+@keyframes contact-water{to{transform:translateX(64px)}}
+
+/* First-paint loader: never captures clicks and always times out safely. */
+.water-preloader{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 48%,#e0f4e9,#f4faf8 65%);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s,visibility .35s}
+.booting .water-preloader{opacity:1;visibility:visible}.preloader-mark{position:relative;width:66px;height:85px;margin-bottom:25px}.preloader-mark svg{width:100%;height:100%;overflow:visible}.loader-outline{fill:#f1fcf8;stroke:#9acbbc;stroke-width:1}.loader-fill{fill:#8ecbb7;animation:loader-water 1.3s ease-in-out infinite alternate}.loader-shine{fill:none;stroke:#f7fffc;stroke-width:2;stroke-linecap:round}.preloader-ripple{position:absolute;bottom:-6px;left:1px;width:64px;height:12px;border:1px solid #8bc2b0;border-radius:50%;animation:loader-ripple 1.3s ease-out infinite}.preloader-wordmark{font-size:26px;font-weight:650;letter-spacing:-1.3px;color:#103b56}.preloader-wordmark>span{font-weight:400}.preloader-caption{font-size:7px;color:#538572;letter-spacing:2.4px;margin-top:12px}
+@keyframes loader-water{from{transform:translate(-12px,20px)}to{transform:translate(12px,-17px)}}@keyframes loader-ripple{from{transform:scale(.6);opacity:.65}to{transform:scale(1.55);opacity:0}}
+.loader-fill,.preloader-ripple{animation-play-state:paused}.booting .loader-fill,.booting .preloader-ripple{animation-play-state:running}.motion-sleeping .contact-wave{animation-play-state:paused}
+html.lenis,html.lenis body{height:auto}html.lenis{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:clip}.lenis [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-smooth iframe{pointer-events:none}
+@media(max-width:760px){.water-atmosphere{background:radial-gradient(ellipse at 85% 46%,#b4e4cdb3,transparent 57%),radial-gradient(ellipse at 34% 91%,#9bd5e9b0,transparent 58%),linear-gradient(155deg,#f7fcfa 10%,#eef9f4 45%,#b8e2de 100%)}.water-atmosphere:after{background:linear-gradient(#f7fcfa5c,transparent 53%)}.chapter-0>.eyebrow{padding:7px 9px;margin-top:-7px}.floating-contact{right:max(8px,env(safe-area-inset-right));bottom:calc(105px + env(safe-area-inset-bottom));gap:3px}.contact-drop{width:46px;height:58px}.contact-icon{height:19px;width:19px;left:calc(50% - 9.5px);top:29px}.contact-tooltip{font-size:10px;padding:9px 12px;top:12px}.banner-current{opacity:.55}.water-indicator{display:none}.seal{right:17%}}
+@media(orientation:landscape) and (max-height:600px){.floating-contact{bottom:58px;right:8px;gap:0}.contact-drop{width:44px;height:54px}.contact-icon{width:18px;height:18px;left:calc(50% - 9px);top:27px}.seal{right:17%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.water-preloader{display:none}.loader-fill,.preloader-ripple,.contact-wave{animation:none}.pill-button,.nav-cta,.pill-button:before,.pill-button:after,.nav-cta:before,.nav-cta:after,.contact-drop,.contact-fill,.contact-icon,.contact-tooltip{transition:none}.contact-drop:is(:hover,:focus-visible),.pill-button:is(:hover,:focus-visible),.nav-cta:is(:hover,:focus-visible){transform:none}}

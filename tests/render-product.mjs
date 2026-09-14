@@ -14,8 +14,8 @@ try {
     const { createScene } = await import('./scene.js');
     const scene = await createScene(canvas);
     scene.update(.3, 0, .016);
-    return canvas.toDataURL('image/png').split(',')[1];
+    return canvas.toDataURL('image/webp', .94).split(',')[1];
   });
-  await writeFile('assets/purifier-render.png', Buffer.from(data, 'base64'));
-  console.log('Exported assets/purifier-render.png');
+  await writeFile('assets/purifier-render.webp', Buffer.from(data, 'base64'));
+  console.log('Exported assets/purifier-render.webp');
 } finally { await browser.close(); }
