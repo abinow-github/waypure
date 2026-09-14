@@ -30,7 +30,8 @@ export function createInterface({ gsap, ScrollTrigger, reduceMotion, dialog, ope
       const target = document.querySelector(link.getAttribute('href'));
       if (!target || event.ctrlKey || event.metaKey || event.shiftKey) return;
       event.preventDefault();
-      scrollTo(target, { offset: -Math.min(100, innerHeight * .1) });
+      // Lenis already applies the document's CSS scroll-padding-top.
+      scrollTo(target);
     });
   });
   const number = value => /^\+?[1-9]\d{7,14}$/.test(value.replace(/[\s()-]/g, '')) ? value.replace(/\D/g, '') : '';

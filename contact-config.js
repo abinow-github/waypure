@@ -1,7 +1,6 @@
-// Add the retailer's real international phone numbers, including country code.
-// Until supplied, the contact controls open the local product enquiry dialog.
+// Confirmed by the user against the supplied Waypure brochures.
 export const contactConfig = {
-  phone: '+919946731750',
-  whatsapp: '+919946731750',
-  message: 'Hello! I would like to know more about the Aqua Royal water purifier.',
+  phone: '+919061091810',
+  whatsapp: '+919895301810',
+  message: 'Hello Waypure! I would like to know more about your products and services.',
 };

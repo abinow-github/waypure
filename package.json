@@ -1,12 +1,13 @@
 {
-  "name": "aqua-royal-experience",
+  "name": "waypure-experience",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
     "build:vendor": "node scripts/build-vendor.mjs",
-    "test": "node tests/browser.mjs && node tests/water-effects.mjs && node tests/responsive.mjs && node tests/interface.mjs"
+    "test": "node tests/browser.mjs && node tests/water-effects.mjs && node tests/responsive.mjs && node tests/interface.mjs && node tests/catalogue.mjs && node tests/pages.mjs",
+    "build:catalogue": "node scripts/build-catalogue.mjs"
   },
   "dependencies": {
     "aos": "^2.3.4",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "esbuild": "0.25.12",
+    "pdfjs-dist": "4.10.38",
     "playwright": "https://registry.npmjs.org/playwright/-/playwright-1.61.1.tgz"
   }
 }

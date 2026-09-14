@@ -116,17 +116,14 @@ export async function createScene(canvas) {
   const lever = new THREE.Mesh(new THREE.CapsuleGeometry(.027,.19,5,12),darkBlue); lever.rotation.z = Math.PI/2; lever.position.y = .17; handle.add(lever);
   const nozzle = new THREE.Object3D(); nozzle.position.set(0,-.255,.32); tap.add(nozzle);
 
-  function textTexture(draw) { const c = document.createElement('canvas'); c.width = 512; c.height = 256; draw(c.getContext('2d')); const texture = new THREE.CanvasTexture(c); texture.colorSpace = THREE.SRGBColorSpace; return texture; }
-  const logo = textTexture(ctx => { ctx.clearRect(0,0,512,256); ctx.fillStyle = '#153f69'; ctx.textAlign = 'center'; ctx.font = '500 60px Arial'; ctx.fillText('aqua royal',256,146); ctx.font = '15px Arial'; ctx.fillStyle = '#6d93b3'; ctx.fillText('A  B E T T E R  E V E R Y D A Y',256,182); ctx.beginPath(); ctx.moveTo(256,35); ctx.bezierCurveTo(247,50,237,55,237,67); ctx.bezierCurveTo(237,92,275,92,275,67); ctx.bezierCurveTo(275,55,264,49,256,35); ctx.fill(); });
-  const brand = new THREE.Mesh(new THREE.PlaneGeometry(.7,.35),new THREE.MeshBasicMaterial({ map: logo, transparent: true, depthWrite: false })); brand.position.set(0,-.68,.766); brand.rotation.x = -.045; root.add(brand);
-  const badgeMap = textTexture(ctx => { ctx.clearRect(0,0,512,256); ctx.fillStyle = '#082e5b'; ctx.beginPath(); ctx.arc(256,128,104,0,Math.PI*2); ctx.fill(); ctx.strokeStyle = '#a9dbff'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(256,128,94,0,Math.PI*2); ctx.stroke(); ctx.fillStyle = '#e8f6ff'; ctx.textAlign = 'center'; ctx.font = '24px Georgia'; ctx.fillText('AQUA',256,112); ctx.font = '29px Georgia'; ctx.fillText('ROYAL',256,144); ctx.font = '12px Arial'; ctx.fillText('O R I G I N A L',256,174); });
-  const badge = new THREE.Mesh(new THREE.PlaneGeometry(.65,.325),new THREE.MeshBasicMaterial({ map: badgeMap, transparent:true, depthWrite:false })); badge.position.set(-.61,.91,.805); badge.rotation.y = -.1; badge.renderOrder = 4; root.add(badge);
-  const shieldMap = textTexture(ctx => {
-    ctx.fillStyle = '#173b4b'; ctx.strokeStyle = '#c1aa72'; ctx.lineWidth = 9;
-    ctx.beginPath(); ctx.moveTo(90,56); ctx.lineTo(256,22); ctx.lineTo(420,56); ctx.lineTo(398,160); ctx.lineTo(256,236); ctx.lineTo(112,160); ctx.closePath(); ctx.fill(); ctx.stroke();
-    ctx.textAlign = 'center'; ctx.fillStyle = '#f0e9cc'; ctx.font = 'bold 60px Georgia'; ctx.fillText('AR',256,110); ctx.font = '23px Arial'; ctx.fillText('AQUA ROYAL',256,151); ctx.font = '17px Arial'; ctx.fillText('O R I G I N A L',256,186);
-  });
-  const shield = new THREE.Mesh(new THREE.PlaneGeometry(.39,.3),new THREE.MeshBasicMaterial({map:shieldMap,transparent:true,depthWrite:false}));shield.position.set(-.61,1.57,.811);shield.rotation.y=-.1;root.add(shield);
+  // Use the exact supplied Waypure logo on the animated product.
+  const suppliedLogo = await new THREE.TextureLoader().loadAsync(new URL('./assets/img/logo/logo.png', import.meta.url).href);
+  suppliedLogo.colorSpace = THREE.SRGBColorSpace;
+  const logoMaterial = new THREE.MeshBasicMaterial({map:suppliedLogo,transparent:true,depthWrite:false});
+  const brand = new THREE.Mesh(new THREE.PlaneGeometry(.43,.425),logoMaterial);
+  brand.position.set(0,-.66,.768);brand.rotation.x=-.045;brand.renderOrder=4;root.add(brand);
+  const tankLogo = new THREE.Mesh(new THREE.CircleGeometry(.145,48),logoMaterial);
+  tankLogo.position.set(-.61,1.52,.811);tankLogo.rotation.y=-.1;tankLogo.renderOrder=4;root.add(tankLogo);
   const dropGeometry = new THREE.SphereGeometry(.012,8,6);
   const dropMaterial = new THREE.MeshPhysicalMaterial({color:0xa5deee,roughness:.12,transparent:true,opacity:.32,depthWrite:false});
   for(let i=0;i<30;i++){

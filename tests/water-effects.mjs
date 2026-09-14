@@ -13,7 +13,7 @@ try {
   await page.goto(base, { waitUntil: 'networkidle' });
   await page.locator('.scene-wrap.is-fallback').waitFor();
   await page.waitForFunction(() => document.querySelector('h1').dataset.flowState === 'complete');
-  assert(await page.getByRole('heading', { name: 'Pure water. Beautifully simple.', exact: true }).isVisible(), 'Heading has one clean accessible name');
+  assert(await page.getByRole('heading', { name: 'Drink pure. Eat pure. Breathe pure.', exact: true }).isVisible(), 'Heading has one clean accessible name');
   await page.screenshot({ path: 'test-results/liquid-hero-desktop.png' });
   const heroBubble = page.locator('.experience-sticky > .bubble-field .rising-bubble').first();
   assert.equal(await heroBubble.evaluate(el => getComputedStyle(el).animationPlayState), 'running');

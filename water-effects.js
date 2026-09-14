@@ -1,6 +1,6 @@
 // Liquid type and decorative bubbles share the site's GSAP motion preferences.
 export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
-  const textTargets = [...document.querySelectorAll('.chapter h1, .chapter h2, .chapter > p, .difference h2, .difference-heading > p, .benefit h3, .benefit p, .ritual h2, .ritual-content > p, .product-copy h2, .product-description, .faq-intro h2, .faq-intro > p, .closing h2, .footer-heading, .footer-callout > p')];
+  const textTargets = [...document.querySelectorAll('[data-water-text], .chapter h1, .chapter h2, .chapter > p, .difference h2, .difference-heading > p, .benefit h3, .benefit p, .company-values h3, .ritual h2, .ritual-content > p, .product-copy h2, .product-description, .services-heading h2, .services-heading > p, .faq-intro h2, .faq-intro > p, .closing h2, .footer-heading, .footer-callout > p')];
   const visualLetters = new Map();
   const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('en', { granularity: 'grapheme' }) : null;
   const splitLetters = text => segmenter ? [...segmenter.segment(text)].map(item => item.segment) : Array.from(text);
@@ -60,7 +60,7 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
   });
 
   const fields = [];
-  const parents = document.querySelectorAll('.experience-sticky, .difference, .ritual, .product-section, .faq-section, .closing, .water-footer');
+  const parents = document.querySelectorAll('.page-hero, .water-life, .experience-sticky, .difference, .ritual, .product-section, .faq-section, .closing, .water-footer');
   parents.forEach((parent, fieldIndex) => {
     const field = document.createElement('div');
     field.className = 'bubble-field';

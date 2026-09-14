@@ -1,5 +1,8 @@
 import { createWaterEffects } from './water-effects.js';
 import { createInterface } from './interface.js';
+import { createCatalogue } from './catalogue.js';
+import { contactConfig } from './contact-config.js';
+import { createWaterLife } from './water-life.js';
 const { gsap, ScrollTrigger } = window;
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
@@ -12,10 +15,11 @@ const sceneWrap = document.querySelector('#scene-wrap');
 const waterLabel = document.querySelector('#water-label');
 let targetProgress = 0, smoothProgress = 0, activeChapter = 0, scene = null, previousTime = 0, staticRendered = false;
 let siteInterface;
-let viewportHeight = innerHeight, experienceHeight = experience.offsetHeight;
+let viewportHeight = innerHeight, experienceHeight = experience?.offsetHeight || 0;
 const clamp = (n, a = 0, b = 1) => Math.max(a, Math.min(b, n));
 const chapterPositions = [0, .31, .61, .92];
 const storyTimeline = gsap.timeline({ paused: true });
+if (experience) {
 storyTimeline.set(chapters.slice(1), { opacity: 0, y: 32 });
 storyTimeline.to(chapters[0], { opacity: 0, y: -24, duration: .11, ease: 'power2.inOut' }, .12)
   .to(chapters[1], { opacity: 1, y: 0, duration: .1, ease: 'power2.out' }, .16)
@@ -30,14 +34,16 @@ storyTimeline.to(chapters[0], { opacity: 0, y: -24, duration: .11, ease: 'power2
   .to('.product-plinth', { opacity: .2, y: 24, duration: .15 }, .38)
   .to('.hero-watermark', { opacity: .07, x: -45, duration: .5, ease: 'none' }, .4)
   .to({}, { duration: .01 }, .99);
+}
 
 function measure() {
   viewportHeight = innerHeight;
-  experienceHeight = experience.offsetHeight;
+  experienceHeight = experience?.offsetHeight || 0;
   updateScroll();
   scene?.resize(); staticRendered = false;
 }
 function updateScroll() {
+  if (!experience) return;
   targetProgress = reduceMotion.matches ? 0 : clamp(-experience.getBoundingClientRect().top / Math.max(1, experienceHeight - viewportHeight));
 }
 function goToChapter(index) {
@@ -48,7 +54,7 @@ function goToChapter(index) {
 document.querySelectorAll('[data-chapter]').forEach(button => button.addEventListener('click', event => {
   event.preventDefault(); goToChapter(Number(button.dataset.chapter)); closeMenu();
 }));
-document.querySelector('[data-next-chapter]').addEventListener('click', () => {
+document.querySelector('[data-next-chapter]')?.addEventListener('click', () => {
   if (activeChapter < 3 && !reduceMotion.matches) goToChapter(activeChapter + 1);
   else siteInterface.scrollTo(document.querySelector('#difference'));
 });
@@ -65,12 +71,14 @@ document.addEventListener('keydown', event => { if (event.key === 'Escape') clos
 
 document.body.classList.add('js-ready', 'gsap-active');
 const waterEffects = createWaterEffects({ gsap, ScrollTrigger, storyTimeline });
+createWaterLife({ gsap, ScrollTrigger });
 document.fonts.ready.then(() => waterEffects.refresh());
 gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
   document.querySelectorAll('.reveal').forEach(el => {
     if (el.matches('.liquid-text') || el.querySelector('.liquid-text')) { gsap.set(el, { opacity: 1, y: 0 }); return; }
     gsap.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 91%', once: true } });
   });
+  if (!experience) return;
   if (scrollY < 100) gsap.fromTo('.chapter-0 > :not(.liquid-text)', { opacity: .85, y: 18 }, { opacity: 1, y: 0, duration: .9, stagger: .06, ease: 'power3.out' });
   const ambientTweens = [
     gsap.to('.water-caustics', { xPercent: 4, yPercent: 3, rotation: -7, scale: 1.12, duration: 13, yoyo: true, repeat: -1, ease: 'sine.inOut' }),
@@ -93,11 +101,14 @@ const form = document.querySelector('#enquiry-form');
 const formView = document.querySelector('#enquiry-form-view');
 const successView = document.querySelector('#enquiry-success');
 let enquiryUrl = null;
-function openEnquiry() {
+function openEnquiry(product = 'General enquiry') {
+  form.elements.product.value = product;
+  formView.hidden = false; successView.hidden = true;
+  dialog.removeAttribute('aria-label'); dialog.setAttribute('aria-labelledby', 'enquiry-title');
   closeMenu(); siteInterface?.stop(); dialog.showModal(); document.body.style.overflow = 'hidden';
 }
 siteInterface = createInterface({ gsap, ScrollTrigger, reduceMotion, dialog, openEnquiry });
-document.querySelectorAll('.enquire-button').forEach(button => button.addEventListener('click', openEnquiry));
+document.querySelectorAll('.enquire-button').forEach(button => button.addEventListener('click', () => openEnquiry()));
 function closeDialog() { dialog.close(); }
 document.querySelector('.dialog-close').addEventListener('click', closeDialog);
 dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeDialog(); } });
@@ -109,10 +120,11 @@ form.addEventListener('submit', event => {
   const name = String(data.get('name')).trim();
   const city = String(data.get('city')).trim();
   if (!name || !city) { const field = form.elements[!name ? 'name' : 'city']; field.setCustomValidity('Please enter a value.'); field.reportValidity(); field.addEventListener('input', () => field.setCustomValidity(''), { once: true }); return; }
-  const content = `AQUA ROYAL — PRODUCT ENQUIRY\n\nProduct: Aqua Royal Original\nFinish: Ocean blue / Warm ivory\n\nName: ${name}\nEmail: ${String(data.get('email')).trim()}\nCity: ${city}\n\nQuestions:\n${String(data.get('message')).trim() || 'Please share pricing, availability, dimensions, capacity, filtration specifications, warranty, and maintenance information.'}\n\nPrepared on ${new Date().toLocaleDateString('en-IN')}\nThis enquiry was prepared locally and has not been sent.\n`;
+  const content = `WAYPURE — PRODUCT ENQUIRY\n\nProduct / service: ${String(data.get('product'))}\n\nName: ${name}\nEmail: ${String(data.get('email')).trim()}\nCity: ${city}\n\nQuestions:\n${String(data.get('message')).trim() || 'Please share current pricing, availability, specifications and applicable warranty terms.'}\n\nPrepared on ${new Date().toLocaleDateString('en-IN')}\nWaypure: +91 90610 91810 | WhatsApp: +91 98953 01810\n`;
   if (enquiryUrl) URL.revokeObjectURL(enquiryUrl);
   enquiryUrl = URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }));
   document.querySelector('#download-enquiry').href = enquiryUrl;
+  document.querySelector('#whatsapp-enquiry').href = `https://wa.me/${contactConfig.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(content)}`;
   formView.hidden = true; successView.hidden = false;
   dialog.setAttribute('aria-label', 'Your product enquiry is ready'); dialog.removeAttribute('aria-labelledby');
   document.querySelector('#download-enquiry').focus();
@@ -121,6 +133,8 @@ document.querySelector('#edit-enquiry').addEventListener('click', () => {
   formView.hidden = false; successView.hidden = true;
   dialog.removeAttribute('aria-label'); dialog.setAttribute('aria-labelledby', 'enquiry-title'); form.elements.name.focus();
 });
+
+createCatalogue({ gsap, reduceMotion, refresh: () => { measure(); waterEffects.refresh(); }, onEnquire: openEnquiry });
 
 function renderChapters(progress) {
   storyTimeline.progress(progress);
@@ -135,7 +149,7 @@ function renderChapters(progress) {
   });
   if (stage !== activeChapter) {
     stageButtons.forEach((button, index) => { button.classList.toggle('active', index === stage); if (index === stage) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current'); });
-    waterLabel.innerHTML = ['A fresh kind<br>of everyday.', 'A little more<br>possibility.', 'Find your<br>natural flow.', 'A glass full<br>of good.'][stage];
+    waterLabel.innerHTML = ['Waypure.<br>Forever pure.', 'Pure water<br>solutions.', 'Your daily<br>glass of water.', 'Find your<br>Waypure.'][stage];
     activeChapter = stage;
   }
   progressBar.style.width = `${progress * 100}%`;
@@ -160,6 +174,7 @@ document.addEventListener('visibilitychange', () => {
   if (!document.hidden) previousTime = 0;
 });
 measure();
+if (experience) {
 gsap.ticker.add(time => frame(time * 1000));
 import('./scene.js').then(async ({ createScene }) => {
   scene = await createScene(document.querySelector('#product-canvas'));
@@ -169,3 +184,4 @@ import('./scene.js').then(async ({ createScene }) => {
   console.info('Static product view is active.', error.message);
   sceneWrap.classList.add('is-fallback');
 });
+}

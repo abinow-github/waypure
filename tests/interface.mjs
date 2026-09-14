@@ -14,8 +14,8 @@ try {
   await page.locator('.scene-wrap.is-rendered').waitFor();
   await page.waitForFunction(() => !document.documentElement.classList.contains('booting'));
   assert.equal(await page.locator('.footer-wave').count(), 2, 'Footer has two visible water layers');
-  assert.equal(await page.locator('[data-contact=call]').getAttribute('href'), 'tel:+919946731750');
-  assert((await page.locator('[data-contact=whatsapp]').getAttribute('href')).startsWith('https://wa.me/919946731750?text='));
+  assert.equal(await page.locator('[data-contact=call]').getAttribute('href'), 'tel:+919061091810');
+  assert((await page.locator('[data-contact=whatsapp]').getAttribute('href')).startsWith('https://wa.me/919895301810?text='));
   const drop = page.locator('[data-contact=whatsapp]');
   const waterBefore = await drop.locator('.contact-fill').evaluate(el => getComputedStyle(el).transform);
   await drop.hover();
@@ -34,7 +34,7 @@ try {
   const earlyScroll = await page.evaluate(() => scrollY);
   await page.waitForTimeout(1300);
   const settledScroll = await page.evaluate(() => scrollY);
-  assert(settledScroll > earlyScroll + 50, 'Wheel input moves smoothly over multiple frames');
+  assert(settledScroll > earlyScroll + 50, `Wheel input moves smoothly over multiple frames (early: ${earlyScroll}, settled: ${settledScroll})`);
   assert(Math.abs(settledScroll - 900) < 12, 'Smooth wheel scroll reaches the requested distance');
   await page.locator('.nav-cta').click();
   await page.waitForTimeout(1500);

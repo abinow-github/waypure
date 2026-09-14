@@ -1,52 +1,49 @@
-# Aqua Royal
+# Waypure
 
-A self-contained water purifier website with an original 3D product model based on the supplied reference photograph. Built with HTML, CSS, JavaScript, Three.js, GSAP, ScrollTrigger, AOS, and Lenis.
+A responsive Waypure website with a Three.js water-filling/pouring story, GSAP and AOS text reveals, Lenis smooth scrolling, animated bubbles, liquid button hovers and a two-layer wave footer. Company and product copy comes from the four supplied PDFs in `info/`. The supplied logo is used throughout.
 
-## Open locally
+## Preview
 
-With XAMPP Apache running, visit **http://localhost/water-purifying/**. No build step or npm installation is needed to view the website: the rendering library, font, and product illustrations are included locally.
+With XAMPP Apache running, open **http://localhost/water-purifying/**. No build or npm installation is needed to view the site; runtime libraries and assets are local. Alternatively, run `npm start` and open **http://localhost:3000**.
 
-Alternatively, run `npm start` and visit **http://localhost:3000**.
+## Content and contact
 
-## Experience
+- 56 distinct catalogue entries across Waypure, Aquaguard, Merlin, Prolife and Chrome. Product cards intentionally have no images. The animated hero remains an illustrative water journey, rather than a model specification diagram.
+- Product prices are labelled **2023 catalogue MRP**. Current availability, selling price and warranty terms are confirmed on enquiry. Unlisted prices are shown as “On enquiry”.
+- Call: **+91 90610 91810**. WhatsApp: **+91 98953 01810**, confirmed by the user.
+- Branch details, company introduction, mission, vision and services come from the supplied brochures. See [CONTENT-SOURCES.md](CONTENT-SOURCES.md) for the source audit.
+- Enquiry buttons select the relevant product. The form prepares a downloadable text enquiry and a WhatsApp link for the visitor to review and send. It does not send messages automatically or store customer details on a server.
 
-- Scroll through four stages: introduction, tank filling, tap pouring, and a filled glass. Scrolling backwards reverses the sequence.
-- A larger product presentation, cool blue and white materials, animated water caustics, and a navy/white pouring stage keep the purifier in focus. GSAP controls the product rotation, background transitions, and section entrances; ScrollTrigger controls section reveals and parallax.
-- Headings and supporting copy reveal through a moving wave edge with individually staggered letters. AOS triggers section reveals; the pinned story uses a reversible GSAP letter timeline. Background bubbles rise throughout the page, and two moving water layers form the footer. Bubbles and footer motion pause offscreen and when the tab is hidden; reduced-motion mode keeps text readable and the water surface still.
-- Soft mint-green accents and moving water currents complement the navy/blue banner. Buttons have liquid sweep hovers, and fixed water-drop call/WhatsApp controls connect to **+91 99467 31750** with a rising-water hover.
-- Lenis smooths wheel input and anchor navigation on the GSAP clock; touch scrolling stays native. The enquiry dialog locks background scrolling, and reduced motion switches to native scrolling. Integration follows the [official Lenis documentation](https://github.com/darkroomengineering/lenis).
-- A small drop preloader dismisses as soon as the preview/font are ready, with a 1.6-second fail-safe and no artificial minimum delay. It never blocks input and is hidden with reduced motion or without JavaScript.
-- The model has a rounded rectangular ivory cabinet, a thin lid, a transparent blue tank with surface droplets and brand decals, a water surface, bubbles, a turning tap handle, an attached water stream, glass ripples, and splash particles.
-- Stage controls and navigation work with the keyboard. Mobile layouts, reduced motion, and a static WebGL fallback are included.
-- Product details, native FAQ accordions, and a product enquiry dialog complete the page.
-- “Make it yours” prepares a downloadable enquiry locally. It does not send email, store customer details, or claim to submit a request to a retailer. The floating call/WhatsApp buttons use the supplied retailer number; connect a backend if the form should submit enquiries directly.
+## Editing
 
-## Customize
+- `index.html`: 3D home experience, animated human water illustration, company summary and six featured products. “Show more products” opens `products.html`.
+- `about.html`: company introduction, mission, vision and services.
+- `products.html`: all 56 models, brand/category filters, search and product enquiries.
+- `contact.html`: call/WhatsApp links, enquiry entry point and both branch addresses/map searches.
+- `pages.css`, `water-life.js`: responsive inner pages, green prices and scroll-linked silhouette fill with flowing water surfaces. The illustration is conceptual, without medical percentages.
+- `data/products.js`: verified models, specifications, historical MRPs and source pages. Run `npm run build:catalogue` after editing to regenerate cards and form options.
+- `catalogue.js`: search, brand/category filtering and product enquiries. All matching products remain visible on the Products page.
+- `contact-config.js`: confirmed contact destinations. Keep native links across the four HTML pages in sync if these change. Shared navigation, footer and enquiry markup are present in each static page.
+- `assets/img/logo/logo.png`: original supplied logo; responsive dimensions are in `waypure.css`.
+- `waypure.css`: logo layout, brochure colours, catalogue, services and branch information.
+- `styles.css`, `water-theme.css`, `fresh-water.css`: base layout, water theme, responsive story, liquid hovers and preloader.
+- `app.js`, `interface.js`, `water-effects.js`, `water-effects.css`: scroll/story synchronization, contact interface, accessible letter reveals, bubbles and footer motion.
+- `scene.js`: procedural 3D purifier and water sequence with the supplied logo texture. Regenerate its static hero preview with `node tests/render-product.mjs` while the local server runs (`TEST_URL` can select XAMPP).
 
-- `index.html`: branding, product content, FAQ, and enquiry fields.
-- `styles.css`: colors, typography, layouts, and section animations.
-- `water-theme.css`: the navy/white water theme, larger product layout, and responsive presentation.
-- `fresh-water.css`: mint accents, banner currents, liquid button hovers, contact droplets, and preloader.
-- `interface.js` / `contact-config.js`: smooth scrolling and retailer contact destinations.
-- `water-effects.js` / `water-effects.css`: accessible liquid text reveals, rising bubbles, and the animated footer surface.
-- `scene.js`: model geometry, lighting, and the scroll-driven water sequence.
-- `app.js`: scroll transitions, navigation, accessibility, and enquiry download.
-- `assets/purifier-render.webp`: exported from the live model for the product portrait and static fallback. Regenerate with `node tests/render-product.mjs` while the local server is running. The original PNG/SVG illustrations are retained as source assets.
+## Performance and accessibility
 
-The supplied photo was used as a visual reference; the model is a custom approximation, not a manufacturer CAD model. Pricing, capacity, certifications, filtration performance, and warranty were not supplied, so the site does not invent them. The reference URL `https://www.palmo.co.in/` could not be reached during development.
+Three.js is loaded only on the home page, minified to 681 KB and served as a 174 KB gzip response on XAMPP. The hero fallback uses WebP. Inner pages use lightweight SVG water art. The logo is reused from one URL. Source PDFs load only when a visitor follows the catalogue link; PDF extraction dependencies are development tools, not website downloads.
 
-## Loading performance
+Run `npm run build:vendor` after updating Three.js or Lenis to regenerate local files and gzip companions together. `.htaccess` negotiates compressed vendor files and revalidates code/images. The optional Node server serves the minified JavaScript without gzip.
 
-The complete Three.js library is minified to 681 KB and served as a 174 KB gzip response on XAMPP. The transparent WebP product preview is 79 KB, down from 308 KB PNG. Fonts are preloaded, the lower product image loads lazily, and the scene module is preloaded. Visible animations retain their geometry and timing; ambient hero motion and rendering pause offscreen.
-
-Run `npm run build:vendor` after updating Three.js or Lenis to regenerate their local files and gzip companions together. `.htaccess` negotiates compressed vendor responses and revalidates code/images so edits appear immediately. The optional Node development server serves the same minified JavaScript without gzip.
+The preloader has no minimum delay and a 1.6-second fail-safe. Reduced motion keeps text readable and uses native scrolling; touch scrolling stays native. Bubbles, footer waves and hero ambient motion pause offscreen. Screen readers receive one semantic copy of animated headings. The enquiry dialog locks background scrolling, and the catalogue remains readable without JavaScript.
 
 ## Verification
 
-Install development dependencies using `npm ci`, start the local server, then run `npm test`. To test XAMPP instead, set `TEST_URL` to `http://localhost/water-purifying/`. The Playwright checks use installed Google Chrome and verify actual 3D rendering, scroll state changes, reverse scrolling, mobile navigation, enquiry downloads, FAQ behavior, text reveal completion, moving bubbles, footer waves, offscreen pausing, and reduced motion. The water-effects check uses the static product fallback to test DOM animation independently of the WebGL renderer. Screenshots are written to `test-results/`.
+Install development dependencies with `npm ci`, start the server, and run `npm test`. For XAMPP, set `TEST_URL` to `http://localhost/water-purifying/`. Tests use installed Google Chrome through Playwright.
 
-The responsive matrix verifies hero and pouring stages at 12 phone, tablet, desktop, and landscape sizes, from 320px to 1920px wide.
+Checks cover actual 3D filling/pouring/reverse scrolling, AOS letter reveals, bubbles/waves, wheel interpolation, contact links, enquiries/downloads, the 56-entry catalogue and source-verified prices, filters/search, six home cards and navigation to the collection, all inner pages, animated body-water fill, no eager PDFs or inner-page Three.js, reduced motion, static/no-JavaScript fallbacks and 12 viewport sizes from 320 to 1920px. Screenshots go to `test-results/`.
 
-The interface check verifies contact destinations without placing calls or sending messages, actual liquid hover changes, wheel interpolation, modal scroll lock, contact positioning, preloader fail-safe behavior, reduced motion, and asset sizes.
+`scripts/read-brochures.mjs` extracts text and renders PDF pages into `test-results/brochures/` for visual verification. It does not change the PDFs.
 
-AOS, Lenis, Three.js, and Manrope license notices are included in `vendor/AOS-LICENSE.txt`, `vendor/LENIS-LICENSE.txt`, `vendor/THREE-LICENSE.txt`, and `assets/MANROPE-LICENSE.txt`. The vendored GSAP and ScrollTrigger files retain their copyright and license headers.
+Runtime license notices: `vendor/THREE-LICENSE.txt`, `vendor/AOS-LICENSE.txt`, `vendor/LENIS-LICENSE.txt`, `assets/MANROPE-LICENSE.txt`. GSAP/ScrollTrigger retain their license headers. Lenis integration follows its [official documentation](https://github.com/darkroomengineering/lenis).
