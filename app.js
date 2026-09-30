@@ -16,6 +16,7 @@ const waterLabel = document.querySelector('#water-label');
 let targetProgress = 0, smoothProgress = 0, activeChapter = 0, scene = null, previousTime = 0, staticRendered = false;
 let siteInterface;
 let viewportHeight = innerHeight, experienceHeight = experience?.offsetHeight || 0;
+let experienceTop = 0, lastChapterProgress = -1, resizeFrame = 0;
 const clamp = (n, a = 0, b = 1) => Math.max(a, Math.min(b, n));
 const chapterPositions = [0, .31, .61, .92];
 const storyTimeline = gsap.timeline({ paused: true });
@@ -39,17 +40,17 @@ storyTimeline.to(chapters[0], { opacity: 0, y: -24, duration: .11, ease: 'power2
 function measure() {
   viewportHeight = innerHeight;
   experienceHeight = experience?.offsetHeight || 0;
+  experienceTop = experience ? experience.getBoundingClientRect().top + scrollY : 0;
   updateScroll();
   scene?.resize(); staticRendered = false;
 }
 function updateScroll() {
   if (!experience) return;
-  targetProgress = reduceMotion.matches ? 0 : clamp(-experience.getBoundingClientRect().top / Math.max(1, experienceHeight - viewportHeight));
+  targetProgress = reduceMotion.matches ? 0 : clamp((scrollY - experienceTop) / Math.max(1, experienceHeight - viewportHeight));
 }
 function goToChapter(index) {
   if (reduceMotion.matches) { document.querySelector('#difference').scrollIntoView({ behavior: 'auto' }); return; }
-  const top = experience.getBoundingClientRect().top + scrollY;
-  siteInterface.scrollTo(top + (experienceHeight - viewportHeight) * chapterPositions[index]);
+  siteInterface.scrollTo(experienceTop + (experienceHeight - viewportHeight) * chapterPositions[index]);
 }
 document.querySelectorAll('[data-chapter]').forEach(button => button.addEventListener('click', event => {
   event.preventDefault(); goToChapter(Number(button.dataset.chapter)); closeMenu();
@@ -59,7 +60,9 @@ document.querySelector('[data-next-chapter]')?.addEventListener('click', () => {
   else siteInterface.scrollTo(document.querySelector('#difference'));
 });
 window.addEventListener('scroll', updateScroll, { passive: true });
-window.addEventListener('resize', measure, { passive: true });
+window.addEventListener('resize', () => {
+  if (!resizeFrame) resizeFrame = requestAnimationFrame(() => { resizeFrame = 0; measure(); });
+}, { passive: true });
 reduceMotion.addEventListener('change', () => { smoothProgress = 0; measure(); });
 
 const menuToggle = document.querySelector('.menu-toggle');
@@ -89,7 +92,7 @@ gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
   let heroVisible = true;
   const pauseAmbient = () => ambientTweens.forEach(tween => tween.paused(!heroVisible || document.hidden));
   const heroObserver = new IntersectionObserver(([entry]) => { heroVisible = entry.isIntersecting; pauseAmbient(); });
-  heroObserver.observe(experience);
+  heroObserver.observe(experience.querySelector('.experience-sticky'));
   document.addEventListener('visibilitychange', pauseAmbient);
   gsap.to('.ritual-art', { y: -22, rotation: 2, ease: 'none', scrollTrigger: { trigger: '.ritual', start: 'top bottom', end: 'bottom top', scrub: 1.2 } });
   return () => { heroObserver.disconnect(); document.removeEventListener('visibilitychange', pauseAmbient); };
@@ -137,6 +140,8 @@ document.querySelector('#edit-enquiry').addEventListener('click', () => {
 createCatalogue({ gsap, reduceMotion, refresh: () => { measure(); waterEffects.refresh(); }, onEnquire: openEnquiry });
 
 function renderChapters(progress) {
+  if (progress === lastChapterProgress) return;
+  lastChapterProgress = progress;
   storyTimeline.progress(progress);
   const stage = progress < .19 ? 0 : progress < .47 ? 1 : progress < .77 ? 2 : 3;
   chapters.forEach((chapter, index) => {
@@ -152,14 +157,18 @@ function renderChapters(progress) {
     waterLabel.innerHTML = ['Waypure.<br>Forever pure.', 'Pure water<br>solutions.', 'Your daily<br>glass of water.', 'Find your<br>Waypure.'][stage];
     activeChapter = stage;
   }
-  progressBar.style.width = `${progress * 100}%`;
-  sceneWrap.dataset.stage = String(stage);
+  progressBar.style.transform = `scaleX(${progress})`;
+  progressBar.dataset.progress = progress.toFixed(5);
+  if (sceneWrap.dataset.stage !== String(stage)) sceneWrap.dataset.stage = String(stage);
 }
 function frame(time) {
   if (document.hidden) return;
   const dt = Math.min((time - previousTime) / 1000 || .016, .25);
   previousTime = time;
-  smoothProgress += (targetProgress - smoothProgress) * (1 - Math.exp(-dt * (document.documentElement.dataset.smoothScroll === 'enabled' ? 16 : 9)));
+  // Lenis already interpolates the page position. Follow that position directly;
+  // applying a second easing filter made the product trail the user's scroll.
+  if (document.documentElement.dataset.smoothScroll === 'enabled') smoothProgress = targetProgress;
+  else smoothProgress += (targetProgress - smoothProgress) * (1 - Math.exp(-dt * 14));
   if (Math.abs(targetProgress - smoothProgress) < .00005) smoothProgress = targetProgress;
   const inView = scrollY < experienceHeight + 100;
   if (inView) {

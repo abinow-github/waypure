@@ -91,6 +91,7 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
     });
   }, { threshold: 0 });
   fields.forEach(field => fieldVisibility.observe(field));
+  document.querySelectorAll('.experience-sticky, .ticker').forEach(parent => fieldVisibility.observe(parent));
   fieldVisibility.observe(footer);
   const fieldSize = new ResizeObserver(entries => {
     entries.forEach(({ target, contentRect }) => target.style.setProperty('--bubble-travel', `${-(contentRect.height + 100)}px`));
@@ -149,9 +150,14 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
   window.AOS.init({ startEvent: 'aqua:letters-ready', offset: 65, once: true, disableMutationObserver: true, throttleDelay: 50 });
   document.dispatchEvent(new Event('aqua:letters-ready'));
 
+  let refreshFrame = 0;
   return {
     textCount: textTargets.length,
-    refresh() { ScrollTrigger.refresh(); window.AOS.refreshHard(); },
-    destroy() { media.revert(); fieldVisibility.disconnect(); fieldSize.disconnect(); document.removeEventListener('visibilitychange', visibility); },
+    refresh() {
+      if (!refreshFrame) refreshFrame = requestAnimationFrame(() => {
+        refreshFrame = 0; ScrollTrigger.refresh(); window.AOS.refreshHard();
+      });
+    },
+    destroy() { cancelAnimationFrame(refreshFrame); media.revert(); fieldVisibility.disconnect(); fieldSize.disconnect(); document.removeEventListener('visibilitychange', visibility); },
   };
 }

@@ -19,7 +19,7 @@ await page.screenshot({ path: 'test-results/desktop-hero.png' });
 const initialFill = Number(await page.locator('#product-canvas').getAttribute('data-tank-fill'));
 async function stage(progress) {
   await page.evaluate(p => { document.documentElement.style.scrollBehavior = 'auto'; const el = document.querySelector('.experience'); window.scrollTo(0, (el.offsetHeight - innerHeight) * p); }, progress);
-  await page.waitForFunction(p => { const bar = document.querySelector('.scroll-progress span'); return Math.abs(parseFloat(bar.style.width) / 100 - p) < .004; }, progress, { timeout: 30000 });
+  await page.waitForFunction(p => { const bar = document.querySelector('.scroll-progress span'); return Math.abs(Number(bar.dataset.progress) - p) < .004; }, progress, { timeout: 30000 });
   await page.waitForTimeout(500);
 }
 await stage(.36);

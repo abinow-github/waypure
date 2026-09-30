@@ -14,6 +14,7 @@ try{
   assert.equal(await page.locator('h1').count(),1);
   assert.equal(await page.locator('.desktop-nav [aria-current=page]').getAttribute('href'),file);
   assert.equal(await page.locator('.footer-wave').count(),2);
+  assert.equal(await page.locator('.contact-tooltip').count(),0);
   assert.equal(await page.evaluate(()=>performance.getEntriesByType('resource').some(e=>/three.module|scene.js/.test(e.name))),false,'Inner pages do not load 3D code');
   assert.equal(await page.locator('[data-contact=call]').getAttribute('href'),'tel:+919061091810');
   for(const [width,height] of [[320,568],[390,844],[768,1024],[1440,900]]){
@@ -58,6 +59,20 @@ try{
  await page.emulateMedia({reducedMotion:'reduce'});
  assert.equal(await page.locator('.body-bubbles').evaluate(e=>getComputedStyle(e).animationName),'none');
  assert.equal(await fill(),0,'Reduced-motion illustration remains filled');
+ const touch=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+ await touch.goto(url('contact.html'),{waitUntil:'networkidle'});
+ await touch.locator('.contact-intro .enquire-button').tap();
+ assert.equal(await touch.locator('input[name=name]').evaluate(el=>getComputedStyle(el).fontSize),'16px','Touch form fields prevent automatic focus zoom');
+ assert.equal(await touch.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ await touch.keyboard.press('Escape');
+ await touch.evaluate(()=>scrollTo(0,0));
+ const menuBox=await touch.locator('.menu-toggle').boundingBox();
+ assert(menuBox.width>=44&&menuBox.height>=44,'Mobile navigation has a comfortable touch target');
+ await touch.locator('.menu-toggle').tap();
+ await touch.locator('#mobile-nav a[href="about.html"]').tap();
+ await touch.waitForURL('**/about.html');
+ assert.equal(await touch.locator('#mobile-nav').isVisible(),false);
+ await touch.close();
  const noJS=await browser.newPage({javaScriptEnabled:false});
  for(const file of ['index.html','about.html','products.html','contact.html']){
   await noJS.goto(url(file));

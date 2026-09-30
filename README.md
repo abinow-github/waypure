@@ -38,6 +38,10 @@ Run `npm run build:vendor` after updating Three.js or Lenis to regenerate local 
 
 The preloader has no minimum delay and a 1.6-second fail-safe. Reduced motion keeps text readable and uses native scrolling; touch scrolling stays native. Bubbles, footer waves and hero ambient motion pause offscreen. Screen readers receive one semantic copy of animated headings. The enquiry dialog locks background scrolling, and the catalogue remains readable without JavaScript.
 
+Floating call/WhatsApp droplets have no tooltips. Their water surfaces move continuously, fill on hover or keyboard focus, and return to a partly filled state afterward. Touch devices avoid sticky hover and use 16px form controls to prevent focus zoom.
+
+The 3D scene batches condensation, bubbles and splashes into instanced draws while preserving their materials, geometry and animation. Shaders compile before the glass and stream enter view. The scroll indicator uses a transform; hero geometry is cached, resize/refresh requests are coalesced, and unchanged progress attributes are left alone. The 3D story follows Lenis directly instead of adding a second smoothing delay. Offscreen ticker/seal motion pauses, and only visible bubble fields retain compositor hints.
+
 ## Verification
 
 Install development dependencies with `npm ci`, start the server, and run `npm test`. For XAMPP, set `TEST_URL` to `http://localhost/water-purifying/`. Tests use installed Google Chrome through Playwright.
@@ -45,5 +49,7 @@ Install development dependencies with `npm ci`, start the server, and run `npm t
 Checks cover actual 3D filling/pouring/reverse scrolling, AOS letter reveals, bubbles/waves, wheel interpolation, contact links, enquiries/downloads, the 56-entry catalogue and source-verified prices, filters/search, six home cards and navigation to the collection, all inner pages, animated body-water fill, no eager PDFs or inner-page Three.js, reduced motion, static/no-JavaScript fallbacks and 12 viewport sizes from 320 to 1920px. Screenshots go to `test-results/`.
 
 `scripts/read-brochures.mjs` extracts text and renders PDF pages into `test-results/brochures/` for visual verification. It does not change the PDFs.
+
+`node tests/scroll-profile.mjs <label>` records a six-second browser scroll profile in `test-results/scroll-<label>.json`, including draw calls, frame timing and layout/style work. Frame timing depends on the browser, GPU and system load; compare profiles on the same device.
 
 Runtime license notices: `vendor/THREE-LICENSE.txt`, `vendor/AOS-LICENSE.txt`, `vendor/LENIS-LICENSE.txt`, `assets/MANROPE-LICENSE.txt`. GSAP/ScrollTrigger retain their license headers. Lenis integration follows its [official documentation](https://github.com/darkroomengineering/lenis).

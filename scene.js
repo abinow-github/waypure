@@ -126,15 +126,19 @@ export async function createScene(canvas) {
   tankLogo.position.set(-.61,1.52,.811);tankLogo.rotation.y=-.1;tankLogo.renderOrder=4;root.add(tankLogo);
   const dropGeometry = new THREE.SphereGeometry(.012,8,6);
   const dropMaterial = new THREE.MeshPhysicalMaterial({color:0xa5deee,roughness:.12,transparent:true,opacity:.32,depthWrite:false});
+  const instance = new THREE.Object3D();
+  const condensation = new THREE.InstancedMesh(dropGeometry,dropMaterial,30);
   for(let i=0;i<30;i++){
-    const drop = new THREE.Mesh(dropGeometry,dropMaterial);const x=Math.sin(i*2.399)*.85;
-    drop.position.set(x,1.08+(i%9)*.078,.817-Math.pow(Math.abs(x),3.4)*.05);drop.scale.set(1+(i%3)*.2,1.3+(i%4)*.2,.24);root.add(drop);
+    const x=Math.sin(i*2.399)*.85;
+    instance.position.set(x,1.08+(i%9)*.078,.817-Math.pow(Math.abs(x),3.4)*.05);instance.scale.set(1+(i%3)*.2,1.3+(i%4)*.2,.24);instance.updateMatrix();condensation.setMatrixAt(i,instance.matrix);
   }
+  root.add(condensation);
 
-  const bubbles = new THREE.Group(); root.add(bubbles);
   const bubbleGeo = new THREE.SphereGeometry(.016,8,8);
   const bubbleMat = new THREE.MeshPhysicalMaterial({ color:0xd2f7fa,transparent:true,opacity:.48,roughness:.05,metalness:.1 });
-  for (let i = 0; i < 24; i++) { const mesh = new THREE.Mesh(bubbleGeo,bubbleMat); const a = i * 2.39996; const r = .25 + (i % 6) * .11; mesh.position.set(Math.cos(a)*r,.2,Math.sin(a)*r*.7); mesh.userData.seed = i / 24; mesh.scale.setScalar(.5 + (i % 4) * .28); bubbles.add(mesh); }
+  const bubbles = new THREE.InstancedMesh(bubbleGeo,bubbleMat,24); root.add(bubbles);
+  bubbles.instanceMatrix.setUsage(THREE.DynamicDrawUsage);bubbles.frustumCulled=false;
+  const bubblePositions=Array.from({length:24},(_,i)=>{const a=i*2.39996,r=.25+(i%6)*.11;return {x:Math.cos(a)*r,z:Math.sin(a)*r*.7,seed:i/24,scale:.5+(i%4)*.28};});
 
   const glass = new THREE.Group(); scene.add(glass);
   const glassMat = new THREE.MeshPhysicalMaterial({ color:0xd7efff,roughness:.045,metalness:.08,transparent:true,opacity:.3,side:THREE.DoubleSide,depthWrite:false,clearcoat:1,envMapIntensity:1.6 });
@@ -149,8 +153,8 @@ export async function createScene(canvas) {
   const streamGeo = new THREE.CylinderGeometry(.03,.036,1,16,36,true);
   const stream = new THREE.Mesh(streamGeo,new THREE.MeshPhysicalMaterial({color:0x90dbe3,roughness:.04,metalness:.1,transparent:true,opacity:.69,side:THREE.DoubleSide,depthWrite:false,clearcoat:1}));scene.add(stream);
   const streamBase = streamGeo.attributes.position.array.slice();
-  const splashes = new THREE.Group();scene.add(splashes);
-  for(let i=0;i<12;i++){const drop=new THREE.Mesh(new THREE.SphereGeometry(.016,6,6),bubbleMat);drop.userData.seed=i/12;drop.scale.y=1.6;splashes.add(drop);}
+  const splashes = new THREE.InstancedMesh(new THREE.SphereGeometry(.016,6,6),bubbleMat,12);scene.add(splashes);
+  splashes.instanceMatrix.setUsage(THREE.DynamicDrawUsage);splashes.frustumCulled=false;
   const shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(30,30),new THREE.ShadowMaterial({color:0x304a3e,opacity:.12})); shadowPlane.rotation.x=-Math.PI/2;shadowPlane.position.y=-1.18;shadowPlane.receiveShadow=true;scene.add(shadowPlane);
   const shadowCanvas=document.createElement('canvas');shadowCanvas.width=128;shadowCanvas.height=128;const ctx=shadowCanvas.getContext('2d');const gradient=ctx.createRadialGradient(64,64,0,64,64,64);gradient.addColorStop(0,'rgba(35,70,50,0.18)');gradient.addColorStop(1,'rgba(35,70,50,0)');ctx.fillStyle=gradient;ctx.fillRect(0,0,128,128);
   const contactShadow = new THREE.Mesh(new THREE.PlaneGeometry(3.7,2.7),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(shadowCanvas),transparent:true,depthWrite:false}));contactShadow.rotation.x=-Math.PI/2;contactShadow.position.y=-1.175;scene.add(contactShadow);
@@ -169,7 +173,8 @@ export async function createScene(canvas) {
   let contextLost=false;
   canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();contextLost=true;canvas.parentElement.classList.remove('is-rendered');});
   canvas.addEventListener('webglcontextrestored',()=>{contextLost=false;canvas.parentElement.classList.add('is-rendered');});
-  function resize(){const box=canvas.parentElement.getBoundingClientRect();mobile=innerWidth<=760;renderer.setSize(box.width,box.height,false);camera.aspect=box.width/box.height;camera.updateProjectionMatrix();}
+  let renderWidth=0,renderHeight=0;
+  function resize(){const box=canvas.parentElement.getBoundingClientRect();mobile=innerWidth<=760;if(box.width===renderWidth&&box.height===renderHeight)return;renderWidth=box.width;renderHeight=box.height;renderer.setSize(box.width,box.height,false);camera.aspect=box.width/box.height;camera.updateProjectionMatrix();}
   function update(progress,time,dt){
     if(contextLost)return;
     poseTimeline.progress(progress);
@@ -190,9 +195,10 @@ export async function createScene(canvas) {
     for(let i=0;i<verts.count;i++){const x=baseSurfacePositions[i*3],z=baseSurfacePositions[i*3+2];verts.array[i*3+1]=Math.sin(x*7+time*1.6)*Math.cos(z*8+time)*.009;}
     verts.needsUpdate=true;
     waterRings.forEach((r,i)=>{r.position.y=surface.position.y+.003;r.scale.setScalar(.9+Math.sin(time*1.3+i)*.03);r.material.opacity=.09+Math.sin(time+i)*.035;});
-    bubbles.children.forEach(b=>{b.position.y=.24+((time*.07+b.userData.seed)%1)*waterHeight*.95;b.visible=progress<.85;});
+    bubbles.visible=progress<.85;
+    if(bubbles.visible){bubblePositions.forEach((b,i)=>{instance.position.set(b.x,.24+((time*.07+b.seed)%1)*waterHeight*.95,b.z);instance.scale.setScalar(b.scale);instance.updateMatrix();bubbles.setMatrixAt(i,instance.matrix);});bubbles.instanceMatrix.needsUpdate=true;}
     handle.rotation.y=-smooth(.45,.55,progress)*.6+smooth(.82,.88,progress)*.6;
-    root.updateMatrixWorld(true);nozzle.getWorldPosition(nozzlePosition);
+    nozzle.getWorldPosition(nozzlePosition);
     glass.visible=revealGlass>.005;glass.scale.setScalar(Math.max(.001,revealGlass));glass.position.set(nozzlePosition.x,-2.05,nozzlePosition.z);
     const glassHeight=.018+pour*.62;
     glassWater.scale.y=glassHeight;glassWater.position.y=.055+glassHeight/2;
@@ -209,7 +215,7 @@ export async function createScene(canvas) {
       const positions=streamGeo.attributes.position;
       for(let i=0;i<positions.count;i++){const y=streamBase[i*3+1];positions.array[i*3]=streamBase[i*3]+Math.sin(y*31-time*14)*.004;positions.array[i*3+2]=streamBase[i*3+2]+Math.cos(y*28-time*12)*.003;}
       positions.needsUpdate=true;
-      splashes.children.forEach((drop,i)=>{const t=(time*1.4+drop.userData.seed)%1;const angle=i*2.39996;drop.position.set(nozzlePosition.x+Math.cos(angle)*t*.14,impactY+Math.sin(t*Math.PI)*.13,nozzlePosition.z+Math.sin(angle)*t*.14);drop.scale.setScalar((1-t)*.8+.15);});
+      for(let i=0;i<12;i++){const t=(time*1.4+i/12)%1,angle=i*2.39996;instance.position.set(nozzlePosition.x+Math.cos(angle)*t*.14,impactY+Math.sin(t*Math.PI)*.13,nozzlePosition.z+Math.sin(angle)*t*.14);instance.scale.setScalar((1-t)*.8+.15);instance.updateMatrix();splashes.setMatrixAt(i,instance.matrix);}splashes.instanceMatrix.needsUpdate=true;
     }
     glassRipples.forEach((r,i)=>{r.visible=pour>.01;const cycle=(time*.75+i/3)%1;r.position.y=glassSurface.position.y+.005;r.scale.setScalar(.2+cycle*2.5);r.material.opacity=(1-cycle)*.32*(1-finish*.8);});
     shadowPlane.position.y=mix(-1.18,-2.065,revealGlass);contactShadow.position.y=shadowPlane.position.y+.005;contactShadow.position.z=mix(0,nozzlePosition.z,revealGlass);contactShadow.scale.setScalar(mix(1,.5,revealGlass));
@@ -218,9 +224,13 @@ export async function createScene(canvas) {
     camera.position.set(mix(1.65,1.3,revealGlass),mix(1.4,1.2,revealGlass)+(time?tiltY*.07:0),Math.max(horizontalFit,distance+pose.zoom*(mobile?2.25:2.65)));
     targetLook.set(0,mix(.39,.05,revealGlass),mix(0,.22,revealGlass));camera.lookAt(targetLook);
     renderer.render(scene,camera);
-    canvas.dataset.tankFill=waterHeight.toFixed(3);canvas.dataset.glassFill=pour.toFixed(3);canvas.dataset.pouring=String(flowing);
-    canvas.dataset.productTurn=pose.turn.toFixed(3);
+    // Expose useful state without invalidating DOM styles on unchanged frames.
+    const state={tankFill:waterHeight.toFixed(3),glassFill:pour.toFixed(3),pouring:String(flowing),productTurn:pose.turn.toFixed(3)};
+    for(const key in state)if(canvas.dataset[key]!==state[key])canvas.dataset[key]=state[key];
   }
   resize();
+  // Prepare glass/stream shaders before their first scroll appearance.
+  // The static preview stays visible while the GPU compiles asynchronously.
+  await renderer.compileAsync(scene,camera);
   return {resize,update};
 }

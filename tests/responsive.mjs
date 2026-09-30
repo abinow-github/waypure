@@ -16,7 +16,7 @@ try {
     await page.setViewportSize({width,height});
     for(const progress of [0,.66]) {
       await page.evaluate(p=>{document.documentElement.style.scrollBehavior='auto';window.scrollTo(0,(document.querySelector('.experience').offsetHeight-innerHeight)*p);},progress);
-      await page.waitForFunction(p=>Math.abs(parseFloat(document.querySelector('.scroll-progress span').style.width)/100-p)<.003,progress);
+      await page.waitForFunction(p=>Math.abs(Number(document.querySelector('.scroll-progress span').dataset.progress)-p)<.003,progress);
       await page.waitForTimeout(250);
       const metrics=await page.evaluate(()=>{
         const chapter=document.querySelector('.chapter.is-active');

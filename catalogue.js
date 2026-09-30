@@ -10,21 +10,21 @@ export function createCatalogue({ gsap, reduceMotion, refresh, onEnquire }) {
   const filters = [...section.querySelectorAll('[data-brand-filter]')];
   const search = section.querySelector('#product-search');
   const category = section.querySelector('#product-category');
-  const more = section.querySelector('#catalogue-more');
   const status = section.querySelector('[data-catalogue-count]');
   const empty = section.querySelector('.catalogue-empty');
-  let brand = 'All', limit = Infinity, timer;
+  const normalize = text => text.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const searchable = new Map(cards.map(card=>[card,normalize(card.dataset.search)]));
+  let brand = 'All', timer;
   function update(animate = true) {
-    const normalize = text => text.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
     const query = normalize(search.value);
-    const matches = cards.filter(card => (brand === 'All' || card.dataset.brand === brand) && (category.value === 'All' || card.dataset.category === category.value) && normalize(card.dataset.search).includes(query));
-    const visible = matches.slice(0,limit);
+    const visible = cards.filter(card => (brand === 'All' || card.dataset.brand === brand) && (category.value === 'All' || card.dataset.category === category.value) && searchable.get(card).includes(query));
+    const visibleSet = new Set(visible);
     const newlyVisible = visible.filter(card=>card.hidden);
-    cards.forEach(card => card.hidden = !visible.includes(card));
-    status.textContent = `Showing ${visible.length} of ${matches.length} products`;
-    empty.hidden = matches.length > 0;
-    if (more) more.hidden = matches.length <= limit;
-    if (animate && !reduceMotion.matches && newlyVisible.length) gsap.fromTo(newlyVisible,{opacity:0,y:18},{opacity:1,y:0,duration:.55,stagger:.045,ease:'power2.out',clearProps:'opacity,transform'});
+    cards.forEach(card => { const hidden=!visibleSet.has(card); if(card.hidden!==hidden)card.hidden=hidden; });
+    status.textContent = `Showing ${visible.length} of ${visible.length} products`;
+    empty.hidden = visible.length > 0;
+    gsap.killTweensOf(cards);gsap.set(cards,{clearProps:'opacity,transform'});
+    if (animate && !reduceMotion.matches && newlyVisible.length) gsap.fromTo(newlyVisible,{opacity:0,y:18},{opacity:1,y:0,duration:.55,stagger:{amount:.3},ease:'power2.out',clearProps:'opacity,transform'});
     requestAnimationFrame(refresh);
     return newlyVisible;
   }
@@ -35,5 +35,6 @@ export function createCatalogue({ gsap, reduceMotion, refresh, onEnquire }) {
   }));
   search.addEventListener('input',()=>{clearTimeout(timer);timer=setTimeout(()=>update(),120);});
   category.addEventListener('change',()=>update());
+  section.addEventListener('toggle',event=>{if(event.target.matches('.card-details'))refresh();},true);
   update(false);
 }
