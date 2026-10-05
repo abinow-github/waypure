@@ -1,4 +1,4 @@
-﻿/* ================================================================
+/* ================================================================
    WATER QUALITY SCROLL STORY — wq-story.css
    A cinematic, scroll-pinned awareness journey
    ================================================================ */
@@ -6,8 +6,8 @@
 /* ── Section wrapper ────────────────────────────────────────── */
 .wq-story {
   position: relative;
-  /* 5 phases × 100vh each */
-  height: 500vh;
+  /* 6 phases × 100vh each (added extra space for the last phase) */
+  height: 600vh;
   background: transparent;
 }
 
@@ -373,7 +373,7 @@
   opacity: 0;
   transition: opacity 0.8s ease;
   pointer-events: none;
-  z-index: 3;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -492,5 +492,5 @@
 
   .wq-scroll-bar { display: none; }
 
-  .wq-story { height: 450vh; }
+  .wq-story { height: 550vh; }
 }
