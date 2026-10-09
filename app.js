@@ -79,7 +79,14 @@ document.fonts.ready.then(() => waterEffects.refresh());
 gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
   document.querySelectorAll('.reveal').forEach(el => {
     if (el.matches('.liquid-text') || el.querySelector('.liquid-text')) { gsap.set(el, { opacity: 1, y: 0 }); return; }
-    gsap.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 91%', once: true } });
+    // New glaze effect instead of old reveal
+    gsap.set(el, { opacity: 1, y: 0, clearProps: 'opacity,transform' });
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 85%',
+      onEnter: () => el.classList.add('glaze-sweep-active'),
+      onLeaveBack: () => el.classList.remove('glaze-sweep-active')
+    });
   });
   if (!experience) return;
   if (scrollY < 100) gsap.fromTo('.chapter-0 > :not(.liquid-text)', { opacity: .85, y: 18 }, { opacity: 1, y: 0, duration: .9, stagger: .06, ease: 'power3.out' });

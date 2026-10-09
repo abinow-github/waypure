@@ -60,7 +60,7 @@ export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
   });
 
   const fields = [];
-  const parents = document.querySelectorAll('.page-hero, .water-life, .experience-sticky, .difference, .ritual, .product-section, .faq-section, .closing, .water-footer');
+  const parents = document.querySelectorAll('.page-hero, .water-life, .experience-sticky, .wq-story, .difference, .ritual, .product-section, .faq-section, .closing, .water-footer');
   parents.forEach((parent, fieldIndex) => {
     const field = document.createElement('div');
     field.className = 'bubble-field';

@@ -25,9 +25,25 @@ export function createCatalogue({ gsap, reduceMotion, refresh, onEnquire }) {
     empty.hidden = visible.length > 0;
     gsap.killTweensOf(cards);gsap.set(cards,{clearProps:'opacity,transform'});
     if (animate && !reduceMotion.matches && newlyVisible.length) gsap.fromTo(newlyVisible,{opacity:0,y:18},{opacity:1,y:0,duration:.55,stagger:{amount:.3},ease:'power2.out',clearProps:'opacity,transform'});
-    requestAnimationFrame(refresh);
+    
+    // Refresh ScrollTriggers after layout changes
+    requestAnimationFrame(() => {
+      refresh();
+      window.ScrollTrigger.refresh();
+    });
     return newlyVisible;
   }
+  
+  // Create glaze triggers for cards
+  cards.forEach(card => {
+    window.ScrollTrigger.create({
+      trigger: card,
+      start: 'top 85%',
+      onEnter: () => card.classList.add('glaze-active'),
+      onLeaveBack: () => card.classList.remove('glaze-active')
+    });
+  });
+
   filters.forEach(button => button.addEventListener('click',()=>{
     brand = button.dataset.brandFilter;
     filters.forEach(filter => filter.setAttribute('aria-pressed',String(filter === button)));

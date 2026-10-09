@@ -1,7 +1,7 @@
 /* A soft sea-glass accent, with navy type and the ocean-blue product. */
 :root{--sea-glass:#bde6d8;--sea-mist:#e8f6ef;--sea-deep:#287061}
 ::selection{background:#c4eadb;color:#092c58}
-.header{background:linear-gradient(110deg,#f9fcff85,#edfaf35c);border-bottom-color:#579d9220}
+.header{background:white;border-bottom-color:#579d9220}
 .brand>svg{color:#287466}.nav-cta{border-color:#98c9bb;background:#f9fffc9c}
 .water-atmosphere{background:radial-gradient(ellipse at 83% 26%,#b3e3ceba 0%,#c6eee04d 28%,transparent 53%),radial-gradient(ellipse at 70% 87%,#8fcfe8a6,transparent 55%),linear-gradient(115deg,#f7fcfa 12%,#eef9f5 46%,#caeae6 100%)}
 .water-atmosphere:after{background:linear-gradient(90deg,#f7fcfac9 0%,#f4faf52b 44%,transparent 68%)}

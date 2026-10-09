@@ -90,8 +90,7 @@
 }
 
 .hero-slide__title {
-  font-size: clamp(2.1rem, 5.8vw, 4.2rem);
-  font-weight: 800;
+    font-weight: 800;
   line-height: 1.1;
   color: #ffffff;
   margin: 0;
@@ -104,8 +103,7 @@
 .hero-slide__title .warn { color: #ff7043; }
 
 .hero-slide__desc {
-  font-size: clamp(0.95rem, 1.8vw, 1.12rem);
-  color: rgba(255,255,255,0.82);
+    color: rgba(255,255,255,0.82);
   line-height: 1.65;
   max-width: 500px;
   margin: 0;
@@ -271,8 +269,7 @@
 }
 
 .awareness-intro h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 800;
+    font-weight: 800;
   color: #fff;
   line-height: 1.15;
   margin: 0 0 1.2rem;
@@ -281,8 +278,7 @@
 .awareness-intro h2 em { font-style: normal; color: #ff7043; }
 
 .awareness-intro > p {
-  font-size: clamp(1rem, 1.8vw, 1.15rem);
-  color: rgba(255,255,255,0.62);
+    color: rgba(255,255,255,0.62);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.7;
@@ -318,8 +314,7 @@
 }
 
 .stat-number {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
+    font-weight: 900;
   line-height: 1;
   background: linear-gradient(135deg, #ff7043, #ffb74d);
   -webkit-background-clip: text;
@@ -402,8 +397,7 @@
 }
 
 .problem-card__title {
-  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-  font-weight: 800;
+    font-weight: 800;
   color: #fff;
   margin: 0 0 0.6rem;
   line-height: 1.2;
@@ -521,8 +515,7 @@
 }
 
 .awareness-solution__copy h2 {
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: 800;
+    font-weight: 800;
   color: #fff;
   line-height: 1.18;
   margin: 0 0 1.3rem;
@@ -531,8 +524,7 @@
 .awareness-solution__copy h2 em { font-style: normal; color: #6ee8c8; }
 
 .awareness-solution__copy p {
-  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-  color: rgba(255,255,255,0.68);
+    color: rgba(255,255,255,0.68);
   line-height: 1.7;
   margin: 0 0 2rem;
 }
