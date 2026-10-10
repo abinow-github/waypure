@@ -1,6 +1,7 @@
 // Liquid type and decorative bubbles share the site's GSAP motion preferences.
 export function createWaterEffects({ gsap, ScrollTrigger, storyTimeline }) {
-  const textTargets = [...document.querySelectorAll('[data-water-text], .chapter h1, .chapter h2, .chapter > p, .difference h2, .difference-heading > p, .benefit h3, .benefit p, .company-values h3, .ritual h2, .ritual-content > p, .product-copy h2, .product-description, .services-heading h2, .services-heading > p, .faq-intro h2, .faq-intro > p, .closing h2, .footer-heading, .footer-callout > p')];
+  const isHomePage = window.location.pathname === '/' || window.location.pathname.match(/index\.html$/) || window.location.pathname.match(/\/waypure\/?$/);
+  const textTargets = isHomePage ? [] : [...document.querySelectorAll('[data-water-text], .chapter h1, .chapter h2, .chapter > p, .difference h2, .difference-heading > p, .benefit h3, .benefit p, .company-values h3, .ritual h2, .ritual-content > p, .product-copy h2, .product-description, .services-heading h2, .services-heading > p, .faq-intro h2, .faq-intro > p, .closing h2, .footer-heading, .footer-callout > p')];
   const visualLetters = new Map();
   const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('en', { granularity: 'grapheme' }) : null;
   const splitLetters = text => segmenter ? [...segmenter.segment(text)].map(item => item.segment) : Array.from(text);
