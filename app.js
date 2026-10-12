@@ -144,6 +144,37 @@ document.querySelector('#edit-enquiry').addEventListener('click', () => {
   dialog.removeAttribute('aria-label'); dialog.setAttribute('aria-labelledby', 'enquiry-title'); form.elements.name.focus();
 });
 
+function openWhatsAppProduct(productName) {
+  const digits = contactConfig?.whatsapp ? contactConfig.whatsapp.replace(/\D/g, '') : '919895301810';
+  const name = productName ? productName.trim() : 'Waypure Purifier';
+  const text = `Hello Waypure, I am interested in ${name}. Please share current pricing and details.`;
+  window.open(`https://wa.me/${digits}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+}
+
+// Global click handler for product card action buttons
+document.addEventListener('click', event => {
+  const shopBtn = event.target.closest('.shop-btn');
+  if (shopBtn) {
+    event.preventDefault();
+    event.stopPropagation();
+    const card = shopBtn.closest('.wp-product-card, .catalogue-card');
+    const product = shopBtn.dataset.product || card?.querySelector('h3')?.textContent?.trim() || 'Waypure Water Purifier';
+    openWhatsAppProduct(product);
+    return;
+  }
+  const detailsBtn = event.target.closest('.details-btn');
+  if (detailsBtn) {
+    event.preventDefault();
+    const card = detailsBtn.closest('.wp-product-card, .catalogue-card');
+    const product = detailsBtn.dataset.product || card?.querySelector('h3')?.textContent?.trim() || card?.querySelector('[data-product]')?.dataset.product;
+    if (window.location.pathname.endsWith('products.html') || document.querySelector('#product-search')) {
+      openEnquiry(product || 'General enquiry');
+    } else {
+      window.location.href = 'products.html';
+    }
+  }
+});
+
 createCatalogue({ gsap, reduceMotion, refresh: () => { measure(); waterEffects.refresh(); }, onEnquire: openEnquiry });
 
 function renderChapters(progress) {

@@ -1,7 +1,31 @@
 export function createCatalogue({ gsap, reduceMotion, refresh, onEnquire }) {
   const section = document.querySelector('#details');
   if (!section) return;
-  section.addEventListener('click',event=>{
+
+  function openWhatsAppProduct(productName) {
+    const digits = '919895301810';
+    const name = productName ? productName.trim() : 'Waypure Purifier';
+    const text = `Hello Waypure, I am interested in ${name}. Please share current pricing and details.`;
+    window.open(`https://wa.me/${digits}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+  }
+
+  section.addEventListener('click', event => {
+    const shopBtn = event.target.closest('.shop-btn');
+    if (shopBtn) {
+      event.preventDefault();
+      event.stopPropagation();
+      const product = shopBtn.dataset.product || shopBtn.closest('.catalogue-card')?.querySelector('h3')?.textContent?.trim() || 'Waypure Purifier';
+      openWhatsAppProduct(product);
+      return;
+    }
+    const detailsBtn = event.target.closest('.details-btn');
+    if (detailsBtn) {
+      event.preventDefault();
+      const card = detailsBtn.closest('.catalogue-card');
+      const product = detailsBtn.dataset.product || card?.querySelector('h3')?.textContent?.trim() || card?.querySelector('[data-product]')?.dataset.product;
+      onEnquire(product || 'General enquiry');
+      return;
+    }
     const button = event.target.closest('[data-product]');
     if (button) onEnquire(button.dataset.product);
   });

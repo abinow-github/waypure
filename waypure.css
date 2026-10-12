@@ -32,8 +32,8 @@ dialog h2 {
 dialog select{font-size:11px}.whatsapp-enquiry{background:#25604b;color:white;margin-top:25px;min-height:50px;font-size:11px}#enquiry-success .pill-button{width:100%;margin-top:16px;font-size:11px}#enquiry-success p{max-width:330px}.enquiry-selection{color:#487a36}
 @media(min-width:761px) and (max-height:800px){.chapter h1{font-size:5.15vw}.hero-note{font-size:7px}.chapter .eyebrow{font-size:8px}}
 @media(max-width:1100px){.catalogue-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.footer-locations{grid-template-columns:1fr 1fr}.footer-phones{grid-column:1/-1;display:flex;gap:35px}.footer-phones>a{gap:20px}.catalogue-card h3{font-size:28px}.brand .brand-logo{width:54px}.brand .brand-name{font-size:24px}.brand .brand-name small{font-size:5px}.desktop-nav{gap:20px}.catalogue-intro{gap:35px}}
-@media(max-width:760px){.brand{gap:7px}.brand .brand-logo{width:45px}.brand .brand-name{font-size:22px}.brand .brand-name small{font-size:4.5px;letter-spacing:.6px}.header .nav-cta{font-size:8px;padding:10px 12px;gap:13px;min-height:39px}.header .nav-cta>span{font-size:17px}.chapter h1{font-size:clamp(28px,8.3vw,43px);line-height:1.04;margin:13px 0}.chapter h1 br:nth-of-type(2){display:block}.chapter-0>p{font-size:9px;line-height:1.8}.chapter .eyebrow{font-size:6px;letter-spacing:.9px}.chapter-0 .pill-button{margin-top:13px}.water-atmosphere{background:radial-gradient(ellipse at 85% 46%,#c5e6a9b3,transparent 57%),radial-gradient(ellipse at 34% 91%,#9bd5e9b0,transparent 58%),linear-gradient(155deg,#f9fcf6 10%,#f1f8ec 45%,#bddfd4 100%)}.company-values{grid-template-columns:1fr;gap:28px;margin-top:38px;padding-top:28px}.company-values h3{font-size:22px}.company-values p{font-size:11px}.ritual h2{font-size:56px}.catalogue-intro{display:block;margin-bottom:30px}.catalogue-intro .product-copy h2{font-size:45px}.catalogue-intro .product-description{font-size:12px}.catalogue-note{max-width:none;margin-top:30px;padding-top:20px}.catalogue-filters{gap:7px}.catalogue-filters button{padding:9px 13px;font-size:10px}.catalogue-search{grid-template-columns:1fr;gap:14px}.catalogue-grid{grid-template-columns:1fr;gap:16px}.catalogue-card{padding:25px}.catalogue-card h3{font-size:31px;min-height:0}.card-top{margin-bottom:22px}.card-technology{min-height:0;margin-bottom:18px}.card-price{font-size:27px}.card-price-label{font-size:9px}.card-category{font-size:8px}.card-capacity,.card-details>summary,.card-enquiry{font-size:11px}.card-detail-body{font-size:11px}.catalogue-section{padding-bottom:60px}.services-section{grid-template-columns:1fr;gap:30px}.services-heading h2{font-size:43px}.service-list h3{font-size:21px}.service-list p{font-size:11px}.service-list article{gap:16px}.closing h2{font-size:39px}.footer-heading{font-size:43px}.footer-locations{grid-template-columns:1fr;gap:24px;padding:25px 0}.footer-phones{grid-column:auto;display:grid;gap:14px}.footer-phones>a{font-size:15px;max-width:290px}.footer-locations address{font-size:11px}.footer-bottom{column-gap:12px}.footer-brand .brand-logo{width:35px}.footer-wordmark{font-size:21px}.water-footer .footer-brand{gap:6px}.footer-bottom p{font-size:7px;text-align:right}.preloader-logo{width:54px}.preloader-mark{margin-bottom:12px}}
-@media(max-width:380px){.brand .brand-logo{width:39px}.brand .brand-name{font-size:19px}.brand .brand-name small{font-size:4px;letter-spacing:.35px}.brand{gap:5px}.header .nav-cta{padding:9px 10px;gap:7px;font-size:7px;min-height:36px}.chapter h1{font-size:28px}.chapter-0>.eyebrow{font-size:5px}.catalogue-card{padding:22px}.closing h2{font-size:33px}.footer-heading{font-size:37px}}
+@media(max-width:760px){.brand{gap:7px}.brand .brand-logo{width:45px}.brand .brand-name{font-size:22px}.brand .brand-name small{font-size:4.5px;letter-spacing:.6px}.header .nav-cta{font-size:8px;padding:10px 12px;gap:13px;min-height:39px}.header .nav-cta>span{font-size:17px}.chapter h1{font-size:clamp(28px,8.3vw,43px);line-height:1.04;margin:13px 0}.chapter h1 br:nth-of-type(2){display:block}.chapter-0>p{font-size:9px;line-height:1.8}.chapter .eyebrow{font-size:6px;letter-spacing:.9px}.chapter-0 .pill-button{margin-top:13px}.water-atmosphere{background:radial-gradient(ellipse at 85% 46%,#c5e6a9b3,transparent 57%),radial-gradient(ellipse at 34% 91%,#9bd5e9b0,transparent 58%),linear-gradient(155deg,#f9fcf6 10%,#f1f8ec 45%,#bddfd4 100%)}.company-values{grid-template-columns:1fr;gap:28px;margin-top:38px;padding-top:28px}.company-values h3{font-size:22px}.company-values p{font-size:11px}.ritual h2{font-size:56px}.catalogue-intro{display:block;margin-bottom:30px}.catalogue-intro .product-copy h2{font-size:45px}.catalogue-intro .product-description{font-size:12px}.catalogue-note{max-width:none;margin-top:30px;padding-top:20px}.catalogue-filters{gap:7px}.catalogue-filters button{padding:9px 13px;font-size:10px}.catalogue-search{grid-template-columns:1fr;gap:14px}.catalogue-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.catalogue-card{padding:14px 10px}.catalogue-card h3{font-size:15px;min-height:0}.card-top{margin-bottom:22px}.card-technology{min-height:0;margin-bottom:18px}.card-price{font-size:27px}.card-price-label{font-size:9px}.card-category{font-size:8px}.card-capacity,.card-details>summary,.card-enquiry{font-size:11px}.card-detail-body{font-size:11px}.catalogue-section{padding-bottom:60px}.services-section{grid-template-columns:1fr;gap:30px}.services-heading h2{font-size:43px}.service-list h3{font-size:21px}.service-list p{font-size:11px}.service-list article{gap:16px}.closing h2{font-size:39px}.footer-heading{font-size:43px}.footer-locations{grid-template-columns:1fr;gap:24px;padding:25px 0}.footer-phones{grid-column:auto;display:grid;gap:14px}.footer-phones>a{font-size:15px;max-width:290px}.footer-locations address{font-size:11px}.footer-bottom{column-gap:12px}.footer-brand .brand-logo{width:35px}.footer-wordmark{font-size:21px}.water-footer .footer-brand{gap:6px}.footer-bottom p{font-size:7px;text-align:right}.preloader-logo{width:54px}.preloader-mark{margin-bottom:12px}}
+@media(max-width:380px){.brand .brand-logo{width:39px}.brand .brand-name{font-size:19px}.brand .brand-name small{font-size:4px;letter-spacing:.35px}.brand{gap:5px}.header .nav-cta{padding:9px 10px;gap:7px;font-size:7px;min-height:36px}.chapter h1{font-size:28px}.chapter-0>.eyebrow{font-size:5px}.catalogue-card{padding:12px 8px}.closing h2{font-size:33px}.footer-heading{font-size:37px}}
 @media(orientation:landscape) and (max-height:600px){.brand .brand-logo{width:38px}.brand .brand-name{font-size:20px}.chapter h1{font-size:clamp(25px,3.7vw,34px);line-height:1.03;margin:10px 0}.chapter h1 br:nth-of-type(2){display:block}.chapter .eyebrow{font-size:5px}.chapter-0>p{font-size:8px;line-height:1.6}.chapter-0 .pill-button{margin-top:10px}.chapter-0>.eyebrow{padding:5px 8px}.hero-note{display:none}}
 
 /* =====================================================
@@ -158,8 +158,8 @@ dialog select{font-size:11px}.whatsapp-enquiry{background:#25604b;color:white;ma
 .wp-showcase-cta { text-align: center; margin-top: 52px; }
 
 @media(max-width:1100px) { .wp-product-grid { grid-template-columns: repeat(3,1fr); } }
-@media(max-width:760px) { .wp-product-grid { grid-template-columns: repeat(2,1fr); gap: 14px; } .wp-product-img { height: 120px; } .wp-showcase-tabs { gap: 6px; } .wp-tab { padding: 8px 16px; font-size: 11px; } }
-@media(max-width:480px) { .wp-product-grid { grid-template-columns: repeat(2,1fr); gap: 10px; } .wp-product-card { padding: 14px; } }
+@media(max-width:760px) { .wp-product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; } .wp-product-img { height: 120px; } .wp-showcase-tabs { gap: 6px; } .wp-tab { padding: 8px 16px; font-size: 11px; } }
+@media(max-width:480px) { .wp-product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; } .wp-product-card { padding: 12px 8px; } }
 
 
 /* --- Fix Buttons CSS --- */
@@ -414,3 +414,171 @@ dialog select{font-size:11px}.whatsapp-enquiry{background:#25604b;color:white;ma
 
 .card-body{flex: 1; display: flex; flex-direction: column;}
 .card-price-row{margin-top:auto; padding-top: 15px; border-top: 1px solid #f0f0f0;}
+
+/* =====================================================
+   MOBILE PRODUCT GRIDS (2 PER ROW) - STRICTLY MOBILE ONLY (<=768px)
+   Does not affect laptop/desktop view (>768px)
+   ===================================================== */
+@media (max-width: 768px) {
+  /* Prevent horizontal section overflow on mobile */
+  #waypure-products.section-space,
+  #details.section-space {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    overflow-x: hidden;
+  }
+
+  .wp-showcase-inner,
+  .catalogue-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2 products per row for showcase & catalogue grid */
+  .wp-product-grid,
+  .catalogue-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Uniform card sizing & spacing */
+  .wp-product-card,
+  .catalogue-card {
+    min-width: 0 !important;
+    width: 100% !important;
+    padding: 12px 8px !important;
+    border-radius: 14px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    overflow: hidden !important;
+    background: #fff !important;
+  }
+
+  .catalogue-card:before {
+    left: 12px !important;
+    right: 12px !important;
+  }
+
+  /* Product images */
+  .wp-product-img,
+  .card-image-wrap {
+    width: 100% !important;
+    height: 115px !important;
+    padding: 6px 6px 0 !important;
+    margin-bottom: 4px !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: linear-gradient(180deg, rgba(240, 250, 245, 0.6) 0%, rgba(255, 255, 255, 0) 100%) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .card-image {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .wp-product-img img,
+  .card-image img {
+    max-height: 100px !important;
+    max-width: 90% !important;
+    object-fit: contain !important;
+    transform: none !important;
+    mix-blend-mode: multiply !important;
+  }
+
+  .card-brand-logo {
+    width: 24px !important;
+    top: 6px !important;
+    right: 6px !important;
+  }
+
+  /* Product info & typography */
+  .wp-product-info,
+  .card-body {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 0 !important;
+    gap: 3px !important;
+    box-sizing: border-box !important;
+  }
+
+  .wp-product-info h3,
+  .catalogue-card h3 {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.3px !important;
+    margin: 2px 0 !important;
+    min-height: 0 !important;
+    color: var(--ink) !important;
+    word-break: break-word !important;
+  }
+
+  .wp-product-info p,
+  .card-technology {
+    font-size: 9.5px !important;
+    line-height: 1.35 !important;
+    color: #5d7790 !important;
+    margin-bottom: 6px !important;
+    min-height: 25px !important;
+  }
+
+  .wp-product-info strong,
+  .card-price {
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.4px !important;
+    color: var(--ink) !important;
+  }
+
+  .card-price-row {
+    margin-top: auto !important;
+    padding-top: 6px !important;
+    margin-bottom: 0 !important;
+    border-top: 1px solid #ebf1e8 !important;
+  }
+
+  /* Action buttons side-by-side perfectly fitting 2 columns */
+  .card-actions,
+  .wp-product-card .card-actions {
+    display: flex !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-top: auto !important;
+    padding-top: 8px !important;
+    border-top: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .card-btn {
+    flex: 1 !important;
+    min-width: 0 !important;
+    padding: 8px 3px !important;
+    font-size: 9.5px !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    line-height: 1.15 !important;
+    min-height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+}

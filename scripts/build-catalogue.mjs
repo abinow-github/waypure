@@ -18,7 +18,7 @@ const card = (p, index) => `<article class="catalogue-card" data-brand="${escape
       <strong class="card-price">${p.mrp ? currency(p.mrp) : 'Price on enquiry'}</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <button class="card-btn details-btn" data-product="${escape(`${p.brand} ${p.name}`)}">Product Details</button>
       <button class="card-btn shop-btn" data-product="${escape(`${p.brand} ${p.name}`)}">Shop Now</button>
     </div>
   </div>
