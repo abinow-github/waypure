@@ -21,13 +21,25 @@
   <script defer src="vendor/lenis.min.js"></script>
   <script defer src="preloader.js"></script>
   <script type="module" src="app.js"></script>
+  <link rel="stylesheet" href="ecommerce.css">
+  <script defer src="ecommerce.js"></script>
 </head>
 <body class="inner-page">
   <div class="water-preloader" aria-hidden="true"><div class="preloader-mark"><svg viewBox="0 0 64 80"><defs><clipPath id="loader-drop"><path d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/></clipPath></defs><path class="loader-outline" d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/><g clip-path="url(#loader-drop)"><path class="loader-fill" d="M-64 42Q-48 30-32 42T0 42T32 42T64 42T96 42V90H-64Z"/></g><path class="loader-shine" d="M19 49c0 9 5 14 13 14"/></svg><span class="preloader-ripple"></span></div></span></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="header">
     <a class="brand" href="index.html" aria-label="Waypure home"><img class="brand-logo" src="assets/img/logo/logo.png" alt="" width="1746" height="1724" fetchpriority="high"><span class="brand-name">way<span>pure</span><small>DRINK · EAT · BREATHE PURE</small></span></a>
-    <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="products.html" aria-current="page">Products</a><a href="contact.html">Contact</a></nav>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="products.html" aria-current="page">Products</a><a href="contact.html">Contact</a><a href="cart.php">Shopping Cart</a><a href="wishlist.php">Saved Wishlist</a></nav>
+        <div class="header-actions">
+      <a href="wishlist.php" class="ecom-nav-btn wishlist-nav-btn" aria-label="Wishlist" title="Wishlist">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="ecom-badge wishlist-badge" style="display:none;">0</span>
+      </a>
+      <button type="button" class="ecom-nav-btn cart-nav-btn" id="open-cart-drawer" aria-label="Shopping Cart" title="Cart">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="ecom-badge cart-badge" style="display:none;">0</span>
+      </button>
+    </div>
     <a href="products.html" class="nav-cta">Explore products <span>↗</span></a>
     <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
   </header>
@@ -37,6 +49,7 @@
       <div class="catalogue-controls"><div class="catalogue-filters" role="group" aria-label="Filter products by brand"><button type="button" data-brand-filter="All" aria-pressed="true">All brands</button><button type="button" data-brand-filter="Waypure" aria-pressed="false">Waypure</button><button type="button" data-brand-filter="Aquaguard" aria-pressed="false">Aquaguard</button><button type="button" data-brand-filter="Merlin" aria-pressed="false">Merlin</button><button type="button" data-brand-filter="Prolife" aria-pressed="false">Prolife</button><button type="button" data-brand-filter="Chrome" aria-pressed="false">Chrome</button></div><div class="catalogue-search"><label for="product-search">Find a product<input id="product-search" type="search" placeholder="Search model or technology…" autocomplete="off"></label><label for="product-category">Solution<select id="product-category"><option value="All">All solutions</option><option>Water purifiers</option><option>Commercial &amp; treatment</option><option>Dispensers &amp; ozone</option></select></label></div></div>
       <p class="catalogue-count" role="status" aria-live="polite" aria-atomic="true" data-catalogue-count>Showing 56 of 56 products</p><div class="catalogue-grid" id="catalogue-grid"><!-- PRODUCT_CARDS_START -->
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure q-tone ro + uv + minerals + zinc + copper minerals 15 l 10-stage purification">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="1" data-wishlist-toggle="1" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -49,12 +62,13 @@
       <strong class="card-price">₹19,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-q-tone" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Q-Tone">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure mars ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="2" data-wishlist-toggle="2" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -67,12 +81,13 @@
       <strong class="card-price">₹13,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-mars" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Mars">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure bravo ro + uv + minerals + zinc + copper alkaline 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="3" data-wishlist-toggle="3" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -85,12 +100,13 @@
       <strong class="card-price">₹16,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-bravo" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Bravo">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure onix ro + uv + alkaline minerals + zinc + uf + mtds 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="4" data-wishlist-toggle="4" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -103,12 +119,13 @@
       <strong class="card-price">₹18,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-onix" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Onix">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure glance ro + uv + alkaline minerals 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="5" data-wishlist-toggle="5" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -121,12 +138,13 @@
       <strong class="card-price">₹11,890</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-glance" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Glance">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure epic ro + uv + alkaline minerals + uf + mtds 12 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="6" data-wishlist-toggle="6" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -139,12 +157,13 @@
       <strong class="card-price">₹16,899</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-epic" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Epic">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure aqua pure ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="7" data-wishlist-toggle="7" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -157,12 +176,13 @@
       <strong class="card-price">₹14,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-aqua-pure" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Aqua Pure">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure klickpro ro + uv + alkaline minerals 9 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="8" data-wishlist-toggle="8" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -175,12 +195,13 @@
       <strong class="card-price">₹13,999</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-klickpro" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Klickpro">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure kairox ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="9" data-wishlist-toggle="9" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -193,12 +214,13 @@
       <strong class="card-price">₹17,899</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-kairox" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Kairox">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure xzora ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="10" data-wishlist-toggle="10" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -211,12 +233,13 @@
       <strong class="card-price">₹15,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-xzora" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Xzora">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure rider ro + uv + minerals + zinc + copper alkaline 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="11" data-wishlist-toggle="11" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -229,12 +252,13 @@
       <strong class="card-price">₹19,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-rider" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Rider">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure terron ro + uv + minerals + zinc + copper alkaline 15 l 10-stage purification">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="12" data-wishlist-toggle="12" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -247,12 +271,13 @@
       <strong class="card-price">₹23,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-terron" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Terron">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure xpure ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="13" data-wishlist-toggle="13" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -265,12 +290,13 @@
       <strong class="card-price">₹15,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-xpure" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Xpure">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure water lily ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="14" data-wishlist-toggle="14" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -283,12 +309,13 @@
       <strong class="card-price">₹14,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-water-lily" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Water Lily">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Dispensers &amp; ozone" data-search="waypure 5g pro ro + uv + alkaline minerals + copper minerals + uf + mtds  cold, hot and normal water ozone detoxifier">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="15" data-wishlist-toggle="15" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -301,12 +328,13 @@
       <strong class="card-price">₹25,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-5g-pro" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure 5G Pro">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Commercial &amp; treatment" data-search="waypure 35 lph commercial ro + uv + minerals plant  35 lph commercial system">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="16" data-wishlist-toggle="16" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -319,12 +347,13 @@
       <strong class="card-price">₹25,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-commercial-35" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure 35 LPH Commercial">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Dispensers &amp; ozone" data-search="waypure plus dispenser cold &amp; hot water  hot and cold dispensing">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="17" data-wishlist-toggle="17" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -337,12 +366,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-plus-dispenser" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Plus Dispenser">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure jade ro + uv + alkaline minerals 11 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="18" data-wishlist-toggle="18" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -355,12 +385,13 @@
       <strong class="card-price">₹14,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-jade" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Jade">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure waternet ro + uv + alkaline minerals 8 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="19" data-wishlist-toggle="19" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -373,12 +404,13 @@
       <strong class="card-price">₹13,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-waternet" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Waternet">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure aqua clan ro + uv + alkaline minerals 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="20" data-wishlist-toggle="20" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -391,12 +423,13 @@
       <strong class="card-price">₹22,500</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-aqua-clan" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Aqua Clan">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure aqua nine — zinc ro + uv + alkaline minerals + zinc + uf + mtds 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="21" data-wishlist-toggle="21" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -409,12 +442,13 @@
       <strong class="card-price">₹18,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-aqua-nine" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Aqua Nine — Zinc">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure aqua nine — copper &amp; zinc ro + uv + alkaline minerals + copper + zinc + uf 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="1" data-wishlist-toggle="1" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -427,12 +461,13 @@
       <strong class="card-price">₹18,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aqua-nine-copper-amp-zinc" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Aqua Nine — Copper &amp; Zinc">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure roma ro + uv + alkaline minerals + zinc + uf + mtds 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="23" data-wishlist-toggle="23" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -445,12 +480,13 @@
       <strong class="card-price">₹18,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-roma" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Roma">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure purosis ro + uv + alkaline minerals + uf + mtds 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="24" data-wishlist-toggle="24" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -463,12 +499,13 @@
       <strong class="card-price">₹18,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-purosis" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Purosis">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Dispensers &amp; ozone" data-search="waypure water cooler water cooling ">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="25" data-wishlist-toggle="25" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -481,12 +518,13 @@
       <strong class="card-price">₹23,500</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-water-cooler" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Water Cooler">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure utc under sink ro + uv + alkaline minerals 10 l under-sink design">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="26" data-wishlist-toggle="26" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -499,12 +537,13 @@
       <strong class="card-price">₹17,999</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-under-sink" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure UTC Under Sink">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure 4 stage uv  four-stage system">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="27" data-wishlist-toggle="27" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -517,12 +556,13 @@
       <strong class="card-price">₹3,999</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-four-stage" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure 4 Stage">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Commercial &amp; treatment" data-search="waypure iron remover iron removal + softener filter  automatic valve">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="28" data-wishlist-toggle="28" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -535,12 +575,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-iron-remover" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Iron Remover">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard blaze slim ro + uv + ta + hot + ss 4 l hot water dispensing active copper with zinc booster stainless steel tank mineral guard technology taste adjuster works at zero water pressure">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="29" data-wishlist-toggle="29" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -553,12 +594,13 @@
       <strong class="card-price">₹38,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-blaze-slim" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Blaze Slim">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard eden ro + uv + ta + ss 5 l active copper with zinc booster stainless steel tank mineral guard technology in-built tray taste adjuster diy-replaceable cartridges">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="30" data-wishlist-toggle="30" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -571,12 +613,13 @@
       <strong class="card-price">₹36,500</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-eden" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Eden">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard superio ro + uv + ta + ss 5 l active copper with zinc booster stainless steel tank mineral guard technology uv e-boiling taste adjuster works at zero water pressure">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="31" data-wishlist-toggle="31" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -589,12 +632,13 @@
       <strong class="card-price">₹28,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-superio" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Superio">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard premier ro + uv + ta 6 l active copper with zinc booster uv e-boiling taste adjuster works at zero water pressure">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="32" data-wishlist-toggle="32" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -607,12 +651,13 @@
       <strong class="card-price">₹22,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-premier" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Premier">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard designo utc ro + uv + ta 8 l active copper with zinc booster mineral guard technology uv e-boiling taste adjuster">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="33" data-wishlist-toggle="33" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -625,12 +670,13 @@
       <strong class="card-price">₹23,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-designo" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Designo UTC">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard utc uv booster uv inline active copper with zinc booster mineral guard technology uv e-boiling compact design">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="34" data-wishlist-toggle="34" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -643,12 +689,13 @@
       <strong class="card-price">₹16,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-utc-booster" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard UTC UV Booster">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard astor ro + uv + ta + alkaline 6 l alkaline boost technology ro membrane uv e-boiling taste adjuster smart led indicator">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="35" data-wishlist-toggle="35" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -661,12 +708,13 @@
       <strong class="card-price">₹22,490</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-astor" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Astor">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard neo ro + uv + ta + mc 6 l mineral charge technology taste adjuster smart led indicator">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="36" data-wishlist-toggle="36" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -679,12 +727,13 @@
       <strong class="card-price">₹23,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-neo" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Neo">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard cristal nxt uv+uf booster uv + uf 7 l active copper with zinc booster mineral guard technology uv e-boiling in-built booster pump">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="37" data-wishlist-toggle="37" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -697,12 +746,13 @@
       <strong class="card-price">₹22,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-cristal-booster" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Cristal NXT UV+UF Booster">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard classic booster booster system inline active copper with zinc booster mineral guard technology in-built booster pump compact design">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="38" data-wishlist-toggle="38" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -715,12 +765,13 @@
       <strong class="card-price">₹16,490</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-classic-booster" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Classic Booster">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard crest uv+hot uv + hot inline hot, warm and ambient water active copper with zinc booster stainless steel tank mineral guard technology uv e-boiling">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="39" data-wishlist-toggle="39" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -733,12 +784,13 @@
       <strong class="card-price">₹18,490</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-crest-hot" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Crest UV+Hot">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard crest uv uv inline active copper with zinc booster smart led indicator mineral guard technology">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="40" data-wishlist-toggle="40" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -751,12 +803,13 @@
       <strong class="card-price">₹15,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-crest" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Crest UV">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard crystal nxt uv uv inline active copper with zinc booster mineral guard technology uv e-boiling smart led indicator semi-concealable design">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="41" data-wishlist-toggle="41" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -769,12 +822,13 @@
       <strong class="card-price">₹14,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-crystal" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Crystal NXT UV">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Aquaguard" data-category="Water purifiers" data-search="aquaguard mist nxt uv uv inline mineral guard technology uv e-boiling smart led indicator semi-concealable design">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="42" data-wishlist-toggle="42" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -787,12 +841,13 @@
       <strong class="card-price">₹14,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=aquaguard-mist" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Aquaguard Mist NXT UV">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Merlin" data-category="Water purifiers" data-search="merlin matrix zinc copper digital black ro + copper alkaline + uv + uf  taste adjuster">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="43" data-wishlist-toggle="43" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -805,12 +860,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=merlin-matrix-zinc" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Merlin Matrix Zinc Copper Digital Black">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Merlin" data-category="Water purifiers" data-search="merlin planet digi zinc copper digital black ro + copper alkaline + uf  taste adjuster">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="44" data-wishlist-toggle="44" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -823,12 +879,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=merlin-planet-digi" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Merlin Planet Digi Zinc Copper Digital Black">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Merlin" data-category="Water purifiers" data-search="merlin matrix white ro + alkaline + uf  taste adjuster">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="45" data-wishlist-toggle="45" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -841,12 +898,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=merlin-matrix-white" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Merlin Matrix White">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Merlin" data-category="Water purifiers" data-search="merlin planet copper white ro + copper alkaline + uf  taste adjuster">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="46" data-wishlist-toggle="46" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -859,12 +917,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=merlin-planet-white" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Merlin Planet Copper White">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Merlin" data-category="Water purifiers" data-search="merlin planet copper black ro + copper alkaline + uf  taste adjuster">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="47" data-wishlist-toggle="47" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -877,12 +936,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=merlin-planet-black" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Merlin Planet Copper Black">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Merlin" data-category="Water purifiers" data-search="merlin matrix black ro + alkaline + uf  taste adjuster">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="48" data-wishlist-toggle="48" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -895,12 +955,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=merlin-matrix-black" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Merlin Matrix Black">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Prolife" data-category="Water purifiers" data-search="prolife fiesta blue membrane filtration + copper filter  anti-bacterial membrane high-tds membrane self-suction booster pump advanced copper filter">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="49" data-wishlist-toggle="49" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -913,12 +974,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=prolife-fiesta-blue" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Prolife Fiesta Blue">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Prolife" data-category="Water purifiers" data-search="prolife fiesta membrane filtration + copper filter  anti-bacterial membrane high-tds membrane self-suction booster pump advanced copper filter">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="50" data-wishlist-toggle="50" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -931,12 +993,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=prolife-fiesta" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Prolife Fiesta">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Prolife" data-category="Water purifiers" data-search="prolife fiesta transparent membrane filtration + copper filter  anti-bacterial membrane high-tds membrane self-suction booster pump advanced copper filter">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="51" data-wishlist-toggle="51" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -949,12 +1012,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=prolife-fiesta-transparent" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Prolife Fiesta Transparent">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Prolife" data-category="Water purifiers" data-search="prolife viber uv + active copper with zinc booster  smart led indicator mineral guard technology">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="52" data-wishlist-toggle="52" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -967,12 +1031,13 @@
       <strong class="card-price">Price on enquiry</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=prolife-viber" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Prolife Viber">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Chrome" data-category="Water purifiers" data-search="chrome 1st choice copper ro + uv + uf + tds + copper cartridge 7–8 l 7-stage purification user manual, installation kit and ro membrane included">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="53" data-wishlist-toggle="53" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -985,12 +1050,13 @@
       <strong class="card-price">₹23,999</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=chrome-first-copper" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Chrome 1st Choice Copper">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Chrome" data-category="Water purifiers" data-search="chrome 1st choice alkaline ro + uv + uf + tds + alkaline cartridge 7–8 l 7-stage purification user manual, installation kit and ro membrane included">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="54" data-wishlist-toggle="54" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -1003,12 +1069,13 @@
       <strong class="card-price">₹23,999</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=chrome-first-alkaline" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Chrome 1st Choice Alkaline">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Chrome" data-category="Water purifiers" data-search="chrome 1st choice mineral ro + uv + uf + tds + mineral cartridge 7–8 l 7-stage purification user manual, installation kit and ro membrane included">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="55" data-wishlist-toggle="55" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -1021,12 +1088,13 @@
       <strong class="card-price">₹21,999</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=chrome-first-mineral" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Chrome 1st Choice Mineral">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Chrome" data-category="Water purifiers" data-search="chrome smart+ mineral ro + uv + uf + tds + mineral cartridge 7–8 l 7-stage purification user manual, installation kit and ro membrane included">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="56" data-wishlist-toggle="56" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -1039,7 +1107,7 @@
       <strong class="card-price">₹23,000</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=chrome-smart-mineral" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Chrome Smart+ Mineral">Shop Now</button>
     </div>
   </div>

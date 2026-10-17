@@ -173,6 +173,10 @@ dialog select{font-size:11px}.whatsapp-enquiry{background:#25604b;color:white;ma
 
 .card-btn {
   flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   padding: 12px 14px;
   border-radius: 10px;
   font-size: 11px;

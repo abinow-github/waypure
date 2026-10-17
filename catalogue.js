@@ -20,9 +20,18 @@ export function createCatalogue({ gsap, reduceMotion, refresh, onEnquire }) {
     }
     const detailsBtn = event.target.closest('.details-btn');
     if (detailsBtn) {
-      event.preventDefault();
+      if (detailsBtn.tagName === 'A' && detailsBtn.getAttribute('href')) {
+        // Allow natural navigation to product.php view page
+        return;
+      }
       const card = detailsBtn.closest('.catalogue-card');
       const product = detailsBtn.dataset.product || card?.querySelector('h3')?.textContent?.trim() || card?.querySelector('[data-product]')?.dataset.product;
+      if (card && card.dataset.search) {
+        const parts = card.dataset.search.split(' ');
+        const slug = parts.slice(0, 2).join('-');
+        window.location.href = `product.php?id=${encodeURIComponent(slug)}`;
+        return;
+      }
       onEnquire(product || 'General enquiry');
       return;
     }

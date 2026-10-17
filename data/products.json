@@ -1,0 +1,1324 @@
+[
+  {
+    "id": "waypure-q-tone",
+    "brand": "Waypure",
+    "name": "Q-Tone",
+    "pages": [
+      9,
+      12
+    ],
+    "capacity": "15 L",
+    "technology": "RO + UV + Minerals + Zinc + Copper minerals",
+    "mrp": 19990,
+    "features": [
+      "10-stage purification"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/q-tone.png",
+    "slug": "waypure-q-tone",
+    "price": 18391,
+    "description": "The Waypure Q-Tone is engineered for superior water purification, combining RO + UV + Minerals + Zinc + Copper minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 18
+  },
+  {
+    "id": "waypure-mars",
+    "brand": "Waypure",
+    "name": "Mars",
+    "pages": [
+      11
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 13499,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/mars.png",
+    "slug": "waypure-mars",
+    "price": 12419,
+    "description": "The Waypure Mars is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 21
+  },
+  {
+    "id": "waypure-bravo",
+    "brand": "Waypure",
+    "name": "Bravo",
+    "pages": [
+      8
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Minerals + Zinc + Copper alkaline",
+    "mrp": 16990,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/bravo.png",
+    "slug": "waypure-bravo",
+    "price": 15631,
+    "description": "The Waypure Bravo is engineered for superior water purification, combining RO + UV + Minerals + Zinc + Copper alkaline with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 24
+  },
+  {
+    "id": "waypure-onix",
+    "brand": "Waypure",
+    "name": "Onix",
+    "pages": [
+      10
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals + Zinc + UF + MTDS",
+    "mrp": 18990,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/onix.png",
+    "slug": "waypure-onix",
+    "price": 17471,
+    "description": "The Waypure Onix is engineered for superior water purification, combining RO + UV + Alkaline minerals + Zinc + UF + MTDS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 27
+  },
+  {
+    "id": "waypure-glance",
+    "brand": "Waypure",
+    "name": "Glance",
+    "pages": [
+      13
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 11890,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/glance.png",
+    "slug": "waypure-glance",
+    "price": 10939,
+    "description": "The Waypure Glance is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 30
+  },
+  {
+    "id": "waypure-epic",
+    "brand": "Waypure",
+    "name": "Epic",
+    "pages": [
+      11
+    ],
+    "capacity": "12 L",
+    "technology": "RO + UV + Alkaline minerals + UF + MTDS",
+    "mrp": 16899,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/epic.png",
+    "slug": "waypure-epic",
+    "price": 15547,
+    "description": "The Waypure Epic is engineered for superior water purification, combining RO + UV + Alkaline minerals + UF + MTDS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 33
+  },
+  {
+    "id": "waypure-aqua-pure",
+    "brand": "Waypure",
+    "name": "Aqua Pure",
+    "pages": [
+      8
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 14499,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/aqua-pure.png",
+    "slug": "waypure-aqua-pure",
+    "price": 13339,
+    "description": "The Waypure Aqua Pure is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 36
+  },
+  {
+    "id": "waypure-klickpro",
+    "brand": "Waypure",
+    "name": "Klickpro",
+    "pages": [
+      8
+    ],
+    "capacity": "9 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 13999,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/klickpro.png",
+    "slug": "waypure-klickpro",
+    "price": 12879,
+    "description": "The Waypure Klickpro is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 39
+  },
+  {
+    "id": "waypure-kairox",
+    "brand": "Waypure",
+    "name": "Kairox",
+    "pages": [
+      8
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 17899,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/kairox.png",
+    "slug": "waypure-kairox",
+    "price": 16467,
+    "description": "The Waypure Kairox is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 42
+  },
+  {
+    "id": "waypure-xzora",
+    "brand": "Waypure",
+    "name": "Xzora",
+    "pages": [
+      9
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 15499,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/xzora.png",
+    "slug": "waypure-xzora",
+    "price": 14259,
+    "description": "The Waypure Xzora is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 45
+  },
+  {
+    "id": "waypure-rider",
+    "brand": "Waypure",
+    "name": "Rider",
+    "pages": [
+      9,
+      12
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Minerals + Zinc + Copper alkaline",
+    "mrp": 19990,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/rider.png",
+    "slug": "waypure-rider",
+    "price": 18391,
+    "description": "The Waypure Rider is engineered for superior water purification, combining RO + UV + Minerals + Zinc + Copper alkaline with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 48
+  },
+  {
+    "id": "waypure-terron",
+    "brand": "Waypure",
+    "name": "Terron",
+    "pages": [
+      9,
+      12
+    ],
+    "capacity": "15 L",
+    "technology": "RO + UV + Minerals + Zinc + Copper alkaline",
+    "mrp": 23990,
+    "features": [
+      "10-stage purification"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/terron.png",
+    "slug": "waypure-terron",
+    "price": 22071,
+    "description": "The Waypure Terron is engineered for superior water purification, combining RO + UV + Minerals + Zinc + Copper alkaline with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 51
+  },
+  {
+    "id": "waypure-xpure",
+    "brand": "Waypure",
+    "name": "Xpure",
+    "pages": [
+      10
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 15499,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/xpure.png",
+    "slug": "waypure-xpure",
+    "price": 14259,
+    "description": "The Waypure Xpure is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 54
+  },
+  {
+    "id": "waypure-water-lily",
+    "brand": "Waypure",
+    "name": "Water Lily",
+    "pages": [
+      10
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 14499,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/water-lily.png",
+    "slug": "waypure-water-lily",
+    "price": 13339,
+    "description": "The Waypure Water Lily is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 57
+  },
+  {
+    "id": "waypure-5g-pro",
+    "brand": "Waypure",
+    "name": "5G Pro",
+    "pages": [
+      10
+    ],
+    "capacity": null,
+    "technology": "RO + UV + Alkaline minerals + Copper minerals + UF + MTDS",
+    "mrp": 25000,
+    "features": [
+      "Cold, hot and normal water",
+      "Ozone detoxifier"
+    ],
+    "category": "Dispensers & ozone",
+    "warranty": "36 months",
+    "image": "assets/img/products/5g-pro.png",
+    "slug": "waypure-5g-pro",
+    "price": 23000,
+    "description": "The Waypure 5G Pro is engineered for superior water purification, combining RO + UV + Alkaline minerals + Copper minerals + UF + MTDS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 60
+  },
+  {
+    "id": "waypure-commercial-35",
+    "brand": "Waypure",
+    "name": "35 LPH Commercial",
+    "pages": [
+      11
+    ],
+    "capacity": null,
+    "technology": "RO + UV + Minerals plant",
+    "mrp": 25000,
+    "features": [
+      "35 LPH commercial system"
+    ],
+    "category": "Commercial & treatment",
+    "image": "assets/img/products/35-lph-commercial.png",
+    "slug": "waypure-commercial-35",
+    "price": 23000,
+    "description": "The Waypure 35 LPH Commercial is engineered for superior water purification, combining RO + UV + Minerals plant with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 18
+  },
+  {
+    "id": "waypure-plus-dispenser",
+    "brand": "Waypure",
+    "name": "Plus Dispenser",
+    "pages": [
+      11
+    ],
+    "capacity": null,
+    "technology": "Cold & hot water",
+    "mrp": 15999,
+    "features": [
+      "Hot and cold dispensing"
+    ],
+    "category": "Dispensers & ozone",
+    "image": "assets/img/products/plus-dispenser.png",
+    "slug": "waypure-plus-dispenser",
+    "price": 14999,
+    "description": "The Waypure Plus Dispenser is engineered for superior water purification, combining Cold & hot water with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 21
+  },
+  {
+    "id": "waypure-jade",
+    "brand": "Waypure",
+    "name": "Jade",
+    "pages": [
+      12
+    ],
+    "capacity": "11 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 14499,
+    "features": [
+      "LED indicators"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/jade.png",
+    "slug": "waypure-jade",
+    "price": 13339,
+    "description": "The Waypure Jade is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 24
+  },
+  {
+    "id": "waypure-waternet",
+    "brand": "Waypure",
+    "name": "Waternet",
+    "pages": [
+      13
+    ],
+    "capacity": "8 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 13499,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/waternet.png",
+    "slug": "waypure-waternet",
+    "price": 12419,
+    "description": "The Waypure Waternet is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 27
+  },
+  {
+    "id": "waypure-aqua-clan",
+    "brand": "Waypure",
+    "name": "Aqua Clan",
+    "pages": [
+      13
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 22500,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/aqua-clan.png",
+    "slug": "waypure-aqua-clan",
+    "price": 20700,
+    "description": "The Waypure Aqua Clan is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 30
+  },
+  {
+    "id": "waypure-aqua-nine",
+    "brand": "Waypure",
+    "name": "Aqua Nine — Zinc",
+    "pages": [
+      13
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals + Zinc + UF + MTDS",
+    "mrp": 18990,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/aqua-nine.png",
+    "slug": "waypure-aqua-nine",
+    "price": 17471,
+    "description": "The Waypure Aqua Nine — Zinc is engineered for superior water purification, combining RO + UV + Alkaline minerals + Zinc + UF + MTDS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 33
+  },
+  {
+    "id": "waypure-aqua-nine-copper",
+    "brand": "Waypure",
+    "name": "Aqua Nine — Copper & Zinc",
+    "pages": [
+      14
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals + Copper + Zinc + UF",
+    "mrp": 18990,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/aqua-nine-copper.png",
+    "slug": "waypure-aqua-nine-copper",
+    "price": 17471,
+    "description": "The Waypure Aqua Nine — Copper & Zinc is engineered for superior water purification, combining RO + UV + Alkaline minerals + Copper + Zinc + UF with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 36
+  },
+  {
+    "id": "waypure-roma",
+    "brand": "Waypure",
+    "name": "Roma",
+    "pages": [
+      14
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals + Zinc + UF + MTDS",
+    "mrp": 18990,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/roma.png",
+    "slug": "waypure-roma",
+    "price": 17471,
+    "description": "The Waypure Roma is engineered for superior water purification, combining RO + UV + Alkaline minerals + Zinc + UF + MTDS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 39
+  },
+  {
+    "id": "waypure-purosis",
+    "brand": "Waypure",
+    "name": "Purosis",
+    "pages": [
+      14
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals + UF + MTDS",
+    "mrp": 18990,
+    "features": [],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/purosis.png",
+    "slug": "waypure-purosis",
+    "price": 17471,
+    "description": "The Waypure Purosis is engineered for superior water purification, combining RO + UV + Alkaline minerals + UF + MTDS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 42
+  },
+  {
+    "id": "waypure-water-cooler",
+    "brand": "Waypure",
+    "name": "Water Cooler",
+    "pages": [
+      14
+    ],
+    "capacity": null,
+    "technology": "Water cooling",
+    "mrp": 23500,
+    "features": [],
+    "category": "Dispensers & ozone",
+    "image": "assets/img/products/water-cooler.png",
+    "slug": "waypure-water-cooler",
+    "price": 21620,
+    "description": "The Waypure Water Cooler is engineered for superior water purification, combining Water cooling with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 45
+  },
+  {
+    "id": "waypure-under-sink",
+    "brand": "Waypure",
+    "name": "UTC Under Sink",
+    "pages": [
+      15
+    ],
+    "capacity": "10 L",
+    "technology": "RO + UV + Alkaline minerals",
+    "mrp": 17999,
+    "features": [
+      "Under-sink design"
+    ],
+    "category": "Water purifiers",
+    "warranty": "36 months",
+    "image": "assets/img/products/utc-under-sink.png",
+    "slug": "waypure-under-sink",
+    "price": 16559,
+    "description": "The Waypure UTC Under Sink is engineered for superior water purification, combining RO + UV + Alkaline minerals with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 48
+  },
+  {
+    "id": "waypure-four-stage",
+    "brand": "Waypure",
+    "name": "4 Stage",
+    "pages": [
+      15
+    ],
+    "capacity": null,
+    "technology": "UV",
+    "mrp": 3999,
+    "features": [
+      "Four-stage system"
+    ],
+    "category": "Water purifiers",
+    "image": "assets/img/products/4-stage.png",
+    "slug": "waypure-four-stage",
+    "price": 3679,
+    "description": "The Waypure 4 Stage is engineered for superior water purification, combining UV with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 51
+  },
+  {
+    "id": "waypure-iron-remover",
+    "brand": "Waypure",
+    "name": "Iron Remover",
+    "pages": [
+      15
+    ],
+    "capacity": null,
+    "technology": "Iron removal + Softener filter",
+    "mrp": 15999,
+    "features": [
+      "Automatic valve"
+    ],
+    "category": "Commercial & treatment",
+    "image": "assets/img/products/iron-remover.png",
+    "slug": "waypure-iron-remover",
+    "price": 14999,
+    "description": "The Waypure Iron Remover is engineered for superior water purification, combining Iron removal + Softener filter with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 54
+  },
+  {
+    "id": "aquaguard-blaze-slim",
+    "brand": "Aquaguard",
+    "name": "Blaze Slim",
+    "pages": [
+      2
+    ],
+    "capacity": "4 L",
+    "technology": "RO + UV + TA + Hot + SS",
+    "mrp": 38000,
+    "features": [
+      "Hot water dispensing",
+      "Active copper with zinc booster",
+      "Stainless steel tank",
+      "Mineral guard technology",
+      "Taste adjuster",
+      "Works at zero water pressure"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "350 × 350 × 490",
+    "tankWarranty": "Lifetime stainless steel tank warranty",
+    "slug": "aquaguard-blaze-slim",
+    "price": 34960,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Blaze Slim is engineered for superior water purification, combining RO + UV + TA + Hot + SS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 57
+  },
+  {
+    "id": "aquaguard-eden",
+    "brand": "Aquaguard",
+    "name": "Eden",
+    "pages": [
+      2
+    ],
+    "capacity": "5 L",
+    "technology": "RO + UV + TA + SS",
+    "mrp": 36500,
+    "features": [
+      "Active copper with zinc booster",
+      "Stainless steel tank",
+      "Mineral guard technology",
+      "In-built tray",
+      "Taste adjuster",
+      "DIY-replaceable cartridges"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "350 × 275 × 530",
+    "tankWarranty": "Lifetime stainless steel tank warranty",
+    "slug": "aquaguard-eden",
+    "price": 33580,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Eden is engineered for superior water purification, combining RO + UV + TA + SS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 60
+  },
+  {
+    "id": "aquaguard-superio",
+    "brand": "Aquaguard",
+    "name": "Superio",
+    "pages": [
+      2
+    ],
+    "capacity": "5 L",
+    "technology": "RO + UV + TA + SS",
+    "mrp": 28000,
+    "features": [
+      "Active copper with zinc booster",
+      "Stainless steel tank",
+      "Mineral guard technology",
+      "UV e-boiling",
+      "Taste adjuster",
+      "Works at zero water pressure"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "320 × 290 × 480",
+    "tankWarranty": "Lifetime stainless steel tank warranty",
+    "slug": "aquaguard-superio",
+    "price": 25760,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Superio is engineered for superior water purification, combining RO + UV + TA + SS with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 18
+  },
+  {
+    "id": "aquaguard-premier",
+    "brand": "Aquaguard",
+    "name": "Premier",
+    "pages": [
+      2
+    ],
+    "capacity": "6 L",
+    "technology": "RO + UV + TA",
+    "mrp": 22000,
+    "features": [
+      "Active copper with zinc booster",
+      "UV e-boiling",
+      "Taste adjuster",
+      "Works at zero water pressure"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "320 × 275 × 476",
+    "slug": "aquaguard-premier",
+    "price": 20240,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Premier is engineered for superior water purification, combining RO + UV + TA with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 21
+  },
+  {
+    "id": "aquaguard-designo",
+    "brand": "Aquaguard",
+    "name": "Designo UTC",
+    "pages": [
+      3
+    ],
+    "capacity": "8 L",
+    "technology": "RO + UV + TA",
+    "mrp": 23000,
+    "features": [
+      "Active copper with zinc booster",
+      "Mineral guard technology",
+      "UV e-boiling",
+      "Taste adjuster"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "275 × 285 × 195",
+    "slug": "aquaguard-designo",
+    "price": 21160,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Designo UTC is engineered for superior water purification, combining RO + UV + TA with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 24
+  },
+  {
+    "id": "aquaguard-utc-booster",
+    "brand": "Aquaguard",
+    "name": "UTC UV Booster",
+    "pages": [
+      3
+    ],
+    "capacity": "Inline",
+    "technology": "UV",
+    "mrp": 16000,
+    "features": [
+      "Active copper with zinc booster",
+      "Mineral guard technology",
+      "UV e-boiling",
+      "Compact design"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "275 × 285 × 195",
+    "slug": "aquaguard-utc-booster",
+    "price": 14720,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard UTC UV Booster is engineered for superior water purification, combining UV with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 27
+  },
+  {
+    "id": "aquaguard-astor",
+    "brand": "Aquaguard",
+    "name": "Astor",
+    "pages": [
+      3
+    ],
+    "capacity": "6 L",
+    "technology": "RO + UV + TA + Alkaline",
+    "mrp": 22490,
+    "features": [
+      "Alkaline Boost technology",
+      "RO membrane",
+      "UV e-boiling",
+      "Taste adjuster",
+      "Smart LED indicator"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "320 × 278 × 476",
+    "slug": "aquaguard-astor",
+    "price": 20691,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Astor is engineered for superior water purification, combining RO + UV + TA + Alkaline with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 30
+  },
+  {
+    "id": "aquaguard-neo",
+    "brand": "Aquaguard",
+    "name": "Neo",
+    "pages": [
+      3
+    ],
+    "capacity": "6 L",
+    "technology": "RO + UV + TA + MC",
+    "mrp": 23000,
+    "features": [
+      "Mineral charge technology",
+      "Taste adjuster",
+      "Smart LED indicator"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "320 × 275 × 476",
+    "slug": "aquaguard-neo",
+    "price": 21160,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Neo is engineered for superior water purification, combining RO + UV + TA + MC with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 33
+  },
+  {
+    "id": "aquaguard-cristal-booster",
+    "brand": "Aquaguard",
+    "name": "Cristal NXT UV+UF Booster",
+    "pages": [
+      4
+    ],
+    "capacity": "7 L",
+    "technology": "UV + UF",
+    "mrp": 22000,
+    "features": [
+      "Active copper with zinc booster",
+      "Mineral guard technology",
+      "UV e-boiling",
+      "In-built booster pump"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "316 × 251 × 462",
+    "slug": "aquaguard-cristal-booster",
+    "price": 20240,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Cristal NXT UV+UF Booster is engineered for superior water purification, combining UV + UF with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 36
+  },
+  {
+    "id": "aquaguard-classic-booster",
+    "brand": "Aquaguard",
+    "name": "Classic Booster",
+    "pages": [
+      4
+    ],
+    "capacity": "Inline",
+    "technology": "Booster system",
+    "mrp": 16490,
+    "features": [
+      "Active copper with zinc booster",
+      "Mineral guard technology",
+      "In-built booster pump",
+      "Compact design"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "313 × 167 × 423",
+    "slug": "aquaguard-classic-booster",
+    "price": 15171,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Classic Booster is engineered for superior water purification, combining Booster system with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 39
+  },
+  {
+    "id": "aquaguard-crest-hot",
+    "brand": "Aquaguard",
+    "name": "Crest UV+Hot",
+    "pages": [
+      4
+    ],
+    "capacity": "Inline",
+    "technology": "UV + Hot",
+    "mrp": 18490,
+    "features": [
+      "Hot, warm and ambient water",
+      "Active copper with zinc booster",
+      "Stainless steel tank",
+      "Mineral guard technology",
+      "UV e-boiling"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "315 × 185 × 425",
+    "tankWarranty": "Lifetime stainless steel tank warranty",
+    "slug": "aquaguard-crest-hot",
+    "price": 17011,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Crest UV+Hot is engineered for superior water purification, combining UV + Hot with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 42
+  },
+  {
+    "id": "aquaguard-crest",
+    "brand": "Aquaguard",
+    "name": "Crest UV",
+    "pages": [
+      4
+    ],
+    "capacity": "Inline",
+    "technology": "UV",
+    "mrp": 15990,
+    "features": [
+      "Active copper with zinc booster",
+      "Smart LED indicator",
+      "Mineral guard technology"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "315 × 185 × 425",
+    "slug": "aquaguard-crest",
+    "price": 14711,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Crest UV is engineered for superior water purification, combining UV with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 45
+  },
+  {
+    "id": "aquaguard-crystal",
+    "brand": "Aquaguard",
+    "name": "Crystal NXT UV",
+    "pages": [
+      5
+    ],
+    "capacity": "Inline",
+    "technology": "UV",
+    "mrp": 14000,
+    "features": [
+      "Active copper with zinc booster",
+      "Mineral guard technology",
+      "UV e-boiling",
+      "Smart LED indicator",
+      "Semi-concealable design"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "313 × 167 × 423",
+    "slug": "aquaguard-crystal",
+    "price": 12880,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Crystal NXT UV is engineered for superior water purification, combining UV with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 48
+  },
+  {
+    "id": "aquaguard-mist",
+    "brand": "Aquaguard",
+    "name": "Mist NXT UV",
+    "pages": [
+      5
+    ],
+    "capacity": "Inline",
+    "technology": "UV",
+    "mrp": 14000,
+    "features": [
+      "Mineral guard technology",
+      "UV e-boiling",
+      "Smart LED indicator",
+      "Semi-concealable design"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "313 × 167 × 423",
+    "slug": "aquaguard-mist",
+    "price": 12880,
+    "image": "assets/purifier-render.webp",
+    "description": "The Aquaguard Mist NXT UV is engineered for superior water purification, combining UV with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 51
+  },
+  {
+    "id": "merlin-matrix-zinc",
+    "brand": "Merlin",
+    "name": "Matrix Zinc Copper Digital Black",
+    "pages": [
+      5
+    ],
+    "capacity": null,
+    "technology": "RO + Copper alkaline + UV + UF",
+    "mrp": 15999,
+    "features": [
+      "Taste adjuster"
+    ],
+    "category": "Water purifiers",
+    "slug": "merlin-matrix-zinc",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Merlin Matrix Zinc Copper Digital Black is engineered for superior water purification, combining RO + Copper alkaline + UV + UF with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 54
+  },
+  {
+    "id": "merlin-planet-digi",
+    "brand": "Merlin",
+    "name": "Planet Digi Zinc Copper Digital Black",
+    "pages": [
+      5
+    ],
+    "capacity": null,
+    "technology": "RO + Copper alkaline + UF",
+    "mrp": 15999,
+    "features": [
+      "Taste adjuster"
+    ],
+    "category": "Water purifiers",
+    "slug": "merlin-planet-digi",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Merlin Planet Digi Zinc Copper Digital Black is engineered for superior water purification, combining RO + Copper alkaline + UF with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 57
+  },
+  {
+    "id": "merlin-matrix-white",
+    "brand": "Merlin",
+    "name": "Matrix White",
+    "pages": [
+      6
+    ],
+    "capacity": null,
+    "technology": "RO + Alkaline + UF",
+    "mrp": 15999,
+    "features": [
+      "Taste adjuster"
+    ],
+    "category": "Water purifiers",
+    "slug": "merlin-matrix-white",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Merlin Matrix White is engineered for superior water purification, combining RO + Alkaline + UF with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 60
+  },
+  {
+    "id": "merlin-planet-white",
+    "brand": "Merlin",
+    "name": "Planet Copper White",
+    "pages": [
+      6
+    ],
+    "capacity": null,
+    "technology": "RO + Copper alkaline + UF",
+    "mrp": 15999,
+    "features": [
+      "Taste adjuster"
+    ],
+    "category": "Water purifiers",
+    "slug": "merlin-planet-white",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Merlin Planet Copper White is engineered for superior water purification, combining RO + Copper alkaline + UF with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 18
+  },
+  {
+    "id": "merlin-planet-black",
+    "brand": "Merlin",
+    "name": "Planet Copper Black",
+    "pages": [
+      6
+    ],
+    "capacity": null,
+    "technology": "RO + Copper alkaline + UF",
+    "mrp": 15999,
+    "features": [
+      "Taste adjuster"
+    ],
+    "category": "Water purifiers",
+    "slug": "merlin-planet-black",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Merlin Planet Copper Black is engineered for superior water purification, combining RO + Copper alkaline + UF with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 21
+  },
+  {
+    "id": "merlin-matrix-black",
+    "brand": "Merlin",
+    "name": "Matrix Black",
+    "pages": [
+      6
+    ],
+    "capacity": null,
+    "technology": "RO + Alkaline + UF",
+    "mrp": 15999,
+    "features": [
+      "Taste adjuster"
+    ],
+    "category": "Water purifiers",
+    "slug": "merlin-matrix-black",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Merlin Matrix Black is engineered for superior water purification, combining RO + Alkaline + UF with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 24
+  },
+  {
+    "id": "prolife-fiesta-blue",
+    "brand": "Prolife",
+    "name": "Fiesta Blue",
+    "pages": [
+      7
+    ],
+    "capacity": null,
+    "technology": "Membrane filtration + Copper filter",
+    "mrp": 15999,
+    "features": [
+      "Anti-bacterial membrane",
+      "High-TDS membrane",
+      "Self-suction booster pump",
+      "Advanced copper filter"
+    ],
+    "category": "Water purifiers",
+    "slug": "prolife-fiesta-blue",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Prolife Fiesta Blue is engineered for superior water purification, combining Membrane filtration + Copper filter with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 27
+  },
+  {
+    "id": "prolife-fiesta",
+    "brand": "Prolife",
+    "name": "Fiesta",
+    "pages": [
+      7
+    ],
+    "capacity": null,
+    "technology": "Membrane filtration + Copper filter",
+    "mrp": 15999,
+    "features": [
+      "Anti-bacterial membrane",
+      "High-TDS membrane",
+      "Self-suction booster pump",
+      "Advanced copper filter"
+    ],
+    "category": "Water purifiers",
+    "slug": "prolife-fiesta",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Prolife Fiesta is engineered for superior water purification, combining Membrane filtration + Copper filter with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 30
+  },
+  {
+    "id": "prolife-fiesta-transparent",
+    "brand": "Prolife",
+    "name": "Fiesta Transparent",
+    "pages": [
+      7
+    ],
+    "capacity": null,
+    "technology": "Membrane filtration + Copper filter",
+    "mrp": 15999,
+    "features": [
+      "Anti-bacterial membrane",
+      "High-TDS membrane",
+      "Self-suction booster pump",
+      "Advanced copper filter"
+    ],
+    "category": "Water purifiers",
+    "slug": "prolife-fiesta-transparent",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Prolife Fiesta Transparent is engineered for superior water purification, combining Membrane filtration + Copper filter with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 33
+  },
+  {
+    "id": "prolife-viber",
+    "brand": "Prolife",
+    "name": "Viber",
+    "pages": [
+      7
+    ],
+    "capacity": null,
+    "technology": "UV + Active copper with zinc booster",
+    "mrp": 15999,
+    "features": [
+      "Smart LED indicator",
+      "Mineral guard technology"
+    ],
+    "category": "Water purifiers",
+    "slug": "prolife-viber",
+    "price": 14999,
+    "image": "assets/purifier-render.webp",
+    "description": "The Prolife Viber is engineered for superior water purification, combining UV + Active copper with zinc booster with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 36
+  },
+  {
+    "id": "chrome-first-copper",
+    "brand": "Chrome",
+    "name": "1st Choice Copper",
+    "pages": [
+      16
+    ],
+    "capacity": "7–8 L",
+    "technology": "RO + UV + UF + TDS + Copper cartridge",
+    "mrp": 23999,
+    "features": [
+      "7-stage purification",
+      "User manual, installation kit and RO membrane included"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "360 × 330 × 540",
+    "image": "assets/img/products/chrome-1st-copper.png",
+    "slug": "chrome-first-copper",
+    "price": 22079,
+    "description": "The Chrome 1st Choice Copper is engineered for superior water purification, combining RO + UV + UF + TDS + Copper cartridge with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.7,
+    "reviews_count": 39
+  },
+  {
+    "id": "chrome-first-alkaline",
+    "brand": "Chrome",
+    "name": "1st Choice Alkaline",
+    "pages": [
+      16
+    ],
+    "capacity": "7–8 L",
+    "technology": "RO + UV + UF + TDS + Alkaline cartridge",
+    "mrp": 23999,
+    "features": [
+      "7-stage purification",
+      "User manual, installation kit and RO membrane included"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "360 × 330 × 540",
+    "image": "assets/img/products/chrome-1st-alkaline.png",
+    "slug": "chrome-first-alkaline",
+    "price": 22079,
+    "description": "The Chrome 1st Choice Alkaline is engineered for superior water purification, combining RO + UV + UF + TDS + Alkaline cartridge with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews_count": 42
+  },
+  {
+    "id": "chrome-first-mineral",
+    "brand": "Chrome",
+    "name": "1st Choice Mineral",
+    "pages": [
+      16
+    ],
+    "capacity": "7–8 L",
+    "technology": "RO + UV + UF + TDS + Mineral cartridge",
+    "mrp": 21999,
+    "features": [
+      "7-stage purification",
+      "User manual, installation kit and RO membrane included"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "360 × 330 × 540",
+    "image": "assets/img/products/chrome-1st-mineral.png",
+    "slug": "chrome-first-mineral",
+    "price": 20239,
+    "description": "The Chrome 1st Choice Mineral is engineered for superior water purification, combining RO + UV + UF + TDS + Mineral cartridge with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 4.9,
+    "reviews_count": 45
+  },
+  {
+    "id": "chrome-smart-mineral",
+    "brand": "Chrome",
+    "name": "Smart+ Mineral",
+    "pages": [
+      16
+    ],
+    "capacity": "7–8 L",
+    "technology": "RO + UV + UF + TDS + Mineral cartridge",
+    "mrp": 23000,
+    "features": [
+      "7-stage purification",
+      "User manual, installation kit and RO membrane included"
+    ],
+    "category": "Water purifiers",
+    "dimensions": "330 × 230 × 460",
+    "image": "assets/img/products/chrome-smart-mineral.png",
+    "slug": "chrome-smart-mineral",
+    "price": 21160,
+    "description": "The Chrome Smart+ Mineral is engineered for superior water purification, combining RO + UV + UF + TDS + Mineral cartridge with high performance filtration to deliver pure, healthy drinking water for Indian homes.",
+    "stock": 25,
+    "rating": 5,
+    "reviews_count": 48
+  }
+]

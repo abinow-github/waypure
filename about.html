@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#edf9f5">
-  <meta name="description" content="Meet Waypure, a southern India company offering water, air and ozone solutions with a commitment to thoughtful service and lasting customer relationships.">
-  <title>About Waypure | Our Promise of Pure Living</title>
+  <meta name="description" content="Water is part of every day and every stage of life. At WayPure, we believe everyone deserves access to clean, safe water at a cost they can afford.">
+  <title>About Us | Waypure — Eat Pure. Drink Pure. Breathe Pure.</title>
   <link rel="icon" type="image/png" href="assets/img/logo/logo.png">
   <link rel="preload" href="assets/manrope-variable.ttf" as="font" type="font/ttf" crossorigin>
   <script>document.documentElement.classList.add('booting');setTimeout(function(){document.documentElement.classList.remove('booting')},1600);</script>
@@ -21,27 +21,285 @@
   <script defer src="vendor/lenis.min.js"></script>
   <script defer src="preloader.js"></script>
   <script type="module" src="app.js"></script>
+  <link rel="stylesheet" href="ecommerce.css">
+  <link rel="stylesheet" href="mission-vision.css">
+  <script defer src="ecommerce.js"></script>
 </head>
 <body class="inner-page">
   <div class="water-preloader" aria-hidden="true"><div class="preloader-mark"><svg viewBox="0 0 64 80"><defs><clipPath id="loader-drop"><path d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/></clipPath></defs><path class="loader-outline" d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/><g clip-path="url(#loader-drop)"><path class="loader-fill" d="M-64 42Q-48 30-32 42T0 42T32 42T64 42T96 42V90H-64Z"/></g><path class="loader-shine" d="M19 49c0 9 5 14 13 14"/></svg><span class="preloader-ripple"></span></div></span></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="header">
     <a class="brand" href="index.html" aria-label="Waypure home"><img class="brand-logo" src="assets/img/logo/logo.png" alt="" width="1746" height="1724" fetchpriority="high"><span class="brand-name">way<span>pure</span><small>DRINK · EAT · BREATHE PURE</small></span></a>
-    <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html" aria-current="page">About</a><a href="products.html">Products</a><a href="contact.html">Contact</a></nav>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html" aria-current="page">About</a><a href="products.html">Products</a><a href="contact.html">Contact</a><a href="cart.php">Shopping Cart</a><a href="wishlist.php">Saved Wishlist</a></nav>
+        <div class="header-actions">
+      <a href="wishlist.php" class="ecom-nav-btn wishlist-nav-btn" aria-label="Wishlist" title="Wishlist">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="ecom-badge wishlist-badge" style="display:none;">0</span>
+      </a>
+      <button type="button" class="ecom-nav-btn cart-nav-btn" id="open-cart-drawer" aria-label="Shopping Cart" title="Cart">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="ecom-badge cart-badge" style="display:none;">0</span>
+      </button>
+    </div>
     <a href="products.html" class="nav-cta">Explore products <span>↗</span></a>
     <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
   </header>
   <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="index.html">Home</a><a href="about.html" aria-current="page">About</a><a href="products.html">Products</a><a href="contact.html">Contact</a></nav>
-  <main id="main-content"><section class="page-hero about-hero" aria-labelledby="page-title"><div class="page-current" aria-hidden="true"><span></span><span></span><span></span></div><div class="page-hero-copy"><span class="eyebrow"><span class="live-dot"></span> ABOUT WAYPURE</span><h1 id="page-title" data-water-text>Pure living.<br><em>A shared promise.</em></h1><p data-water-text>Water, air and ozone solutions. Thoughtful service. A commitment to the people who choose us.</p></div><div class="page-emblem" aria-hidden="true"><div class="emblem-ring"></div><svg viewBox="0 0 160 200"><defs><clipPath id="page-drop"><path d="M80 8C64 48 20 84 20 124a60 60 0 0 0 120 0C140 84 96 48 80 8Z"/></clipPath></defs><path d="M80 8C64 48 20 84 20 124a60 60 0 0 0 120 0C140 84 96 48 80 8Z" fill="#ffffff80" stroke="#65b3ad"/><g clip-path="url(#page-drop)"><path class="emblem-water" d="M-160 95Q-120 65-80 95T0 95T80 95T160 95T240 95V210H-160Z" fill="#8cc67b"/><path class="emblem-water" d="M-160 115Q-120 90-80 115T0 115T80 115T160 115T240 115V210H-160Z" fill="#359cba"/></g><path d="M42 128q0 36 38 37" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/></svg><span>FOREVER PURE.</span></div><div class="page-hero-bottom"><span>WAYPURE / ABOUT WAYPURE</span><a href="#page-content">Keep exploring <span>↓</span></a></div></section><section class="difference section-space" id="page-content">
-      <div class="section-top reveal"><span class="eyebrow">ABOUT WAYPURE</span><span class="small-index">[ FOREVER PURE ]</span></div>
-      <div class="difference-heading reveal"><h2>Pure solutions.<br>For the way you <em>live.</em></h2><p>Based in southern India, Waypure brings together water purifiers, air purifiers, ozone detoxifiers and filtration services. Our promise is an honest brand, thoughtful products and lasting relationships with our customers.</p></div>
-      <div class="benefit-grid">
-        <article class="benefit reveal"><span class="benefit-index">01</span><div class="benefit-art art-drop"><svg viewBox="0 0 100 110" aria-hidden="true"><path d="M50 5C40 30 12 48 12 72a38 38 0 0 0 76 0C88 48 60 30 50 5Z"/><path class="drop-shine" d="M29 69c0 14 9 23 23 23"/></svg><span class="art-ring"></span></div><h3>Drink pure.</h3><p>Domestic and commercial water purifiers, with RO, UV and mineral options across the catalogue.</p></article>
-        <article class="benefit reveal"><span class="benefit-index">02</span><div class="benefit-art art-flow"><span></span><span></span><span></span></div><h3>Eat pure.</h3><p>Ozone detoxifier solutions are part of the Waypure range. Ask our team about the right model and its use.</p></article>
-        <article class="benefit reveal"><span class="benefit-index">03</span><div class="benefit-art art-sun"><span>✳</span></div><h3>Breathe pure.</h3><p>Air purification is part of our approach to pure living, alongside water and filtration solutions.</p></article>
+  <main id="main-content">
+    <section class="page-hero about-hero" aria-labelledby="page-title">
+      <div class="page-current" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="page-hero-copy">
+        <span class="eyebrow"><span class="live-dot"></span> ABOUT US</span>
+        <h1 id="page-title" data-water-text>Eat Pure. Drink Pure.<br><em>Breathe Pure.</em></h1>
+        <p data-water-text>Water is part of every day and every stage of life. At WayPure, we believe everyone deserves access to clean, safe water at a cost they can afford.</p>
       </div>
-      <div class="company-values"><article class="reveal"><span class="eyebrow">OUR MISSION</span><h3>Relationships that last.</h3><p>Build lifelong customer relationships through outstanding service, continuous evaluation and better products.</p></article><article class="reveal"><span class="eyebrow">OUR VISION</span><h3>Stay true to purity.</h3><p>Keep our word and make pure living part of the everyday, with care for our customers and their trust.</p></article></div>
-    </section><section class="about-story section-space"><span class="eyebrow">THE WAY WE THINK</span><div><h2 data-water-text>Good products.<br><em>Lasting relationships.</em></h2><p>Based in southern India, Waypure brings together water purifiers, air purifiers, ozone detoxifiers and filtration services for homes and businesses. Drink pure. Eat pure. Breathe pure. These words bring our range together.</p><p>Our mission is to build lifelong customer relationships through outstanding service. By listening to feedback, evaluating our work and improving our products, we aim to keep that commitment part of everyday life.</p><a class="pill-button dark" href="contact.html">Connect with our team <span>↗</span></a></div></section></main>
+      <div class="page-emblem" aria-hidden="true">
+        <div class="emblem-ring"></div>
+        <svg viewBox="0 0 160 200"><defs><clipPath id="page-drop"><path d="M80 8C64 48 20 84 20 124a60 60 0 0 0 120 0C140 84 96 48 80 8Z"/></clipPath></defs><path d="M80 8C64 48 20 84 20 124a60 60 0 0 0 120 0C140 84 96 48 80 8Z" fill="#ffffff80" stroke="#65b3ad"/><g clip-path="url(#page-drop)"><path class="emblem-water" d="M-160 95Q-120 65-80 95T0 95T80 95T160 95T240 95V210H-160Z" fill="#8cc67b"/><path class="emblem-water" d="M-160 115Q-120 90-80 115T0 115T80 115T160 115T240 115V210H-160Z" fill="#359cba"/></g><path d="M42 128q0 36 38 37" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/></svg>
+        <span>FOREVER PURE.</span>
+      </div>
+      <div class="page-hero-bottom"><span>WAYPURE / ABOUT US</span><a href="#page-content">Keep exploring <span>↓</span></a></div>
+    </section>
+
+    <section class="difference section-space" id="page-content">
+      <div class="section-top reveal"><span class="eyebrow">ABOUT US</span><span class="small-index">[ FOREVER PURE ]</span></div>
+      <div class="difference-heading reveal">
+        <h2>Clean, safe water.<br>At a cost you can <em>afford.</em></h2>
+        <p>Water is part of every day and every stage of life. At WayPure, we believe everyone deserves access to clean, safe water at a cost they can afford.</p>
+      </div>
+      <div class="benefit-grid">
+        <article class="benefit reveal">
+          <span class="benefit-index">01</span>
+          <div class="benefit-art art-flow"><span></span><span></span><span></span></div>
+          <h3>Eat pure.</h3>
+          <p>Ozone detoxifier solutions designed to purify fruits, vegetables, and everyday food safely and naturally.</p>
+        </article>
+        <article class="benefit reveal">
+          <span class="benefit-index">02</span>
+          <div class="benefit-art art-drop">
+            <svg viewBox="0 0 100 110" aria-hidden="true"><path d="M50 5C40 30 12 48 12 72a38 38 0 0 0 76 0C88 48 60 30 50 5Z"/><path class="drop-shine" d="M29 69c0 14 9 23 23 23"/></svg>
+            <span class="art-ring"></span>
+          </div>
+          <h3>Drink pure.</h3>
+          <p>Water testing, filtration, and purification systems for homes, businesses, and hospitals.</p>
+        </article>
+        <article class="benefit reveal">
+          <span class="benefit-index">03</span>
+          <div class="benefit-art art-sun"><span>✳</span></div>
+          <h3>Breathe pure.</h3>
+          <p>Extending our focus to air purification — taking another step towards healthier spaces for people to live and work.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- MISSION & VISION SECTION -->
+    <section class="mission-vision-section section-space" id="mission-vision" aria-labelledby="mv-heading">
+      <div class="mv-container">
+        
+        <!-- Section Header -->
+        <div class="mv-header reveal">
+          <span class="eyebrow"><span class="live-dot"></span> GUIDING PRINCIPLES</span>
+          <h2 id="mv-heading">Driven by purpose.<br><em>Guided by vision.</em></h2>
+          <p class="mv-header-desc">
+            The standards that shape every water assessment we perform, and the future we are building for homes, businesses, and hospitals.
+          </p>
+        </div>
+
+        <!-- 2 Cards Grid -->
+        <div class="mv-grid">
+          
+          <!-- Card 1: OUR MISSION -->
+          <article class="mv-card mv-card--mission reveal">
+            <div class="mv-card-media">
+              <img src="assets/img/mission-flyer.jpg" alt="Waypure Mission - Thoughtful Water Assessment and Service" class="mv-card-img" loading="lazy">
+              <div class="mv-media-overlay"></div>
+              <div class="mv-card-pill">
+                <span class="mv-pill-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                  </svg>
+                </span>
+                <span class="mv-pill-text">OUR MISSION</span>
+              </div>
+            </div>
+
+            <div class="mv-card-body">
+              <div class="mv-title-row">
+                <div class="mv-icon-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <span class="mv-card-eyebrow">OUR DAILY PURPOSE</span>
+                  <h3 class="mv-card-title">Our Mission</h3>
+                </div>
+              </div>
+
+              <div class="mv-statement-box">
+                <p class="mv-statement">
+                  “To make water purification simple and accessible through thoughtful product selection, site-based water assessment, neat installation and responsive ongoing service.”
+                </p>
+              </div>
+
+              <!-- Feature Points -->
+              <div class="mv-points">
+                <div class="mv-point-item">
+                  <div class="mv-point-check">✓</div>
+                  <div class="mv-point-text">
+                    <strong>Site-Based Water Assessment</strong>
+                    <span>Testing water quality, TDS and source characteristics before recommending a tailored solution.</span>
+                  </div>
+                </div>
+                <div class="mv-point-item">
+                  <div class="mv-point-check">✓</div>
+                  <div class="mv-point-text">
+                    <strong>Thoughtful Product Selection</strong>
+                    <span>Curating premium purifiers with RO, UV, and essential mineral replenishment.</span>
+                  </div>
+                </div>
+                <div class="mv-point-item">
+                  <div class="mv-point-check">✓</div>
+                  <div class="mv-point-text">
+                    <strong>Neat Installation &amp; Care</strong>
+                    <span>Combining practical high performance with a neat, premium aesthetic finish and ongoing care.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Highlight Banner from photo -->
+              <div class="mv-callout-banner">
+                <span class="mv-callout-sparkle">✳</span>
+                <p class="mv-callout-text">
+                  Understand the water. <strong>Choose with care.</strong> Stay connected.
+                </p>
+              </div>
+
+              <!-- Card Footer with Tagline -->
+              <div class="mv-card-footer">
+                <span class="mv-footer-tagline">
+                  Eat Pure. Drink Pure. <strong>Breathe Pure.</strong>
+                </span>
+                <span class="mv-footer-brand">WAYPURE</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: OUR VISION -->
+          <article class="mv-card mv-card--vision reveal">
+            <div class="mv-card-media">
+              <img src="assets/img/vision-flyer.jpg" alt="Waypure Vision - Clean and Safe Water Throughout Life" class="mv-card-img" loading="lazy">
+              <div class="mv-media-overlay"></div>
+              <div class="mv-card-pill">
+                <span class="mv-pill-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 3a9 9 0 0 0 0 18v-18z"/>
+                  </svg>
+                </span>
+                <span class="mv-pill-text">OUR VISION</span>
+              </div>
+            </div>
+
+            <div class="mv-card-body">
+              <div class="mv-title-row">
+                <div class="mv-icon-badge vision-icon-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </div>
+                <div>
+                  <span class="mv-card-eyebrow">THE FUTURE WE ENVISION</span>
+                  <h3 class="mv-card-title">Our Vision</h3>
+                </div>
+              </div>
+
+              <div class="mv-statement-box vision-statement-box">
+                <p class="mv-statement mv-vision-lead">
+                  “A future where every person has access to clean, safe and affordable water throughout their life.”
+                </p>
+              </div>
+
+              <!-- Feature Points -->
+              <div class="mv-points">
+                <div class="mv-point-item">
+                  <div class="mv-point-check vision-check">✓</div>
+                  <div class="mv-point-text">
+                    <strong>Universal Pure Access</strong>
+                    <span>Making clean, healthy drinking water accessible to every person, family, and home.</span>
+                  </div>
+                </div>
+                <div class="mv-point-item">
+                  <div class="mv-point-check vision-check">✓</div>
+                  <div class="mv-point-text">
+                    <strong>Lifelong Family Safety</strong>
+                    <span>From children to elders, safeguarding every drop consumed at every stage of life.</span>
+                  </div>
+                </div>
+                <div class="mv-point-item">
+                  <div class="mv-point-check vision-check">✓</div>
+                  <div class="mv-point-text">
+                    <strong>Affordable Purity</strong>
+                    <span>Providing dependable, high-quality purification systems at an honest, affordable cost.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Highlight Banner from photo -->
+              <div class="mv-callout-banner vision-callout-banner">
+                <span class="mv-callout-sparkle">✨</span>
+                <p class="mv-callout-text">
+                  Safe water for everyone. <strong>For every generation.</strong> Throughout life.
+                </p>
+              </div>
+
+              <!-- Card Footer with Tagline -->
+              <div class="mv-card-footer">
+                <span class="mv-footer-tagline">
+                  Eat Pure. Drink Pure. <strong>Breathe Pure.</strong>
+                </span>
+                <span class="mv-footer-brand">WAYPURE</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="about-story section-space">
+      <div class="about-story-media reveal">
+        <span class="eyebrow" style="display:block; margin-bottom:18px; color:#52813d;">ABOUT US</span>
+        <div class="about-poster-card" style="border-radius:18px; overflow:hidden; box-shadow:0 14px 36px rgba(23,62,56,0.12); border:1px solid #d5e8dc; background:#fff; max-width:320px;">
+          <img src="assets/img/about-flyer.jpg" alt="Waypure - Eat Pure. Drink Pure. Breathe Pure." style="width:100%; height:auto; display:block;">
+        </div>
+      </div>
+      <div class="about-story-content reveal">
+        <h2 data-water-text>Eat Pure. Drink Pure.<br><em>Breathe Pure.</em></h2>
+        <p style="font-size:16px; font-weight:600; color:#173e38; line-height:1.75; margin-bottom:18px;">
+          Water is part of every day and every stage of life. At WayPure, we believe everyone deserves access to clean, safe water at a cost they can afford.
+        </p>
+        <p>
+          This belief inspired our founder, Shabeel, to enter the water purification industry six years ago. His purpose was simple: help people find dependable solutions for the water they use and the families they care for.
+        </p>
+        <p>
+          Today, WayPure provides water testing, filtration, purification, installation and maintenance services for homes, businesses and hospitals. We take time to understand each customer’s water quality, needs and budget before recommending a suitable solution.
+        </p>
+        <p>
+          We also care about how our systems fit into your space. Our installations combine practical performance with a neat, premium finish, supported by ongoing service and care.
+        </p>
+        <p>
+          Guided by <strong>“Eat Pure. Drink Pure. Breathe Pure.”</strong>, we are extending our focus to air purification—taking another step towards healthier spaces for people to live and work.
+        </p>
+        <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-top:28px;">
+          <a class="pill-button dark" href="contact.html">Connect with our team <span>↗</span></a>
+          <a class="pill-button" href="products.html" style="background:#eaf5ef; color:#173e38; border:1px solid #c7dfd2;">Explore All Purifiers <span>→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
   <footer class="water-footer" id="footer">
     <div class="footer-water" aria-hidden="true">
       <svg class="footer-wave footer-wave-back" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 64C120 16 240 16 360 64S600 112 720 64S960 16 1080 64S1320 112 1440 64V160H0Z"/></svg>

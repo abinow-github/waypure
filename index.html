@@ -37,13 +37,25 @@
   <script defer src="vendor/lenis.min.js"></script>
   <script defer src="preloader.js"></script>
   <script type="module" src="app.js"></script>
+  <link rel="stylesheet" href="ecommerce.css">
+  <script defer src="ecommerce.js"></script>
 </head>
 <body>
   <div class="water-preloader" aria-hidden="true"><div class="preloader-mark"><svg viewBox="0 0 64 80"><defs><clipPath id="loader-drop"><path d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/></clipPath></defs><path class="loader-outline" d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/><g clip-path="url(#loader-drop)"><path class="loader-fill" d="M-64 42Q-48 30-32 42T0 42T32 42T64 42T96 42V90H-64Z"/></g><path class="loader-shine" d="M19 49c0 9 5 14 13 14"/></svg><span class="preloader-ripple"></span></div></span></div>
   <a class="skip-link" href="#details">Skip to product details</a>
   <header class="header">
     <a class="brand" href="index.html" aria-label="Waypure home"><img class="brand-logo" src="assets/img/logo/logo.png" alt="" width="1746" height="1724" fetchpriority="high"><span class="brand-name">way<span>pure</span><small>DRINK · EAT · BREATHE PURE</small></span></a>
-    <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html" aria-current="page">Home</a><a href="about.html">About</a><a href="products.html">Products</a><a href="contact.html">Contact</a></nav>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html" aria-current="page">Home</a><a href="about.html">About</a><a href="products.html">Products</a><a href="contact.html">Contact</a><a href="cart.php">Shopping Cart</a><a href="wishlist.php">Saved Wishlist</a></nav>
+        <div class="header-actions">
+      <a href="wishlist.php" class="ecom-nav-btn wishlist-nav-btn" aria-label="Wishlist" title="Wishlist">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="ecom-badge wishlist-badge" style="display:none;">0</span>
+      </a>
+      <button type="button" class="ecom-nav-btn cart-nav-btn" id="open-cart-drawer" aria-label="Shopping Cart" title="Cart">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="ecom-badge cart-badge" style="display:none;">0</span>
+      </button>
+    </div>
     <a href="products.html" class="nav-cta">Explore products <span>↗</span></a>
     <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
   </header>
@@ -315,7 +327,7 @@
     
 <section class="water-life section-space" id="water-life" aria-labelledby="life-title">
   <!-- <div class="life-topline"><span class="eyebrow"><span class="live-dot"></span> THE WATER THAT MAKES US</span><span class="life-edition">LIFE, IN EVERY DROP / 01</span></div> -->
-  <div class="life-layout"><div class="life-copy"><h2 id="life-title">Water within.<br><em>Life, flowing.</em></h2><p class="life-lead">From the first sip of the morning to the moments that keep you moving. Water is woven into your everyday.</p><p>Something so essential deserves thoughtful care. At Waypure, our commitment to quality brings together purification choices, attentive service and continuous improvement.</p><a class="pill-button dark" href="about.html">Meet the Waypure promise <span>↗</span></a><div class="life-signature"><span class="signature-drop">♧</span><span>For you. For your family.<br><strong>For the life you live.</strong></span></div></div>
+  <div class="life-layout"><div class="life-copy"><h2 id="life-title">Water within.<br><em>Life, flowing.</em></h2><p class="life-lead">Water is part of every day and every stage of life. At WayPure, we believe everyone deserves access to clean, safe water at a cost they can afford.</p><p>Inspired by our founder, Shabeel, to help people find dependable solutions for the water they use and the families they care for — guided by Eat Pure, Drink Pure, and Breathe Pure.</p><a class="pill-button dark" href="about.html">Read our About Us story <span>↗</span></a><div class="life-signature"><span class="signature-drop">♧</span><span>For you. For your family.<br><strong>For the life you live.</strong></span></div></div>
   <div class="life-visual"><svg class="life-diagram" viewBox="0 0 640 610" aria-hidden="true">
     <defs><radialGradient id="life-halo"><stop stop-color="#d9f3e1"/><stop offset="1" stop-color="#f4faf5" stop-opacity="0"/></radialGradient><linearGradient id="life-water" x2=".7" y2="1"><stop stop-color="#6bcebe"/><stop offset=".45" stop-color="#1897c0"/><stop offset="1" stop-color="#15588b"/></linearGradient><linearGradient id="life-body" x2="1" y2="1"><stop stop-color="#dcece8"/><stop offset="1" stop-color="#c5dfdf"/></linearGradient>
     <path id="body-one" d="M258 133c-15 0-24 12-24 27 0 12 5 24 13 30v15l-31 14c-12 6-16 16-18 31l-13 89c-2 12 9 15 13 4l21-76 4 45-23 76h26l4 111c0 10 14 11 16 0l9-93h8l9 93c2 11 16 10 16 0l4-111h26l-23-76 4-45 21 76c4 11 15 8 13-4l-13-89c-2-15-6-25-18-31l-31-14v-15c8-6 13-18 13-30 0-15-9-27-24-27Z"/>
@@ -754,6 +766,7 @@
       <!-- <p class="catalogue-count">A selection from our collection · Explore all 56 models on the Products page.</p> -->
       <div class="catalogue-grid" id="catalogue-grid"><!-- PRODUCT_CARDS_START -->
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure q-tone ro + uv + minerals + zinc + copper minerals 15 l 10-stage purification">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="1" data-wishlist-toggle="1" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -766,12 +779,13 @@
       <strong class="card-price">₹19,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-q-tone" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Q-Tone">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure mars ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="2" data-wishlist-toggle="2" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -784,12 +798,13 @@
       <strong class="card-price">₹13,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-mars" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Mars">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure bravo ro + uv + minerals + zinc + copper alkaline 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="3" data-wishlist-toggle="3" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -802,12 +817,13 @@
       <strong class="card-price">₹16,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-bravo" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Bravo">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure onix ro + uv + alkaline minerals + zinc + uf + mtds 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="4" data-wishlist-toggle="4" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -820,12 +836,13 @@
       <strong class="card-price">₹18,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-onix" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Onix">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure glance ro + uv + alkaline minerals 10 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="5" data-wishlist-toggle="5" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -838,12 +855,13 @@
       <strong class="card-price">₹11,890</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-glance" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Glance">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure epic ro + uv + alkaline minerals + uf + mtds 12 l">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="6" data-wishlist-toggle="6" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -856,12 +874,13 @@
       <strong class="card-price">₹16,899</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-epic" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Epic">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure aqua pure ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="7" data-wishlist-toggle="7" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -874,12 +893,13 @@
       <strong class="card-price">₹14,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-aqua-pure" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Aqua Pure">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure klickpro ro + uv + alkaline minerals 9 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="8" data-wishlist-toggle="8" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -892,12 +912,13 @@
       <strong class="card-price">₹13,999</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-klickpro" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Klickpro">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure kairox ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="9" data-wishlist-toggle="9" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -910,12 +931,13 @@
       <strong class="card-price">₹17,899</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-kairox" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Kairox">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure xzora ro + uv + alkaline minerals 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="10" data-wishlist-toggle="10" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -928,12 +950,13 @@
       <strong class="card-price">₹15,499</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-xzora" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Xzora">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure rider ro + uv + minerals + zinc + copper alkaline 10 l led indicators">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="11" data-wishlist-toggle="11" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -946,12 +969,13 @@
       <strong class="card-price">₹19,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-rider" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Rider">Shop Now</button>
     </div>
   </div>
 </article>
 <article class="catalogue-card" data-brand="Waypure" data-category="Water purifiers" data-search="waypure terron ro + uv + minerals + zinc + copper alkaline 15 l 10-stage purification">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="12" data-wishlist-toggle="12" aria-label="Save to Wishlist" title="Save to Wishlist"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
   <div class="card-glaze" aria-hidden="true"></div>
   <div class="card-image-wrap">
     
@@ -964,7 +988,7 @@
       <strong class="card-price">₹23,990</strong>
     </div>
     <div class="card-actions">
-      <button class="card-btn details-btn">Product Details</button>
+      <a href="product.php?id=waypure-terron" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
       <button class="card-btn shop-btn" data-product="Waypure Terron">Shop Now</button>
     </div>
   </div>

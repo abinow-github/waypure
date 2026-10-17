@@ -1,0 +1,484 @@
+/* =====================================================
+   WAYPURE ABOUT PAGE — OUR MISSION & OUR VISION SECTION
+   ===================================================== */
+
+.mission-vision-section {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 80% 20%, rgba(200, 235, 215, 0.5) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(205, 235, 245, 0.45) 0%, transparent 60%),
+              linear-gradient(180deg, #f7faf8 0%, #edf6ef 50%, #f4faf6 100%);
+  border-top: 1px solid #dcebe2;
+  border-bottom: 1px solid #dcebe2;
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+
+.mv-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 6%;
+}
+
+/* Section Header */
+.mv-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 55px;
+}
+
+.mv-header .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: #276721;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.mv-header h2 {
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.15;
+  color: #173e38;
+  letter-spacing: -0.04em;
+  margin: 0 0 16px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+}
+
+.mv-header h2 em {
+  font-style: italic;
+  color: #3d8837;
+}
+
+.mv-header-desc {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #557168;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+/* Cards Grid */
+.mv-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px;
+  align-items: stretch;
+}
+
+/* Card Outer */
+.mv-card {
+  background: #ffffff;
+  border-radius: 26px;
+  border: 1px solid #d5e8dc;
+  box-shadow: 0 16px 45px rgba(23, 62, 56, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+  position: relative;
+}
+
+.mv-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 26px 65px rgba(23, 62, 56, 0.12);
+  border-color: #8bc2a8;
+}
+
+/* Card Visual Media Header */
+.mv-card-media {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  background: #173e38;
+}
+
+.mv-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 36%;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mv-card:hover .mv-card-img {
+  transform: scale(1.06);
+}
+
+.mv-media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(14, 42, 37, 0.15) 0%, rgba(14, 42, 37, 0.55) 100%);
+  pointer-events: none;
+}
+
+/* Floating Badge Pill */
+.mv-card-pill {
+  position: absolute;
+  bottom: 18px;
+  left: 22px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 8px 18px;
+  border-radius: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #173e38;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.mv-card:hover .mv-card-pill {
+  transform: translateY(-2px);
+}
+
+.mv-pill-icon svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  stroke: #2e7d32;
+}
+
+.mv-card--vision .mv-pill-icon svg {
+  stroke: #176f8c;
+}
+
+/* Card Body */
+.mv-card-body {
+  padding: 32px 30px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Title Row */
+.mv-title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.mv-icon-badge {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eaf6ec, #d7eedc);
+  border: 1px solid #c0e5cb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #276721;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(39, 103, 33, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.mv-icon-badge svg {
+  width: 24px;
+  height: 24px;
+}
+
+.vision-icon-badge {
+  background: linear-gradient(135deg, #e6f5fa, #ccebf4);
+  border-color: #b3dfec;
+  color: #156b87;
+  box-shadow: 0 4px 14px rgba(21, 107, 135, 0.12);
+}
+
+.mv-card:hover .mv-icon-badge {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.mv-card-eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #71887e;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.mv-card-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #173e38;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Statement Quote Box */
+.mv-statement-box {
+  background: #f8fbf9;
+  border-left: 4px solid #3d8837;
+  border-radius: 0 14px 14px 0;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.vision-statement-box {
+  border-left-color: #359cba;
+  background: #f6fbfa;
+}
+
+.mv-statement {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #173e38;
+  font-weight: 600;
+  margin: 0;
+}
+
+.mv-vision-lead {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #123e35;
+}
+
+/* Feature Points */
+.mv-points {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.mv-point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.mv-point-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ecf7ed;
+  border: 1px solid #cbe9cf;
+  color: #276721;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.vision-check {
+  background: #eaf6fa;
+  border-color: #c9eaf2;
+  color: #176f8c;
+}
+
+.mv-point-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #49635b;
+}
+
+.mv-point-text strong {
+  display: block;
+  color: #173e38;
+  font-weight: 700;
+  font-size: 13.5px;
+  margin-bottom: 2px;
+}
+
+/* Callout Highlight Banner */
+.mv-callout-banner {
+  background: linear-gradient(135deg, #edf7ee, #e2f2e5);
+  border: 1px solid #cbe7d0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.vision-callout-banner {
+  background: linear-gradient(135deg, #e8f5f9, #d9eff5);
+  border-color: #c4e5ee;
+}
+
+.mv-callout-sparkle {
+  color: #2e7d32;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.vision-callout-banner .mv-callout-sparkle {
+  color: #176f8c;
+}
+
+.mv-callout-text {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #1e4f44;
+}
+
+.mv-callout-text strong {
+  font-weight: 700;
+  color: #173e38;
+}
+
+/* Card Footer with Tagline */
+.mv-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid #edf4f0;
+  font-size: 11px;
+}
+
+.mv-footer-tagline {
+  color: #557168;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.mv-footer-tagline strong {
+  color: #276721;
+  font-weight: 700;
+}
+
+.mv-footer-brand {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #8aa398;
+}
+
+/* =====================================================
+   RESPONSIVE STYLES (TABLET & MOBILE)
+   ===================================================== */
+@media (max-width: 900px) {
+  .mission-vision-section {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .mv-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .mv-card-media {
+    height: 220px;
+  }
+
+  .mv-card-body {
+    padding: 26px 22px 22px;
+  }
+
+  .mv-card-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mission-vision-section {
+    padding-top: 55px;
+    padding-bottom: 55px;
+  }
+
+  .mv-header {
+    margin-bottom: 35px;
+  }
+
+  .mv-header h2 {
+    font-size: 28px;
+  }
+
+  .mv-header-desc {
+    font-size: 13px;
+  }
+
+  .mv-card-media {
+    height: 190px;
+  }
+
+  .mv-card-pill {
+    bottom: 14px;
+    left: 16px;
+    padding: 6px 14px;
+    font-size: 10px;
+  }
+
+  .mv-card-body {
+    padding: 22px 18px 18px;
+  }
+
+  .mv-title-row {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .mv-icon-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .mv-icon-badge svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mv-card-title {
+    font-size: 21px;
+  }
+
+  .mv-statement-box {
+    padding: 14px 16px;
+    margin-bottom: 18px;
+  }
+
+  .mv-statement {
+    font-size: 13.5px;
+  }
+
+  .mv-vision-lead {
+    font-size: 14.5px;
+  }
+
+  .mv-point-text {
+    font-size: 12px;
+  }
+
+  .mv-point-text strong {
+    font-size: 12.5px;
+  }
+
+  .mv-callout-banner {
+    padding: 12px 14px;
+  }
+
+  .mv-callout-text {
+    font-size: 11.5px;
+  }
+
+  .mv-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
