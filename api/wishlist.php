@@ -1,103 +1,111 @@
 <?php
+declare(strict_types=1);
+
 /**
- * Waypure Wishlist API
- * Actions: get, toggle, remove, move_to_cart
+ * Waypure Wishlist AJAX API Endpoint
+ * Pure Core PHP 8.4+ Architecture
  */
-require_once __DIR__ . '/../db.php';
+
+require_once __DIR__ . '/../includes/functions.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
 try {
     $pdo = getDb();
-    $sessionId = getSessionId();
+    $sessionId = getVisitorSessionId();
 
     $action = $_GET['action'] ?? $_POST['action'] ?? 'get';
-    $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-
-    if ($action === 'get') {
-        $summary = getWishlistSummary($pdo, $sessionId);
-        jsonResponse([
-            'success' => true,
-            'wishlist' => $summary
-        ]);
+    $rawInput = file_get_contents('php://input');
+    $input = json_decode($rawInput, true);
+    if (!is_array($input)) {
+        $input = $_POST;
     }
 
-    if ($action === 'toggle') {
-        $productId = (int)($input['product_id'] ?? 0);
-        if ($productId <= 0) {
-            jsonResponse(['success' => false, 'message' => 'Invalid product ID'], 400);
-        }
+    match ($action) {
+        'get' => (function() use ($pdo, $sessionId) {
+            $summary = getWishlistSummary($pdo, $sessionId);
+            jsonResponse([
+                'success' => true,
+                'wishlist' => $summary
+            ]);
+        })(),
 
-        // Check if already in wishlist
-        $check = $pdo->prepare("SELECT id FROM `wishlist` WHERE `session_id` = :s AND `product_id` = :p");
-        $check->execute([':s' => $sessionId, ':p' => $productId]);
-        $existing = $check->fetch();
+        'toggle' => (function() use ($pdo, $sessionId, $input) {
+            $productId = (int)($input['product_id'] ?? 0);
+            if ($productId <= 0) {
+                jsonResponse(['success' => false, 'message' => 'Invalid product identifier.'], 400);
+            }
 
-        if ($existing) {
-            $del = $pdo->prepare("DELETE FROM `wishlist` WHERE `session_id` = :s AND `product_id` = :p");
-            $del->execute([':s' => $sessionId, ':p' => $productId]);
-            $added = false;
-            $msg = 'Removed from wishlist';
-        } else {
-            $ins = $pdo->prepare("INSERT INTO `wishlist` (`session_id`, `product_id`) VALUES (:s, :p)");
-            $ins->execute([':s' => $sessionId, ':p' => $productId]);
-            $added = true;
-            $msg = 'Added to wishlist ❤️';
-        }
+            // Check if already in wishlist
+            $check = $pdo->prepare("SELECT id FROM `wishlist` WHERE `session_id` = :s AND `product_id` = :p");
+            $check->execute([':s' => $sessionId, ':p' => $productId]);
+            $existing = $check->fetch();
 
-        $summary = getWishlistSummary($pdo, $sessionId);
-        jsonResponse([
-            'success' => true,
-            'added' => $added,
-            'message' => $msg,
-            'wishlist' => $summary
-        ]);
-    }
+            if ($existing) {
+                $del = $pdo->prepare("DELETE FROM `wishlist` WHERE `session_id` = :s AND `product_id` = :p");
+                $del->execute([':s' => $sessionId, ':p' => $productId]);
+                $added = false;
+                $msg = 'Removed from wishlist';
+            } else {
+                $ins = $pdo->prepare("INSERT INTO `wishlist` (`session_id`, `product_id`) VALUES (:s, :p)");
+                $ins->execute([':s' => $sessionId, ':p' => $productId]);
+                $added = true;
+                $msg = 'Added to wishlist ❤️';
+            }
 
-    if ($action === 'remove') {
-        $productId = (int)($input['product_id'] ?? 0);
-        if ($productId > 0) {
-            $del = $pdo->prepare("DELETE FROM `wishlist` WHERE `session_id` = :s AND `product_id` = :p");
-            $del->execute([':s' => $sessionId, ':p' => $productId]);
-        }
+            $summary = getWishlistSummary($pdo, $sessionId);
+            jsonResponse([
+                'success' => true,
+                'added' => $added,
+                'message' => $msg,
+                'wishlist' => $summary
+            ]);
+        })(),
 
-        $summary = getWishlistSummary($pdo, $sessionId);
-        jsonResponse([
-            'success' => true,
-            'message' => 'Removed from wishlist',
-            'wishlist' => $summary
-        ]);
-    }
+        'remove' => (function() use ($pdo, $sessionId, $input) {
+            $productId = (int)($input['product_id'] ?? 0);
+            if ($productId > 0) {
+                $del = $pdo->prepare("DELETE FROM `wishlist` WHERE `session_id` = :s AND `product_id` = :p");
+                $del->execute([':s' => $sessionId, ':p' => $productId]);
+            }
 
-    if ($action === 'move_to_cart') {
-        $productId = (int)($input['product_id'] ?? 0);
-        if ($productId > 0) {
-            // Add to cart
-            $cartStmt = $pdo->prepare("
-                INSERT INTO `cart` (`session_id`, `product_id`, `quantity`)
-                VALUES (:s, :p, 1)
-                ON DUPLICATE KEY UPDATE `quantity` = `quantity` + 1
-            ");
-            $cartStmt->execute([':s' => $sessionId, ':p' => $productId]);
+            $summary = getWishlistSummary($pdo, $sessionId);
+            jsonResponse([
+                'success' => true,
+                'message' => 'Removed from wishlist',
+                'wishlist' => $summary
+            ]);
+        })(),
 
-            // Remove from wishlist
-            $del = $pdo->prepare("DELETE FROM `wishlist` WHERE `session_id` = :s AND `product_id` = :p");
-            $del->execute([':s' => $sessionId, ':p' => $productId]);
-        }
+        'move_to_cart' => (function() use ($pdo, $sessionId, $input) {
+            $productId = (int)($input['product_id'] ?? 0);
+            if ($productId > 0) {
+                $cartStmt = $pdo->prepare("
+                    INSERT INTO `cart` (`session_id`, `product_id`, `quantity`)
+                    VALUES (:s, :p, 1)
+                    ON DUPLICATE KEY UPDATE `quantity` = `quantity` + 1
+                ");
+                $cartStmt->execute([':s' => $sessionId, ':p' => $productId]);
 
-        $wSummary = getWishlistSummary($pdo, $sessionId);
-        $cSummary = getCartSummary($pdo, $sessionId);
+                $del = $pdo->prepare("DELETE FROM `wishlist` WHERE `session_id` = :s AND `product_id` = :p");
+                $del->execute([':s' => $sessionId, ':p' => $productId]);
+            }
 
-        jsonResponse([
-            'success' => true,
-            'message' => 'Moved to cart 🛒',
-            'wishlist' => $wSummary,
-            'cart' => $cSummary
-        ]);
-    }
+            $wSummary = getWishlistSummary($pdo, $sessionId);
+            $cSummary = getCartSummary($pdo, $sessionId);
 
-    jsonResponse(['success' => false, 'message' => 'Unknown action'], 400);
+            jsonResponse([
+                'success' => true,
+                'message' => 'Moved to cart 🛒',
+                'wishlist' => $wSummary,
+                'cart' => $cSummary
+            ]);
+        })(),
 
-} catch (Exception $e) {
-    jsonResponse(['success' => false, 'message' => $e->getMessage()], 500);
+        default => jsonResponse(['success' => false, 'message' => 'Unknown action'], 400)
+    };
+
+} catch (Throwable $e) {
+    error_log('[Waypure Wishlist API Error] ' . $e->getMessage());
+    jsonResponse(['success' => false, 'message' => 'Error processing wishlist.'], 500);
 }

@@ -1,123 +1,140 @@
 <?php
+declare(strict_types=1);
+
 /**
- * Waypure Cart API
- * Actions: get, add, update, remove, clear
+ * Waypure Cart AJAX API Endpoint
+ * Pure Core PHP 8.4+ Architecture
  */
-require_once __DIR__ . '/../db.php';
+
+require_once __DIR__ . '/../includes/functions.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
 try {
     $pdo = getDb();
-    $sessionId = getSessionId();
+    $sessionId = getVisitorSessionId();
 
     $action = $_GET['action'] ?? $_POST['action'] ?? 'get';
-    $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-
-    if ($action === 'get') {
-        $summary = getCartSummary($pdo, $sessionId);
-        jsonResponse([
-            'success' => true,
-            'cart' => $summary
-        ]);
+    $rawInput = file_get_contents('php://input');
+    $input = json_decode($rawInput, true);
+    if (!is_array($input)) {
+        $input = $_POST;
     }
 
-    if ($action === 'add') {
-        $productId = (int)($input['product_id'] ?? 0);
-        $qty = max(1, (int)($input['quantity'] ?? 1));
-
-        if ($productId <= 0) {
-            jsonResponse(['success' => false, 'message' => 'Invalid product ID'], 400);
+    // CSRF validation for mutating POST requests if token supplied
+    if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+        $clientToken = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? ($input['csrf_token'] ?? null);
+        if ($clientToken !== null && !verifyCsrfToken((string)$clientToken)) {
+            jsonResponse(['success' => false, 'message' => 'Invalid security token.'], 403);
         }
-
-        // Verify product exists
-        $pStmt = $pdo->prepare("SELECT id, name, price, stock FROM `products` WHERE id = :id");
-        $pStmt->execute([':id' => $productId]);
-        $prod = $pStmt->fetch();
-        if (!$prod) {
-            jsonResponse(['success' => false, 'message' => 'Product not found'], 404);
-        }
-
-        // Insert or update on duplicate key
-        $stmt = $pdo->prepare("
-            INSERT INTO `cart` (`session_id`, `product_id`, `quantity`)
-            VALUES (:session_id, :product_id, :quantity)
-            ON DUPLICATE KEY UPDATE `quantity` = `quantity` + :quantity_inc
-        ");
-        $stmt->execute([
-            ':session_id' => $sessionId,
-            ':product_id' => $productId,
-            ':quantity' => $qty,
-            ':quantity_inc' => $qty
-        ]);
-
-        $summary = getCartSummary($pdo, $sessionId);
-        jsonResponse([
-            'success' => true,
-            'message' => "{$prod['name']} added to cart",
-            'cart' => $summary
-        ]);
     }
 
-    if ($action === 'update') {
-        $productId = (int)($input['product_id'] ?? 0);
-        $qty = (int)($input['quantity'] ?? 1);
+    match ($action) {
+        'add' => (function() use ($pdo, $sessionId, $input) {
+            $productId = (int)($input['product_id'] ?? 0);
+            $quantity = max(1, (int)($input['quantity'] ?? 1));
 
-        if ($productId <= 0) {
-            jsonResponse(['success' => false, 'message' => 'Invalid product ID'], 400);
-        }
+            if ($productId <= 0) {
+                jsonResponse(['success' => false, 'message' => 'Invalid product identifier.'], 400);
+            }
 
-        if ($qty <= 0) {
-            $stmt = $pdo->prepare("DELETE FROM `cart` WHERE `session_id` = :session_id AND `product_id` = :product_id");
-            $stmt->execute([':session_id' => $sessionId, ':product_id' => $productId]);
-        } else {
+            // Check if product exists and is active
+            $pStmt = $pdo->prepare("SELECT id, name, brand, stock, price FROM `products` WHERE id = :id AND status = 'active' LIMIT 1");
+            $pStmt->execute([':id' => $productId]);
+            $product = $pStmt->fetch();
+
+            if (!$product) {
+                jsonResponse(['success' => false, 'message' => 'Product not found or unavailable.'], 404);
+            }
+
+            // Upsert into cart
             $stmt = $pdo->prepare("
-                UPDATE `cart` SET `quantity` = :quantity 
-                WHERE `session_id` = :session_id AND `product_id` = :product_id
+                INSERT INTO `cart` (`session_id`, `product_id`, `quantity`)
+                VALUES (:s, :p, :q)
+                ON DUPLICATE KEY UPDATE `quantity` = `quantity` + VALUES(`quantity`), `updated_at` = CURRENT_TIMESTAMP
             ");
             $stmt->execute([
-                ':quantity' => $qty,
-                ':session_id' => $sessionId,
-                ':product_id' => $productId
+                ':s' => $sessionId,
+                ':p' => $productId,
+                ':q' => $quantity
             ]);
-        }
 
-        $summary = getCartSummary($pdo, $sessionId);
-        jsonResponse([
-            'success' => true,
-            'cart' => $summary
-        ]);
-    }
+            $cart = getCartSummary($pdo, $sessionId);
+            jsonResponse([
+                'success' => true,
+                'message' => sprintf('Added %s %s to your cart! 🛒', e($product['brand']), e($product['name'])),
+                'cart' => $cart
+            ]);
+        })(),
 
-    if ($action === 'remove') {
-        $productId = (int)($input['product_id'] ?? 0);
-        if ($productId > 0) {
-            $stmt = $pdo->prepare("DELETE FROM `cart` WHERE `session_id` = :session_id AND `product_id` = :product_id");
-            $stmt->execute([':session_id' => $sessionId, ':product_id' => $productId]);
-        }
+        'update', 'update_qty' => (function() use ($pdo, $sessionId, $input) {
+            $productId = (int)($input['product_id'] ?? 0);
+            $quantity = (int)($input['quantity'] ?? 1);
 
-        $summary = getCartSummary($pdo, $sessionId);
-        jsonResponse([
-            'success' => true,
-            'message' => 'Item removed from cart',
-            'cart' => $summary
-        ]);
-    }
+            if ($productId <= 0) {
+                jsonResponse(['success' => false, 'message' => 'Invalid product identifier.'], 400);
+            }
 
-    if ($action === 'clear') {
-        $stmt = $pdo->prepare("DELETE FROM `cart` WHERE `session_id` = :session_id");
-        $stmt->execute([':session_id' => $sessionId]);
+            if ($quantity <= 0) {
+                $del = $pdo->prepare("DELETE FROM `cart` WHERE session_id = :s AND product_id = :p");
+                $del->execute([':s' => $sessionId, ':p' => $productId]);
+            } else {
+                $upd = $pdo->prepare("UPDATE `cart` SET quantity = :q WHERE session_id = :s AND product_id = :p");
+                $upd->execute([':q' => $quantity, ':s' => $sessionId, ':p' => $productId]);
+            }
 
-        $summary = getCartSummary($pdo, $sessionId);
-        jsonResponse([
-            'success' => true,
-            'message' => 'Cart cleared',
-            'cart' => $summary
-        ]);
-    }
+            $cart = getCartSummary($pdo, $sessionId);
+            jsonResponse([
+                'success' => true,
+                'message' => 'Cart updated.',
+                'cart' => $cart
+            ]);
+        })(),
 
-    jsonResponse(['success' => false, 'message' => 'Unknown action'], 400);
+        'remove' => (function() use ($pdo, $sessionId, $input) {
+            $productId = (int)($input['product_id'] ?? 0);
+            if ($productId <= 0) {
+                jsonResponse(['success' => false, 'message' => 'Invalid product identifier.'], 400);
+            }
 
-} catch (Exception $e) {
-    jsonResponse(['success' => false, 'message' => $e->getMessage()], 500);
+            $del = $pdo->prepare("DELETE FROM `cart` WHERE session_id = :s AND product_id = :p");
+            $del->execute([':s' => $sessionId, ':p' => $productId]);
+
+            $cart = getCartSummary($pdo, $sessionId);
+            jsonResponse([
+                'success' => true,
+                'message' => 'Item removed from cart.',
+                'cart' => $cart
+            ]);
+        })(),
+
+        'clear' => (function() use ($pdo, $sessionId) {
+            $del = $pdo->prepare("DELETE FROM `cart` WHERE session_id = :s");
+            $del->execute([':s' => $sessionId]);
+
+            $cart = getCartSummary($pdo, $sessionId);
+            jsonResponse([
+                'success' => true,
+                'message' => 'Cart cleared.',
+                'cart' => $cart
+            ]);
+        })(),
+
+        'get', 'get_cart' => (function() use ($pdo, $sessionId) {
+            $cart = getCartSummary($pdo, $sessionId);
+            jsonResponse([
+                'success' => true,
+                'cart' => $cart
+            ]);
+        })(),
+
+        default => jsonResponse(['success' => false, 'message' => 'Invalid cart action specified.'], 400)
+    };
+
+} catch (Throwable $e) {
+    error_log('[Waypure Cart API Error] ' . $e->getMessage());
+    jsonResponse([
+        'success' => false,
+        'message' => 'An error occurred while managing your cart.'
+    ], 500);
 }

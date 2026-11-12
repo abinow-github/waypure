@@ -1,8 +1,10 @@
 <?php
-require_once __DIR__ . '/db.php';
+declare(strict_types=1);
+
+require_once __DIR__ . '/includes/functions.php';
 
 $pdo = getDb();
-$sessionId = getSessionId();
+$sessionId = getVisitorSessionId();
 $wishlist = getWishlistSummary($pdo, $sessionId);
 ?>
 <!doctype html>

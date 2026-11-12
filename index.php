@@ -1,0 +1,1595 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * Waypure Dynamic E-Commerce & WhatsApp Platform Homepage
+ * Pure Core PHP 8.4+ Architecture
+ */
+
+require_once __DIR__ . '/includes/functions.php';
+
+$pdo = getDb();
+$sessionId = getVisitorSessionId();
+$cartSummary = getCartSummary($pdo, $sessionId);
+$wishlistSummary = getWishlistSummary($pdo, $sessionId);
+
+// 1. Fetch Dynamic Banners
+$bStmt = $pdo->query("SELECT * FROM `banners` WHERE status = 'active' ORDER BY sort_order ASC, id ASC");
+$banners = $bStmt->fetchAll();
+if (empty($banners)) {
+    $banners = [
+        [
+            'id' => 1,
+            'title' => "What's really in your\ndaily water?",
+            'subtitle' => 'PROTECT YOUR FAMILY',
+            'description' => "Bacteria, lead, arsenic and fluoride hide in plain sight. Your family deserves water that's truly tested and truly pure.",
+            'button_text' => 'Explore Purifiers',
+            'button_url' => '#details',
+            'image' => 'assets/img/hero-slide-2.jpg',
+            'theme' => 'dark'
+        ],
+        [
+            'id' => 2,
+            'title' => "Drink pure. Eat pure.\nBreathe pure.",
+            'subtitle' => 'THE WAYPURE PROMISE',
+            'description' => "RO + UV + Mineral purification. Premium models from Waypure, Aquaguard, Merlin and more — for every home in Kerala.",
+            'button_text' => 'Explore Collection',
+            'button_url' => '#waypure-products',
+            'image' => 'assets/img/hero-slide-3.jpg',
+            'theme' => 'light'
+        ]
+    ];
+}
+
+// 2. Fetch Active Products for Catalogue Grid
+$prodStmt = $pdo->query("SELECT * FROM `products` WHERE status = 'active' ORDER BY is_featured DESC, id ASC");
+$catalogueProducts = $prodStmt->fetchAll();
+
+// 3. Fetch Showcase Products for Home, Premium, Commercial, Specialty tabs
+$homeProds = $pdo->query("SELECT * FROM `products` WHERE status = 'active' AND (slug IN ('waypure-mars','waypure-glance','waypure-klickpro','waypure-aqua-pure','waypure-xzora','waypure-epic') OR brand = 'Waypure') LIMIT 6")->fetchAll();
+$premiumProds = $pdo->query("SELECT * FROM `products` WHERE status = 'active' AND (slug IN ('waypure-q-tone','waypure-bravo','waypure-onix','waypure-aqua-nine-copper','waypure-aqua-clan','waypure-roma') OR brand = 'Waypure') LIMIT 6")->fetchAll();
+$commercialProds = $pdo->query("SELECT * FROM `products` WHERE status = 'active' AND (slug IN ('waypure-35-lph-commercial','waypure-plus-dispenser','waypure-water-cooler','waypure-jade','waypure-waternet') OR category LIKE '%Commercial%') LIMIT 5")->fetchAll();
+$specialProds = $pdo->query("SELECT * FROM `products` WHERE status = 'active' AND (slug IN ('waypure-utc-under-sink','waypure-4-stage','waypure-iron-remover','waypure-purosis','waypure-terron','waypure-water-lily') OR category LIKE '%Dispensers%' OR category LIKE '%treatment%') LIMIT 6")->fetchAll();
+
+$currentPage = 'home';
+$pageTitle = 'Waypure | Water Purifiers & Pure Living Solutions';
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf9f5">
+  <meta name="description" content="Waypure — drink pure, eat pure, breathe pure. Explore water purifiers, air purifiers, ozone detoxifiers and water treatment solutions in Angadipuram and Pulamanthole.">
+  <title>Waypure | Water Purifiers & Pure Living Solutions</title>
+<!-- favicon -->
+ <link rel="icon" type="image/png" href="<?= BASE_URL ?>favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="<?= BASE_URL ?>favicon/favicon.svg" />
+<link rel="shortcut icon" href="<?= BASE_URL ?>favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="<?= BASE_URL ?>favicon/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Waypure" />
+<link rel="manifest" href="<?= BASE_URL ?>favicon/site.webmanifest" />
+<!-- favicon -->
+
+  <!-- <link rel="icon" type="image/png" href="assets/img/logo/logo.png"> -->
+  <link rel="preload" href="assets/manrope-variable.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="modulepreload" href="scene.js">
+  <script>document.documentElement.classList.add('booting');setTimeout(function(){document.documentElement.classList.remove('booting')},1600);</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="<?= BASE_URL ?>styles.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>water-theme.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>water-effects.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>fresh-water.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>waypure.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>hero-awareness.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>wq-story.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>pages.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+  <script defer src="vendor/gsap.min.js"></script>
+  <script defer src="vendor/ScrollTrigger.min.js"></script>
+  <script defer src="vendor/aos.js"></script>
+  <script defer src="vendor/lenis.min.js"></script>
+  <script defer src="preloader.js"></script>
+  <script type="module" src="app.js"></script>
+  <link rel="stylesheet" href="<?= BASE_URL ?>ecommerce.css">
+  <script defer src="ecommerce.js"></script>
+</head>
+<body>
+  <div class="water-preloader" aria-hidden="true"><div class="preloader-mark"><svg viewBox="0 0 64 80"><defs><clipPath id="loader-drop"><path d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/></clipPath></defs><path class="loader-outline" d="M32 3C26 18 8 34 8 49a24 24 0 0 0 48 0C56 34 38 18 32 3Z"/><g clip-path="url(#loader-drop)"><path class="loader-fill" d="M-64 42Q-48 30-32 42T0 42T32 42T64 42T96 42V90H-64Z"/></g><path class="loader-shine" d="M19 49c0 9 5 14 13 14"/></svg><span class="preloader-ripple"></span></div></span></div>
+  <a class="skip-link" href="#details">Skip to product details</a>
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="Waypure home"><img class="brand-logo" src="assets/img/logo/logo.png" alt="" width="1746" height="1724" fetchpriority="high"><span class="brand-name">way<span>pure</span><small>DRINK · EAT · BREATHE PURE</small></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html" aria-current="page">Home</a><a href="about.html">About</a><a href="products.html">Products</a><a href="contact.html">Contact</a><a href="cart.php">Shopping Cart</a><a href="wishlist.php">Saved Wishlist</a></nav>
+        <div class="header-actions">
+      <a href="wishlist.php" class="ecom-nav-btn wishlist-nav-btn" aria-label="Wishlist" title="Wishlist">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="ecom-badge wishlist-badge" style="<?= ($wishlistSummary['count'] ?? 0) > 0 ? 'display:flex;' : 'display:none;' ?>"><?= $wishlistSummary['count'] ?? 0 ?></span>
+      </a>
+      <button type="button" class="ecom-nav-btn cart-nav-btn" id="open-cart-drawer" aria-label="Shopping Cart" title="Cart">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="ecom-badge cart-badge" style="<?= ($cartSummary['count'] ?? 0) > 0 ? 'display:flex;' : 'display:none;' ?>"><?= $cartSummary['count'] ?? 0 ?></span>
+      </button>
+    </div>
+    <a href="products.html" class="nav-cta">Explore products <span>↗</span></a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+  </header>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="index.html" aria-current="page">Home</a><a href="about.html">About</a><a href="products.html">Products</a><a href="contact.html">Contact</a></nav>
+  <main>
+    <!-- HERO BANNER SLIDER -->
+    <section class="hero-slider-section" id="home" aria-label="Waypure hero banner">
+      <?php foreach ($banners as $idx => $b): ?>
+        <div class="hero-slide <?= $idx === 0 ? 'is-active' : '' ?> <?= ($b['theme'] ?? 'dark') === 'light' ? 'hero-slide--light' : '' ?>" data-slide="<?= $idx ?>">
+          <img class="hero-slide__img" src="<?= e(assetUrl($b['image'])) ?>" alt="<?= e($b['title']) ?>" <?= $idx === 0 ? 'fetchpriority="high"' : '' ?>>
+          <div class="hero-slide__overlay"></div>
+          <div class="hero-slide__content">
+            <?php if (!empty($b['subtitle'])): ?>
+              <div class="hero-slide__eyebrow"><span class="dot-live"></span> <?= e($b['subtitle']) ?></div>
+            <?php endif; ?>
+            <?php if ($idx === 0): ?>
+              <h1 class="hero-slide__title"><?= nl2br(e($b['title'])) ?></h1>
+            <?php else: ?>
+              <h2 class="hero-slide__title"><?= nl2br(e($b['title'])) ?></h2>
+            <?php endif; ?>
+            <p class="hero-slide__desc"><?= e($b['description']) ?></p>
+            <?php if (!empty($b['button_text'])): ?>
+              <a href="<?= e($b['button_url'] ?: '#details') ?>" class="pill-button <?= ($b['theme'] ?? 'dark') === 'light' ? 'dark' : '' ?>" style="margin-top: 24px; display: inline-flex;">
+                <?= e($b['button_text']) ?> <span class="button-icon">↗</span>
+              </a>
+            <?php endif; ?>
+          </div>
+        </div>
+      <?php endforeach; ?>
+
+      <!-- Arrows -->
+      <div class="hero-slider__arrows" aria-hidden="true">
+        <button class="hs-arrow" id="hs-prev" aria-label="Previous slide">&#8592;</button>
+        <button class="hs-arrow" id="hs-next" aria-label="Next slide">&#8594;</button>
+      </div>
+
+      <!-- Dots -->
+      <div class="hero-slider__controls" role="tablist" aria-label="Slider navigation">
+        <?php foreach ($banners as $idx => $b): ?>
+          <button class="hs-dot <?= $idx === 0 ? 'is-active' : '' ?>" data-slide="<?= $idx ?>" aria-label="Slide <?= $idx + 1 ?>" aria-selected="<?= $idx === 0 ? 'true' : 'false' ?>"></button>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="hero-slider__progress" id="hs-progress"></div>
+    </section>
+    <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>Drink pure</span><i>✳</i><span>Eat pure</span><i>✳</i><span>Breathe pure</span><i>✳</i><span>Drink pure</span><i>✳</i><span>Eat pure</span><i>✳</i><span>Breathe pure</span><i>✳</i></div></div>
+
+    <!-- =====================================================
+         WATER QUALITY SCROLL STORY
+         A cinematic scroll-pinned awareness journey
+         5 × 100vh phases — glass animates as you scroll
+         ===================================================== -->
+         <style>
+          @media(max-width: 768px){
+            .wq-story .wq-eyebrow{
+              display: none !important;
+            }
+          }
+         </style>
+    <section class="wq-story" id="water-awareness" aria-label="Water contamination awareness">
+
+      <div class="wq-sticky">
+        <!-- Dynamic background -->
+        <div class="wq-bg" id="wq-bg"></div>
+
+        <!-- Section label -->
+        <!-- <div class="wq-section-label" aria-hidden="true">◒ WAYPURE · WATER AWARENESS</div> -->
+
+        <!-- Solution background image (phase 4 only) -->
+        <div class="wq-solution-reveal" id="wq-sol-reveal" aria-hidden="true">
+          <img src="assets/img/awareness-solution.jpg" alt="">
+        </div>
+
+        <!-- Clean water rings (phase 4) -->
+        <div id="wq-clean-rings" style="position:absolute;inset:0;pointer-events:none;z-index:4;display:none;" aria-hidden="true">
+          <div class="wq-clean-ring"></div>
+          <div class="wq-clean-ring"></div>
+          <div class="wq-clean-ring"></div>
+        </div>
+
+        <!-- Main 3-column layout -->
+        <div class="wq-scene">
+
+          <!-- LEFT: Text panels -->
+           <style>
+            @media(max-width:768px){
+              .wq-panel-wrap .pill-button{
+                display: none !important;
+              }
+            }
+           </style>
+          <div class="wq-panel-wrap">
+
+            <div class="wq-panel wq-panel--active" data-phase="0">
+              <span class="wq-eyebrow"><span class="wq-eyebrow-dot"></span> Every morning. Every day.</span>
+              <h2>Your glass of water<br><span class="wq-safe">looks clean.</span></h2>
+              <p>We trust it without question. We drink it. We give it to our children. But what if what you can't see is slowly harming your family?</p>
+              <div class="wq-scroll-hint">↓ Scroll to reveal what's inside</div>
+            </div>
+
+            <div class="wq-panel" data-phase="1">
+              <span class="wq-eyebrow"><span class="wq-eyebrow-dot"></span> Biological Threat</span>
+              <h2>Bacteria &amp; viruses<br><span class="wq-warn">in every sip.</span></h2>
+              <p>E. coli, cholera, typhoid and hepatitis pathogens thrive in unfiltered water. They are completely invisible — but the damage is real.</p>
+              <p style="font-size:0.82rem;color:rgba(255,90,50,0.8);">⚠ Boiling alone removes only some threats. RO filtration removes all.</p>
+            </div>
+
+            <div class="wq-panel" data-phase="2">
+              <span class="wq-eyebrow"><span class="wq-eyebrow-dot"></span> Chemical Contamination</span>
+              <h2>Lead, arsenic &amp;<br><span class="wq-warn">heavy metals.</span></h2>
+              <p>Old pipes leach lead and rust every day. Groundwater across Kerala carries arsenic, fluoride and nitrates — odourless, tasteless, invisible, deadly long-term.</p>
+              <p style="font-size:0.82rem;color:rgba(255,90,50,0.8);">⚠ These build up in your organs over years. Children are most at risk.</p>
+            </div>
+
+            <div class="wq-panel" data-phase="3">
+              <span class="wq-eyebrow"><span class="wq-eyebrow-dot"></span> The Reality in India</span>
+              <h2><span class="wq-warn">70%</span> of Indian<br>families drink this.</h2>
+              <p>2.1 billion people worldwide consume contaminated water daily. 500,000 die from waterborne diseases every year. You may already be one of the 70%.</p>
+              <p style="font-size:0.82rem;color:rgba(255,90,50,0.8);">⚠ What disease is your water slowly building toward?</p>
+            </div>
+
+            <div class="wq-panel" data-phase="4">
+              <span class="wq-eyebrow"><span class="wq-eyebrow-dot"></span> The Waypure Solution</span>
+              <h2>One decision.<br><span class="wq-safe">Pure water. Forever.</span></h2>
+              <p>A Waypure RO+UV+Mineral purifier eliminates 99.9% of bacteria, viruses and heavy metals — restoring water to its purest form, with beneficial minerals added back.</p>
+              <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:20px;">
+                <a href="products.html" class="pill-button">Explore Products <span>↗</span></a>
+                <a href="tel:+919061091810" class="pill-button dark">Call Us <span>↗</span></a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- CENTER: Animated water glass -->
+          <div class="wq-glass-col">
+            <div class="wq-glass-wrap">
+              <svg class="wq-glass-svg" viewBox="0 0 200 320" aria-hidden="true">
+                <defs>
+                  <clipPath id="wq-glass-clip">
+                    <path d="M34 16 L12 288 Q12 300 24 300 L176 300 Q188 300 188 288 L166 16 Z"/>
+                  </clipPath>
+                  <linearGradient id="wq-water-grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop id="wq-grad-top" offset="0%" stop-color="#64b8d4" stop-opacity="0.7"/>
+                    <stop id="wq-grad-bot" offset="100%" stop-color="#1a7aaf"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Water fill (clipped to glass) -->
+                <g clip-path="url(#wq-glass-clip)">
+                  <!-- Water body -->
+                  <rect class="wq-water-bg" id="wq-water-rect" x="0" y="80" width="200" height="220" fill="url(#wq-water-grad)"/>
+                  <!-- Wave surface -->
+                  <path class="wq-wave" id="wq-wave-path"
+                    d="M-10 82 Q30 70 70 82 T140 82 T210 82 V300 H-10Z"
+                    fill="rgba(255,255,255,0.18)"/>
+
+                  <!-- Bacteria / contaminant particles -->
+                  <circle class="wq-p wq-p-1"  cx="55"  cy="180" r="4.5"/>
+                  <circle class="wq-p wq-p-2"  cx="100" cy="155" r="3"/>
+                  <circle class="wq-p wq-p-3"  cx="140" cy="200" r="5"/>
+                  <circle class="wq-p wq-p-4"  cx="75"  cy="240" r="3.5"/>
+                  <circle class="wq-p wq-p-5"  cx="125" cy="230" r="4"/>
+                  <circle class="wq-p wq-p-6"  cx="65"  cy="135" r="2.5"/>
+                  <circle class="wq-p wq-p-7"  cx="135" cy="148" r="3"/>
+                  <circle class="wq-p wq-p-8"  cx="90"  cy="210" r="2"/>
+                  <circle class="wq-p wq-p-9"  cx="110" cy="268" r="3.5"/>
+                  <circle class="wq-p wq-p-10" cx="160" cy="255" r="2.5"/>
+                  <circle class="wq-p wq-p-11" cx="45"  cy="262" r="3"/>
+                  <circle class="wq-p wq-p-12" cx="150" cy="175" r="2"/>
+
+                  <!-- Sediment layer -->
+                  <rect class="wq-sediment" id="wq-sediment" x="12" y="278" width="176" height="24" rx="2"/>
+                </g>
+
+                <!-- Glass walls -->
+                <path class="wq-glass-wall"
+                  d="M34 16 L12 288 Q12 300 24 300 L176 300 Q188 300 188 288 L166 16 Z"
+                  fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="2.5"/>
+                <!-- Rim highlight -->
+                <line x1="34" y1="16" x2="166" y2="16" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
+                <!-- Left shine -->
+                <path class="wq-glass-shine"
+                  d="M44 28 L26 238"
+                  fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="7" stroke-linecap="round"/>
+                <path class="wq-glass-shine-2"
+                  d="M56 28 L42 170"
+                  fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <!-- Contamination meter -->
+            <div class="wq-meter">
+              <div class="wq-meter-track">
+                <div class="wq-meter-fill" id="wq-meter-fill"></div>
+              </div>
+              <span class="wq-meter-label" id="wq-meter-label">Tap water · Unfiltered</span>
+            </div>
+          </div>
+
+          <!-- RIGHT: Contamination labels -->
+          <div class="wq-right-col">
+            <div class="wq-orbit-labels" id="wq-labels">
+
+              <div class="wq-clabel" data-from-phase="1">
+                <div class="wq-clabel-icon" style="background:rgba(229,57,53,0.18);border-color:rgba(229,57,53,0.4);">🦠</div>
+                <div class="wq-clabel-text">
+                  <span class="wq-clabel-name">E. coli Bacteria</span>
+                  <span class="wq-clabel-risk">Diarrhoea · Kidney failure</span>
+                </div>
+              </div>
+
+              <div class="wq-clabel" data-from-phase="1">
+                <div class="wq-clabel-icon" style="background:rgba(229,57,53,0.18);border-color:rgba(229,57,53,0.4);">🧫</div>
+                <div class="wq-clabel-text">
+                  <span class="wq-clabel-name">Cholera Pathogen</span>
+                  <span class="wq-clabel-risk">Severe dehydration · Fatal</span>
+                </div>
+              </div>
+
+              <div class="wq-clabel" data-from-phase="2">
+                <div class="wq-clabel-icon" style="background:rgba(255,112,67,0.18);border-color:rgba(255,112,67,0.4);">⚠️</div>
+                <div class="wq-clabel-text">
+                  <span class="wq-clabel-name">Lead (Pb)</span>
+                  <span class="wq-clabel-risk">Brain damage · Stunted growth</span>
+                </div>
+              </div>
+
+              <div class="wq-clabel" data-from-phase="2">
+                <div class="wq-clabel-icon" style="background:rgba(255,112,67,0.18);border-color:rgba(255,112,67,0.4);">☢️</div>
+                <div class="wq-clabel-text">
+                  <span class="wq-clabel-name">Arsenic (As)</span>
+                  <span class="wq-clabel-risk">Cancer · Organ damage</span>
+                </div>
+              </div>
+
+              <div class="wq-clabel" data-from-phase="3">
+                <div class="wq-clabel-icon" style="background:rgba(255,61,0,0.18);border-color:rgba(255,61,0,0.4);">⚗️</div>
+                <div class="wq-clabel-text">
+                  <span class="wq-clabel-name">Fluoride &amp; Nitrates</span>
+                  <span class="wq-clabel-risk">Fluorosis · Blue baby syndrome</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase progress dots -->
+        <div class="wq-phase-nav" aria-hidden="true">
+          <div class="wq-phase-dot wq-active" data-p="0"></div>
+          <div class="wq-phase-dot" data-p="1"></div>
+          <div class="wq-phase-dot" data-p="2"></div>
+          <div class="wq-phase-dot" data-p="3"></div>
+          <div class="wq-phase-dot" data-p="4"></div>
+        </div>
+
+        <!-- Side scroll bar -->
+        <div class="wq-scroll-bar" aria-hidden="true">
+          <div class="wq-scroll-bar-fill" id="wq-scroll-bar-fill"></div>
+        </div>
+
+      </div>
+    </section>
+    
+<section class="water-life section-space" id="water-life" aria-labelledby="life-title">
+  <!-- <div class="life-topline"><span class="eyebrow"><span class="live-dot"></span> THE WATER THAT MAKES US</span><span class="life-edition">LIFE, IN EVERY DROP / 01</span></div> -->
+  <div class="life-layout"><div class="life-copy"><h2 id="life-title">Water within.<br><em>Life, flowing.</em></h2><p class="life-lead">Water is part of every day and every stage of life. At WayPure, we believe everyone deserves access to clean, safe water at a cost they can afford.</p><p>Inspired by our founder, Shabeel, to help people find dependable solutions for the water they use and the families they care for — guided by Eat Pure, Drink Pure, and Breathe Pure.</p><a class="pill-button dark" href="about.html">Read our About Us story <span>↗</span></a><div class="life-signature"><span class="signature-drop">♧</span><span>For you. For your family.<br><strong>For the life you live.</strong></span></div></div>
+  <div class="life-visual"><svg class="life-diagram" viewBox="0 0 640 610" aria-hidden="true">
+    <defs><radialGradient id="life-halo"><stop stop-color="#d9f3e1"/><stop offset="1" stop-color="#f4faf5" stop-opacity="0"/></radialGradient><linearGradient id="life-water" x2=".7" y2="1"><stop stop-color="#6bcebe"/><stop offset=".45" stop-color="#1897c0"/><stop offset="1" stop-color="#15588b"/></linearGradient><linearGradient id="life-body" x2="1" y2="1"><stop stop-color="#dcece8"/><stop offset="1" stop-color="#c5dfdf"/></linearGradient>
+    <path id="body-one" d="M258 133c-15 0-24 12-24 27 0 12 5 24 13 30v15l-31 14c-12 6-16 16-18 31l-13 89c-2 12 9 15 13 4l21-76 4 45-23 76h26l4 111c0 10 14 11 16 0l9-93h8l9 93c2 11 16 10 16 0l4-111h26l-23-76 4-45 21 76c4 11 15 8 13-4l-13-89c-2-15-6-25-18-31l-31-14v-15c8-6 13-18 13-30 0-15-9-27-24-27Z"/>
+    <path id="body-two" d="M387 133c-16 0-26 12-26 29 0 12 6 24 15 30v13l-34 12c-14 5-20 15-22 32l-9 91c-1 12 11 14 14 3l18-76 5 83 7 148c1 13 17 14 19 1l10-123h6l10 123c2 13 18 12 19-1l7-148 5-83 18 76c3 11 15 9 14-3l-9-91c-2-17-8-27-22-32l-34-12v-13c9-6 15-18 15-30 0-17-10-29-26-29Z"/>
+    <clipPath id="life-bodies"><use href="#body-one"/><use href="#body-two"/></clipPath></defs>
+    <circle cx="320" cy="300" r="290" fill="url(#life-halo)"/><circle cx="320" cy="300" r="248" fill="none" stroke="#9acac7" stroke-width="1"/><circle cx="320" cy="300" r="226" fill="none" stroke="#bddbd0" stroke-dasharray="2 10"/>
+    <g class="life-orbit"><path d="M320 52a248 248 0 0 1 242 193" fill="none" stroke="#3695b8" stroke-width="3" stroke-linecap="round"/><circle cx="320" cy="52" r="7" fill="#78b951"/><circle cx="78" cy="355" r="4" fill="#43a9b5"/></g>
+    <ellipse cx="322" cy="524" rx="131" ry="12" fill="#21578c" opacity=".07"/>
+    <g fill="url(#life-body)"><use href="#body-one"/><use href="#body-two"/></g>
+    <g clip-path="url(#life-bodies)"><g class="body-water-level"><path class="body-surface" d="M80 236Q120 218 160 236T240 236T320 236T400 236T480 236T560 236T640 236V850H80Z" fill="#79d1b1" opacity=".7"/><path class="body-surface" d="M80 249Q120 268 160 249T240 249T320 249T400 249T480 249T560 249T640 249V850H80Z" fill="url(#life-water)"/>
+    <g class="body-bubbles" fill="none" stroke="#c4f5f0"><circle cx="251" cy="330" r="5"/><circle cx="274" cy="385" r="3"/><circle cx="382" cy="301" r="4"/><circle cx="402" cy="426" r="6"/><circle cx="367" cy="369" r="3"/></g></g><path d="M242 242q-12 52-6 101m141-110q-11 61-7 120" fill="none" stroke="white" opacity=".3" stroke-width="5" stroke-linecap="round"/></g>
+    <g fill="none" stroke="#81b7bb"><path d="M226 165H171l-17-16H90"/><path d="M416 276h62l21-22h69"/><path d="M235 406h-67l-25 23H80"/></g>
+    <g class="life-node" transform="translate(90 149)"><circle r="25" fill="#fff" stroke="#c1ddd5"/><path d="M0-13C-4-6-10 0-10 6a10 10 0 0 0 20 0C10 0 4-6 0-13Z" fill="#3e9db8"/><path d="M-5 5q0 6 6 6" fill="none" stroke="white" stroke-linecap="round"/></g>
+    <g class="life-node" transform="translate(568 254)"><circle r="25" fill="#fff" stroke="#c1ddd5"/><path d="M-14-2h8l4-9 6 20 5-11h6" fill="none" stroke="#539653" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g class="life-node" transform="translate(80 429)"><circle r="25" fill="#fff" stroke="#c1ddd5"/><path d="M-12-6q6-5 12 0t12 0M-12 2q6-5 12 0t12 0M-12 10q6-5 12 0t12 0" fill="none" stroke="#3e9db8" stroke-width="2" stroke-linecap="round"/></g>
+    <g fill="#173f5a" font-family="Manrope,Arial,sans-serif" font-size="12"><text x="66" y="195">Every sip</text><text x="511" y="303">Every moment</text><text x="47" y="476">Every day</text></g>
+    <text x="320" y="580" text-anchor="middle" fill="#558078" font-family="Manrope,Arial,sans-serif" font-size="9" letter-spacing="3">A LITTLE WATER. A PART OF YOU.</text>
+  </svg><span class="life-visual-caption">ESSENTIAL BY NATURE. <strong>CARED FOR BY WAYPURE.</strong></span></div></div>
+  <div class="life-principles"><article><span>01 / UNDERSTAND</span><h3>Your water comes first.</h3><p>Start with your source water and everyday needs. Our team helps you explore suitable options.</p></article><article><span>02 / CHOOSE</span><h3>Purification with purpose.</h3><p>Compare RO, UV and mineral options across the range to find a system for your home.</p></article><article><span>03 / CARE</span><h3>A relationship that flows.</h3><p>Thoughtful service and continuous improvement. Our promise goes beyond the first enquiry.</p></article></div>
+</section>
+
+    
+
+    <section class="ritual" aria-label="Daily hydration inspiration"><div class="ritual-lines" aria-hidden="true"><span></span><span></span><span></span></div><div class="ritual-content reveal"><span class="eyebrow">TOGETHER WITH YOU. FOR YOU.</span><h2>Goodness.<br>Purity.<br><em>Waypure.</em></h2><p>Committed to improving our products.<br>Always listening to your feedback.</p></div><div class="ritual-art" aria-hidden="true"><div class="sun-disc"></div><div class="water-glass"><div class="glass-water"></div><span class="glass-highlight"></span></div><div class="glass-shadow"></div><div class="little-spark">✳</div><span class="ritual-note">our promise.<br><em>forever pure.</em></span></div><span class="ritual-footer">DRINK PURE. EAT PURE. BREATHE PURE.</span></section>
+
+    <!-- Waypure Brand Showcase -->
+    <section class="wp-showcase section-space" id="waypure-products" aria-labelledby="wp-showcase-title">
+      <div class="wp-showcase-inner">
+        <div class="wp-showcase-header reveal">
+          <span class="eyebrow" style="display:flex; justify-content: center;"><span class="live-dot"></span> OUR OWN BRAND</span>
+          <h2 id="wp-showcase-title">Made by Waypure.<br><em>Built for India.</em></h2>
+          <p>Designed and engineered exclusively by us — every Waypure purifier is built for Indian water conditions, Indian families and lasting purity.</p>
+        </div>
+
+        <div class="wp-showcase-tabs" role="tablist" aria-label="Product categories">
+          <button class="wp-tab wp-tab--active" role="tab" aria-selected="true" data-wptab="home" id="tab-home">Home Purifiers</button>
+          <button class="wp-tab" role="tab" aria-selected="false" data-wptab="premium" id="tab-premium">Premium Range</button>
+          <button class="wp-tab" role="tab" aria-selected="false" data-wptab="commercial" id="tab-commercial">Commercial</button>
+          <button class="wp-tab" role="tab" aria-selected="false" data-wptab="special" id="tab-special">Specialty</button>
+        </div>
+
+        <!-- Home Purifiers -->
+        <div class="wp-panel wp-panel--active" role="tabpanel" aria-labelledby="tab-home" data-wppanel="home">
+          <div class="wp-product-grid">
+            <div class="wp-product-card reveal">
+              <div class="wp-product-img"><img src="assets/img/products/mars.png" alt="Waypure Mars" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Mars</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹13,499</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Mars">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.05s">
+              <div class="wp-product-img"><img src="assets/img/products/glance.png" alt="Waypure Glance" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Glance</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹11,890</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Glance">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.1s">
+              <div class="wp-product-img"><img src="assets/img/products/klickpro.png" alt="Waypure Klickpro" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Klickpro</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹13,999</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Klickpro">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.15s">
+              <div class="wp-product-img"><img src="assets/img/products/aqua-pure.png" alt="Waypure Aqua Pure" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Aqua Pure</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹14,499</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Aqua Pure">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.2s">
+              <div class="wp-product-img"><img src="assets/img/products/xzora.png" alt="Waypure Xzora" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Xzora</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹15,499</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Xzora">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.25s">
+              <div class="wp-product-img"><img src="assets/img/products/epic.png" alt="Waypure Epic" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Epic</h3>
+                <p>RO + UV + Alkaline + UF + MTDS</p>
+                <strong>₹16,899</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Epic">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.3s">
+              <div class="wp-product-img"><img src="assets/img/products/xpure.png" alt="Waypure Xpure" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Xpure</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹15,499</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Xpure">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.35s">
+              <div class="wp-product-img"><img src="assets/img/products/water-lily.png" alt="Waypure Water Lily" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Water Lily</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹14,499</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Water Lily">Shop Now</button>
+</div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Premium Range -->
+        <div class="wp-panel" role="tabpanel" aria-labelledby="tab-premium" data-wppanel="premium" hidden>
+          <div class="wp-product-grid">
+            <div class="wp-product-card reveal">
+              <div class="wp-product-img"><img src="assets/img/products/q-tone.png" alt="Waypure Q-Tone" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Q-Tone</h3>
+                <p>RO + UV + Minerals + Zinc + Copper</p>
+                <strong>₹19,990</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Q-Tone">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.05s">
+              <div class="wp-product-img"><img src="assets/img/products/bravo.png" alt="Waypure Bravo" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Bravo</h3>
+                <p>RO + UV + Minerals + Zinc + Copper</p>
+                <strong>₹16,990</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Bravo">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.1s">
+              <div class="wp-product-img"><img src="assets/img/products/onix.png" alt="Waypure Onix" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Onix</h3>
+                <p>RO + UV + Alkaline + Zinc + UF + MTDS</p>
+                <strong>₹18,990</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Onix">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.15s">
+              <div class="wp-product-img"><img src="assets/img/products/kairox.png" alt="Waypure Kairox" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Kairox</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹17,899</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Kairox">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.2s">
+              <div class="wp-product-img"><img src="assets/img/products/rider.png" alt="Waypure Rider" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Rider</h3>
+                <p>RO + UV + Minerals + Zinc + Copper</p>
+                <strong>₹19,990</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Rider">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.25s">
+              <div class="wp-product-img"><img src="assets/img/products/terron.png" alt="Waypure Terron" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Terron</h3>
+                <p>RO + UV + Minerals + Zinc + Copper</p>
+                <strong>₹23,990</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Terron">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.3s">
+              <div class="wp-product-img"><img src="assets/img/products/5g-pro.png" alt="Waypure 5G Pro" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>5G Pro</h3>
+                <p>RO + UV + Alkaline + Copper + UF + MTDS</p>
+                <strong>₹25,000</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure 5G Pro">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.35s">
+              <div class="wp-product-img"><img src="assets/img/products/utc-under-sink.png" alt="Waypure UTC Under Sink" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>UTC Under Sink</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹17,999</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure UTC Under Sink">Shop Now</button>
+</div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Commercial -->
+        <div class="wp-panel" role="tabpanel" aria-labelledby="tab-commercial" data-wppanel="commercial" hidden>
+          <div class="wp-product-grid">
+            <div class="wp-product-card reveal">
+              <div class="wp-product-img"><img src="assets/img/products/35-lph-commercial.png" alt="Waypure 35 LPH" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>35 LPH Commercial</h3>
+                <p>RO + UV + Minerals plant · 35 LPH</p>
+                <strong>₹25,000</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure 35 LPH Commercial">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.05s">
+              <div class="wp-product-img"><img src="assets/img/products/aqua-clan.png" alt="Waypure Aqua Clan" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Aqua Clan</h3>
+                <p>RO + UV + Alkaline minerals</p>
+                <strong>₹22,500</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Aqua Clan">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.1s">
+              <div class="wp-product-img"><img src="assets/img/products/water-cooler.png" alt="Waypure Water Cooler" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Water Cooler</h3>
+                <p>Water cooling system</p>
+                <strong>₹23,500</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Water Cooler">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.15s">
+              <div class="wp-product-img"><img src="assets/img/products/plus-dispenser.png" alt="Waypure Plus Dispenser" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Plus Dispenser</h3>
+                <p>Cold &amp; hot water dispensing</p>
+                <strong>Price on enquiry</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Plus Dispenser">Shop Now</button>
+</div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Specialty -->
+        <div class="wp-panel" role="tabpanel" aria-labelledby="tab-special" data-wppanel="special" hidden>
+          <div class="wp-product-grid">
+            <div class="wp-product-card reveal">
+              <div class="wp-product-img"><img src="assets/img/products/aqua-nine.png" alt="Waypure Aqua Nine Zinc" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Aqua Nine — Zinc</h3>
+                <p>RO + UV + Alkaline + Zinc + UF + MTDS</p>
+                <strong>₹18,990</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Aqua Nine — Zinc">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.05s">
+              <div class="wp-product-img"><img src="assets/img/products/aqua-nine-copper.png" alt="Waypure Aqua Nine Copper" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Aqua Nine — Copper &amp; Zinc</h3>
+                <p>RO + UV + Alkaline + Copper + Zinc + UF</p>
+                <strong>₹18,990</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Aqua Nine — Copper & Zinc">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.1s">
+              <div class="wp-product-img"><img src="assets/img/products/iron-remover.png" alt="Waypure Iron Remover" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>Iron Remover</h3>
+                <p>Iron removal + Softener filter</p>
+                <strong>Price on enquiry</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure Iron Remover">Shop Now</button>
+</div>
+
+            </div>
+            <div class="wp-product-card reveal" style="transition-delay:.15s">
+              <div class="wp-product-img"><img src="assets/img/products/4-stage.png" alt="Waypure 4 Stage" loading="lazy"></div>
+              <div class="wp-product-info">
+                <h3>4 Stage UV</h3>
+                <p>Four-stage UV purification system</p>
+                <strong>₹3,999</strong>
+              </div>
+              
+<div class="card-actions">
+  <button class="card-btn details-btn">Product Details</button>
+  <button class="card-btn shop-btn" data-product="Waypure 4 Stage">Shop Now</button>
+</div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="wp-showcase-cta">
+          <a href="products.html" class="pill-button dark">Explore all 56 models <span>↗</span></a>
+        </div>
+      </div>
+
+      <!-- Tab switching JS (inline, no deps) -->
+      <script>
+      (function() {
+        var tabs = document.querySelectorAll('.wp-tab');
+        var panels = document.querySelectorAll('.wp-panel');
+        tabs.forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            var key = tab.dataset.wptab;
+            tabs.forEach(function(t) { t.classList.remove('wp-tab--active'); t.setAttribute('aria-selected','false'); });
+            panels.forEach(function(p) { p.hidden = true; p.classList.remove('wp-panel--active'); });
+            tab.classList.add('wp-tab--active');
+            tab.setAttribute('aria-selected','true');
+            var panel = document.querySelector('[data-wppanel="' + key + '"]');
+            if (panel) { panel.hidden = false; panel.classList.add('wp-panel--active'); }
+          });
+        });
+      })();
+      </script>
+    </section>
+
+    <section class="product-section catalogue-section section-space" id="details" aria-labelledby="catalogue-title">
+      <div class="catalogue-intro wt-header">
+        <div class="product-copy reveal">
+          <span class="eyebrow"><span class="live-dot"></span> EXPLORE OUR PRODUCTS</span>
+          <h2 id="catalogue-title">Find your<em>pure solution.</em></h2>
+          <p class="product-description" style="margin: 0 auto;">Discover Waypure, Aquaguard, Merlin, Prolife and Chrome models. Compare storage, purification options and the features that matter to you.</p>
+          <button class="pill-button dark enquire-button" style="margin: 26px auto 0;">Help me choose <span class="button-icon">↗</span></button>
+        </div>
+      </div>
+      <!-- <p class="catalogue-count">A selection from our collection · Explore all 56 models on the Products page.</p> -->
+      <div class="catalogue-grid" id="catalogue-grid"><!-- PRODUCT_CARDS_START -->
+<?php foreach ($catalogueProducts as $cp): ?>
+<article class="catalogue-card" data-brand="<?= e($cp['brand']) ?>" data-category="<?= e($cp['category']) ?>" data-search="<?= e(strtolower($cp['brand'] . ' ' . $cp['name'] . ' ' . $cp['technology'] . ' ' . ($cp['capacity'] ?? '') . ' ' . ($cp['description'] ?? ''))) ?>">
+  <button type="button" class="card-wishlist-btn" data-wishlist-id="<?= $cp['id'] ?>" data-wishlist-toggle="<?= $cp['id'] ?>" aria-label="Save to Wishlist" title="Save to Wishlist">
+    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  </button>
+  <div class="card-glaze" aria-hidden="true"></div>
+  <div class="card-image-wrap">
+    <div class="card-image"><img src="<?= e(assetUrl($cp['image'])) ?>" alt="<?= e($cp['brand'] . ' ' . $cp['name']) ?>" loading="lazy"></div>
+  </div>
+  <div class="card-body">
+    <h3 tabindex="-1"><?= e($cp['name']) ?></h3>
+    <p class="card-technology"><?= e($cp['technology']) ?></p>
+    <div class="card-price-row">
+      <strong class="card-price"><?= formatPrice($cp['price']) ?></strong>
+    </div>
+    <div class="card-actions">
+      <a href="<?= BASE_URL ?>product-details.php?id=<?= urlencode((string)$cp['slug']) ?>" class="card-btn details-btn" style="text-align:center; text-decoration:none;">Product Details</a>
+      <button type="button" class="card-btn shop-btn" data-add-to-cart="<?= $cp['id'] ?>" data-product="<?= e($cp['brand'] . ' ' . $cp['name']) ?>">Shop Now</button>
+    </div>
+  </div>
+</article>
+<?php endforeach; ?>
+<!-- PRODUCT_CARDS_END --></div><div class="catalogue-empty" hidden><h3>No matching products.</h3><p>Try another model, technology or brand.</p></div><a id="catalogue-more" class="pill-button catalogue-more" href="products.html">Show more products <span>↗</span></a>
+    </section>
+    <section class="lab-facility section-space" id="facility">
+      <div class="lab-facility-inner">
+        <div class="lab-facility-header reveal">
+          <span class="eyebrow" style="display:flex; justify-content: center;"><span class="live-dot"></span> WAYPURE EXCLUSIVE</span>
+          <h2>Our Testing Lab.</h2>
+          <p>We don't just sell purifiers; we prescribe them. Step into our state-of-the-art facility to get your water scientifically tested and experience our products firsthand.</p>
+        </div>
+        
+        <div class="lab-bento">
+          <!-- Large Lab Card -->
+          <div class="bento-card bento-large reveal">
+            <img src="assets/img/shop-lab-interior/IMG_7346.JPG-500kb.jpeg" alt="Waypure Water Testing Lab" loading="lazy">
+            <div class="bento-glass-panel">
+              <div class="bento-icon">🔬</div>
+              <div>
+                <h3>Advanced Water Testing</h3>
+                <p>Our dedicated laboratory analyzes your water's TDS, pH, and hidden contaminants to recommend the perfect purification system for your family.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tall Experience Center Card -->
+          <div class="bento-card bento-tall reveal" style="transition-delay: 0.1s;">
+            <img src="assets/img/shop-interior/IMG_7335.JPG-500kb.jpeg" alt="Waypure Experience Center" loading="lazy">
+            <div class="bento-glass-panel">
+              <div class="bento-icon">🛋️</div>
+              <div>
+                <h3>Premium Experience</h3>
+                <p>Explore our collection in a modern, welcoming space.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Wide Equipment Card -->
+          <div class="bento-card bento-wide reveal" style="transition-delay: 0.2s;">
+            <img src="assets/img/shop-lab-interior/IMG_7352.JPG-500kb.jpeg" alt="Waypure Lab Equipment" loading="lazy">
+            <div class="bento-glass-panel">
+              <div class="bento-icon">💧</div>
+              <div>
+                <h3>Bring your sample</h3>
+                <p>Visit us today for a free, comprehensive water quality test.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Call to Action Card -->
+          <div class="bento-card bento-cta reveal" style="transition-delay: 0.3s;">
+            <h3>Visit us today</h3>
+            <p>Opp. Nexa Showroom, Angadipuram, Perinthalmanna</p>
+            <a href="contact.html" class="pill-button">Get directions <span>↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+    <!-- Water Testing Plans -->
+    <section class="wt-section section-space" id="water-testing" aria-labelledby="wt-title">
+      <div class="wt-inner">
+        <div class="wt-header reveal">
+          <span class="eyebrow"><span class="live-dot"></span> WAYPURE LAB SERVICES</span>
+          <h2 id="wt-title">Know your water.<br><em>Before you purify it.</em></h2>
+          <p>Our certified lab analyses your water sample and delivers a comprehensive report — helping you choose the exact purifier your home needs.</p>
+        </div>
+        <div class="wt-plans">
+          <!-- Standard Plan -->
+          <div class="wt-card reveal" data-plan="standard">
+            <div class="wt-card-top">
+              <div class="wt-plan-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.3"/>
+                  <path d="M24 8C18 16 12 20 12 28a12 12 0 0 0 24 0C36 20 30 16 24 8Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                  <path d="M18 30c0 4 3 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="wt-plan-label">
+                <span class="wt-badge">Standard</span>
+                <div class="wt-price">
+                  <strong>₹900</strong>
+                  <span>per sample</span>
+                </div>
+              </div>
+            </div>
+            <p class="wt-desc">Essential water quality check covering all key parameters for safe daily drinking use.</p>
+            <ul class="wt-params" aria-label="Standard plan parameters">
+              <li><span class="wt-check">✓</span> pH Level</li>
+              <li><span class="wt-check">✓</span> TDS (Total Dissolved Solids)</li>
+              <li><span class="wt-check">✓</span> Turbidity</li>
+              <li><span class="wt-check">✓</span> Total Hardness</li>
+              <li><span class="wt-check">✓</span> Calcium</li>
+              <li><span class="wt-check">✓</span> Magnesium</li>
+              <li><span class="wt-check">✓</span> Total Alkalinity</li>
+              <li><span class="wt-check">✓</span> Chloride</li>
+              <li><span class="wt-check">✓</span> Sulphate</li>
+              <li><span class="wt-check">✓</span> Nitrate</li>
+              <li><span class="wt-check">✓</span> Iron</li>
+              <li><span class="wt-check">✓</span> Total Coliform</li>
+            </ul>
+            <div class="wt-param-count">12 Parameters</div>
+            <a href="tel:+919061091810" class="wt-cta-btn">Book Standard Test <span>↗</span></a>
+          </div>
+
+          <!-- Pro Plan -->
+          <div class="wt-card wt-card--pro reveal" data-plan="pro" style="transition-delay:0.1s;">
+            <div class="wt-popular-badge" aria-label="Recommended">Recommended</div>
+            <div class="wt-card-top">
+              <div class="wt-plan-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.3"/>
+                  <path d="M24 8C18 16 12 20 12 28a12 12 0 0 0 24 0C36 20 30 16 24 8Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                  <circle cx="24" cy="18" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                  <path d="M18 30c0 4 3 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M30 14l2-3M18 14l-2-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="wt-plan-label">
+                <span class="wt-badge wt-badge--pro">Pro</span>
+                <div class="wt-price">
+                  <strong>₹1,200</strong>
+                  <span>per sample</span>
+                </div>
+              </div>
+            </div>
+            <p class="wt-desc">Advanced comprehensive analysis including heavy metals, biological contaminants and industrial parameters.</p>
+            <ul class="wt-params" aria-label="Pro plan parameters">
+              <li><span class="wt-check">✓</span> pH Level</li>
+              <li><span class="wt-check">✓</span> TDS (Total Dissolved Solids)</li>
+              <li><span class="wt-check">✓</span> Turbidity</li>
+              <li><span class="wt-check">✓</span> Total Hardness</li>
+              <li><span class="wt-check">✓</span> Calcium</li>
+              <li><span class="wt-check">✓</span> Magnesium</li>
+              <li><span class="wt-check">✓</span> Total Alkalinity</li>
+              <li><span class="wt-check">✓</span> Chloride</li>
+              <li><span class="wt-check">✓</span> Sulphate</li>
+              <li><span class="wt-check">✓</span> Nitrate</li>
+              <li><span class="wt-check">✓</span> Iron</li>
+              <li><span class="wt-check">✓</span> Total Coliform</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Fluoride</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Arsenic</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Lead (Pb)</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Copper</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Zinc</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Manganese</li>
+              <li><span class="wt-check wt-check--pro">✓</span> E. Coli (Bacteria)</li>
+              <li><span class="wt-check wt-check--pro">✓</span> BOD (Biological Oxygen Demand)</li>
+              <li><span class="wt-check wt-check--pro">✓</span> COD (Chemical Oxygen Demand)</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Dissolved Oxygen</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Ammonia</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Phosphate</li>
+              <li><span class="wt-check wt-check--pro">✓</span> Residual Chlorine</li>
+              <li><span class="wt-check wt-check--pro">✓</span> TDS at 180°C</li>
+            </ul>
+            <div class="wt-param-count wt-param-count--pro">26 Parameters</div>
+            <a href="tel:+919061091810" class="wt-cta-btn wt-cta-btn--pro">Book Pro Test <span>↗</span></a>
+          </div>
+        </div>
+        <p class="wt-note">Results delivered within 3–5 working days. Sample collection available at our lab or by arrangement. Call us for details.</p>
+      </div>
+    </section>
+
+    <!-- Google Reviews Slider -->
+    <section class="reviews-section section-space" id="reviews" aria-label="Customer reviews">
+      <div class="reviews-inner">
+        <div class="reviews-header reveal">
+          <span class="eyebrow"><span class="live-dot"></span> CUSTOMER REVIEWS</span>
+          <h2>What our customers<br><em>say about us.</em></h2>
+          <div class="reviews-rating-summary">
+            <div class="reviews-stars-big" aria-label="4.8 out of 5 stars">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <div class="reviews-rating-text">
+              <strong>4.8</strong>
+              <span>/ 5 · Google Reviews</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews-slider-wrap" aria-label="Customer review carousel">
+          <div class="reviews-track" id="reviews-track">
+            <!-- Review 1 -->
+            <article class="review-card">
+              <div class="review-top">
+                <div class="review-avatar" aria-hidden="true">A</div>
+                <div class="review-meta">
+                  <strong class="review-name">Arun Kumar</strong>
+                  <span class="review-date">3 months ago</span>
+                </div>
+                <div class="review-google-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                </div>
+              </div>
+              <div class="review-stars" aria-label="5 stars">★★★★★</div>
+              <p class="review-text">"Excellent service! Waypure team helped us choose the perfect purifier for our home. The water quality improved drastically. Highly recommended!"</p>
+            </article>
+
+            <!-- Review 2 -->
+            <article class="review-card">
+              <div class="review-top">
+                <div class="review-avatar" aria-hidden="true" style="background:linear-gradient(135deg,#6ee8c8,#1994e9);">S</div>
+                <div class="review-meta">
+                  <strong class="review-name">Sreevidya M.</strong>
+                  <span class="review-date">5 months ago</span>
+                </div>
+                <div class="review-google-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                </div>
+              </div>
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"Best water purifier showroom in Malappuram. Got my Q-Tone installed and the difference is amazing. Professional staff and fast installation."</p>
+            </article>
+
+            <!-- Review 3 -->
+            <article class="review-card">
+              <div class="review-top">
+                <div class="review-avatar" aria-hidden="true" style="background:linear-gradient(135deg,#ee785e,#c55a3a);">R</div>
+                <div class="review-meta">
+                  <strong class="review-name">Rajesh Nair</strong>
+                  <span class="review-date">1 month ago</span>
+                </div>
+                <div class="review-google-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                </div>
+              </div>
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"Bought the Terron model. Exceptional build quality and the minerals added back to water is something you can taste. Great after-sales support too."</p>
+            </article>
+
+            <!-- Review 4 -->
+            <article class="review-card">
+              <div class="review-top">
+                <div class="review-avatar" aria-hidden="true" style="background:linear-gradient(135deg,#a78bfa,#7c3aed);">F</div>
+                <div class="review-meta">
+                  <strong class="review-name">Fathima Beevi</strong>
+                  <span class="review-date">2 months ago</span>
+                </div>
+                <div class="review-google-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                </div>
+              </div>
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"Water testing service is amazing. They identified iron contamination in our water and recommended the right purifier. Very knowledgeable team."</p>
+            </article>
+
+            <!-- Review 5 -->
+            <article class="review-card">
+              <div class="review-top">
+                <div class="review-avatar" aria-hidden="true" style="background:linear-gradient(135deg,#34d399,#059669);">M</div>
+                <div class="review-meta">
+                  <strong class="review-name">Mohammed Ashraf</strong>
+                  <span class="review-date">4 months ago</span>
+                </div>
+                <div class="review-google-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                </div>
+              </div>
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"Got the commercial RO installed for our restaurant. Excellent quality water, no complaints. Installation was clean and fast. Very happy with Waypure."</p>
+            </article>
+
+            <!-- Review 6 -->
+            <article class="review-card">
+              <div class="review-top">
+                <div class="review-avatar" aria-hidden="true" style="background:linear-gradient(135deg,#fbbf24,#d97706);">P</div>
+                <div class="review-meta">
+                  <strong class="review-name">Priya Suresh</strong>
+                  <span class="review-date">6 months ago</span>
+                </div>
+                <div class="review-google-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                </div>
+              </div>
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"The Waypure Bravo has been excellent for 6 months now. Pure water, great zinc and copper minerals added back. The team is always responsive for any queries."</p>
+            </article>
+          </div>
+
+          <!-- Controls -->
+          <div class="reviews-controls">
+            <button class="reviews-btn" id="rev-prev" aria-label="Previous reviews">‹</button>
+            <div class="reviews-dots" id="reviews-dots" role="tablist" aria-label="Review pages"></div>
+            <button class="reviews-btn" id="rev-next" aria-label="Next reviews">›</button>
+          </div>
+        </div>
+
+        <div class="reviews-google-link">
+          <a href="https://maps.google.com/search/Waypure+Angadipuram" target="_blank" rel="noopener" class="pill-button">
+            Read more on Google
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing"><span class="eyebrow reveal">THE WAYPURE PROMISE</span><h2 class="reveal">Together with you.<br><em>Forever pure.</em><span>✳</span></h2><a href="#home" class="back-top">BACK TO THE TOP <span>↑</span></a></section>
+  </main>
+  <?php require_once __DIR__ . '/includes/footer.php'; ?>
+  <noscript><style>.catalogue-card[hidden]{display:flex!important}.catalogue-controls,[data-catalogue-count]{display:none!important}.experience{height:100svh;min-height:660px}.experience-sticky{position:relative}.chapter:not(.chapter-0),.chapter-nav,.scroll-prompt{display:none}</style><div class="noscript-note">Explore Waypure below. Enable JavaScript for the interactive water experience.</div></noscript>
+
+  <!-- Hero Slider Script -->
+  <script>
+  (function() {
+    var slides = document.querySelectorAll('.hero-slide');
+    var dots   = document.querySelectorAll('.hs-dot');
+    var prev   = document.getElementById('hs-prev');
+    var next   = document.getElementById('hs-next');
+    var progress = document.getElementById('hs-progress');
+    var counter  = document.getElementById('hs-current');
+    if (!slides.length) return;
+
+    var current = 0;
+    var total   = slides.length;
+    var interval = 5500; // ms per slide
+    var timer, progTimer;
+    var progStart, progWidth = 0;
+
+    function padNum(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function goTo(idx) {
+      slides[current].classList.remove('is-active');
+      slides[current].classList.add('is-prev');
+      dots[current].classList.remove('is-active');
+      dots[current].setAttribute('aria-selected', 'false');
+
+      // Remove is-prev from all after a moment
+      var leaving = slides[current];
+      setTimeout(function() { leaving.classList.remove('is-prev'); }, 1200);
+
+      current = (idx + total) % total;
+      slides[current].classList.add('is-active');
+      dots[current].classList.add('is-active');
+      dots[current].setAttribute('aria-selected', 'true');
+      if (counter) counter.textContent = padNum(current + 1);
+
+      resetProgress();
+    }
+
+    function resetProgress() {
+      if (progress) { progress.style.width = '0%'; }
+      clearInterval(progTimer);
+      progWidth = 0;
+      progStart = Date.now();
+      progTimer = setInterval(function() {
+        progWidth = Math.min(100, ((Date.now() - progStart) / interval) * 100);
+        if (progress) progress.style.width = progWidth + '%';
+        if (progWidth >= 100) clearInterval(progTimer);
+      }, 30);
+    }
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(function() { goTo(current + 1); }, interval);
+    }
+
+    function pause() { clearInterval(timer); clearInterval(progTimer); }
+    function resume() { resetProgress(); startAuto(); }
+
+    // Init
+    goTo(0);
+    startAuto();
+
+    // Arrow buttons
+    if (prev) prev.addEventListener('click', function() { goTo(current - 1); startAuto(); });
+    if (next) next.addEventListener('click', function() { goTo(current + 1); startAuto(); });
+
+    // Dot buttons
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() { goTo(i); startAuto(); });
+    });
+
+    // Keyboard
+    document.querySelector('.hero-slider-section').addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') { goTo(current - 1); startAuto(); }
+      if (e.key === 'ArrowRight') { goTo(current + 1); startAuto(); }
+    });
+
+    // Pause on hover
+    document.querySelector('.hero-slider-section').addEventListener('mouseenter', pause);
+    document.querySelector('.hero-slider-section').addEventListener('mouseleave', resume);
+
+    // Touch / swipe
+    var touchX = null;
+    document.querySelector('.hero-slider-section').addEventListener('touchstart', function(e) {
+      touchX = e.touches[0].clientX;
+    }, { passive: true });
+    document.querySelector('.hero-slider-section').addEventListener('touchend', function(e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) { goTo(dx < 0 ? current + 1 : current - 1); startAuto(); }
+      touchX = null;
+    }, { passive: true });
+  })();
+  </script>
+
+  <!-- Water Quality Scroll Story Engine -->
+  <script>
+  (function () {
+    /* ── Helpers ──────────────────────────────────────────────── */
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function smoothstep(e0, e1, x) {
+      var t = clamp((x - e0) / (e1 - e0), 0, 1);
+      return t * t * (3 - 2 * t);
+    }
+
+    /* ── DOM refs ─────────────────────────────────────────────── */
+    var section   = document.querySelector('.wq-story');
+    if (!section) return;
+
+    var waterRect = document.getElementById('wq-water-rect');
+    var gradTop   = document.getElementById('wq-grad-top');
+    var gradBot   = document.getElementById('wq-grad-bot');
+    var sediment  = document.getElementById('wq-sediment');
+    var meterFill = document.getElementById('wq-meter-fill');
+    var meterLbl  = document.getElementById('wq-meter-label');
+    var bg        = document.getElementById('wq-bg');
+    var scrollBar = document.getElementById('wq-scroll-bar-fill');
+    var solReveal = document.getElementById('wq-sol-reveal');
+    var cleanRings= document.getElementById('wq-clean-rings');
+    var particles = document.querySelectorAll('.wq-p');
+    var panels    = document.querySelectorAll('.wq-panel');
+    var phaseDots = document.querySelectorAll('.wq-phase-dot');
+    var cLabels   = document.querySelectorAll('.wq-clabel');
+
+    /* ── Colour keyframes ─────────────────────────────────────── */
+    // Water top-stop colour: clear → brownish-red → crystal-clear
+    var waterColors = [
+      { r: 100, g: 194, b: 220 }, // phase 0 — crystal clear
+      { r: 160, g: 110, b:  60 }, // phase 1 — slightly murky
+      { r: 120, g:  55, b:  28 }, // phase 2 — brown/rust
+      { r:  90, g:  28, b:  18 }, // phase 3 — dark red-brown (peak contamination)
+      { r:  80, g: 195, b: 210 }, // phase 4 — back to clear (Waypure)
+    ];
+
+    var bgColors = [
+      { mid: '#ffffff', outer: '#f4faff' },  // 0
+      { mid: '#ffffff', outer: '#f4faff' },  // 1
+      { mid: '#ffffff', outer: '#f4faff' },  // 2
+      { mid: '#ffffff', outer: '#f4faff' },  // 3
+      { mid: '#ffffff', outer: '#f4faff' },  // 4
+    ];
+
+    var meterLabels = [
+      'Tap water · Unfiltered',
+      'Biological contamination detected',
+      'Heavy metals present',
+      'Critical contamination level',
+      'Waypure · 99.9% purified ✓'
+    ];
+
+    /* ── Phase count ──────────────────────────────────────────── */
+    var PHASES = 5;
+    var currentPhase = -1;
+    var sparkleTimer = null;
+
+    /* ── Linear interpolation between two colour objects ──────── */
+    function lerpColor(a, b, t) {
+      return {
+        r: Math.round(lerp(a.r, b.r, t)),
+        g: Math.round(lerp(a.g, b.g, t)),
+        b: Math.round(lerp(a.b, b.b, t))
+      };
+    }
+
+    function toRgb(c) { return 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')'; }
+
+    /* ── Particle opacity per phase ───────────────────────────── */
+    // Each particle gets opacity based on contamination level
+    function setParticleOpacity(contamination) {
+      // Particles appear from phase 1 onwards, disappear at phase 4
+      var fadeIn  = smoothstep(0.15, 0.45, contamination);
+      var fadeOut = 1 - smoothstep(0.80, 1.0, contamination);
+      var opacity = fadeIn * fadeOut;
+      particles.forEach(function (p, i) {
+        // Stagger each particle slightly
+        var stagger = clamp(opacity - i * 0.04, 0, 1);
+        p.style.opacity = stagger;
+      });
+    }
+
+    /* ── Sediment opacity ─────────────────────────────────────── */
+    function setSediment(contamination) {
+      var op = smoothstep(0.35, 0.75, contamination) * (1 - smoothstep(0.82, 1.0, contamination));
+      var r = Math.round(lerp(60, 100, contamination));
+      var g = Math.round(lerp(30, 40, contamination));
+      var b = Math.round(lerp(10, 15, contamination));
+      sediment.setAttribute('fill', 'rgba(' + r + ',' + g + ',' + b + ',' + op + ')');
+    }
+
+    /* ── Panel transitions ────────────────────────────────────── */
+    function activatePanel(phase) {
+      if (currentPhase === phase) return;
+
+      panels.forEach(function (p) {
+        var pPhase = parseInt(p.getAttribute('data-phase'));
+        if (pPhase === phase) {
+          p.classList.add('wq-panel--active');
+          p.classList.remove('wq-panel--leaving');
+        } else if (pPhase === currentPhase) {
+          p.classList.remove('wq-panel--active');
+          p.classList.add('wq-panel--leaving');
+          // Clean up leaving class after transition
+          (function(el){
+            setTimeout(function(){ el.classList.remove('wq-panel--leaving'); }, 700);
+          })(p);
+        } else {
+          p.classList.remove('wq-panel--active', 'wq-panel--leaving');
+        }
+      });
+
+      // Phase dots
+      phaseDots.forEach(function (dot, i) {
+        dot.classList.toggle('wq-active', i === phase);
+      });
+
+      currentPhase = phase;
+    }
+
+    /* ── Contamination labels ─────────────────────────────────── */
+    function updateLabels(phase) {
+      cLabels.forEach(function (lbl) {
+        var fromPhase = parseInt(lbl.getAttribute('data-from-phase'));
+        var show = phase >= fromPhase && phase < 4;
+        lbl.classList.toggle('wq-clabel--visible', show);
+      });
+    }
+
+    /* ── Sparkle effect when water clears ────────────────────── */
+    function triggerSparkles() {
+      var glassWrap = document.querySelector('.wq-glass-wrap');
+      if (!glassWrap) return;
+      var sparkles = ['✦', '✧', '◈', '⬥', '✦'];
+      sparkles.forEach(function (sym, i) {
+        setTimeout(function () {
+          var sp = document.createElement('div');
+          sp.className = 'wq-sparkle';
+          sp.textContent = sym;
+          sp.style.cssText = [
+            'left:' + (30 + Math.random() * 40) + '%',
+            'top:' + (20 + Math.random() * 60) + '%',
+            'color:' + (i % 2 === 0 ? '#6ee8c8' : '#fff'),
+            'font-size:' + (0.7 + Math.random() * 0.8) + 'rem'
+          ].join(';');
+          glassWrap.appendChild(sp);
+          setTimeout(function () { sp.remove(); }, 1300);
+        }, i * 180);
+      });
+    }
+
+    /* ── Background colour update ─────────────────────────────── */
+    function updateBg(phase, t) {
+      var nextPhase = Math.min(phase + 1, PHASES - 1);
+      var a = bgColors[phase];
+      var b = bgColors[nextPhase];
+      // Simple string colours — just swap at phase boundary
+      bg.style.background =
+        'radial-gradient(ellipse at 60% 40%,' + a.mid + ' 0%,' + a.outer + ' 100%)';
+    }
+
+    /* ── Main scroll handler ──────────────────────────────────── */
+    var prevPhase4 = false;
+
+    function onScroll() {
+      var rect = section.getBoundingClientRect();
+      var totalH = section.offsetHeight - window.innerHeight;
+      var scrolled = -rect.top;
+      var progress = clamp(scrolled / totalH, 0, 1); // 0 → 1 through section
+
+      // Phase (0–4)
+      var phaseRaw = progress * PHASES;
+      var phase    = Math.min(Math.floor(phaseRaw), PHASES - 1);
+      var phaseFrac = phaseRaw - phase; // 0 → 1 within current phase
+
+      // Overall contamination (0 at phase 0, peaks at phase 3, drops at phase 4)
+      var contamination;
+      if (phase < 4) {
+        contamination = clamp(phaseRaw / 3.5, 0, 1);
+      } else {
+        contamination = clamp(1 - (phaseRaw - 4) * 1.2, 0, 1);
+      }
+
+      /* — Water colour — */
+      var phaseIdx = Math.min(phase, waterColors.length - 2);
+      var waterC = lerpColor(waterColors[phaseIdx], waterColors[phaseIdx + 1], phaseFrac);
+      var darkC  = lerpColor(
+        { r: waterC.r - 30, g: waterC.g - 20, b: waterC.b - 10 },
+        { r: waterC.r - 50, g: waterC.g - 40, b: waterC.b - 20 },
+        0.5
+      );
+      gradTop.setAttribute('stop-color', toRgb(waterC));
+      gradBot.setAttribute('stop-color', toRgb({
+        r: Math.max(0, waterC.r - 40),
+        g: Math.max(0, waterC.g - 30),
+        b: Math.max(0, waterC.b - 20)
+      }));
+
+      /* — Particles — */
+      setParticleOpacity(contamination);
+
+      /* — Sediment — */
+      setSediment(contamination);
+
+      /* — Meter — */
+      var meterPct;
+      if (phase < 4) {
+        meterPct = Math.round(contamination * 100);
+      } else {
+        meterPct = Math.round(clamp(1 - (phaseRaw - 4) * 1.2, 0, 1) * 100);
+      }
+      meterFill.style.width = meterPct + '%';
+      meterFill.style.background = phase === 4
+        ? 'linear-gradient(90deg, #6ee8c8, #1abfa0)'
+        : 'linear-gradient(90deg, #ffb74d, #ff3d00)';
+      meterLbl.textContent = meterLabels[phase];
+
+      /* — Background — */
+      updateBg(phase, phaseFrac);
+
+      /* — Panels — */
+      activatePanel(phase);
+
+      /* — Labels — */
+      updateLabels(phase);
+
+      /* — Side scroll bar — */
+      scrollBar.style.height = (progress * 100) + '%';
+
+      /* — Phase 4: solution reveal — */
+      var isPhase4 = phase === 4;
+      solReveal.classList.toggle('wq-sol--visible', isPhase4);
+      cleanRings.style.display = isPhase4 ? 'block' : 'none';
+
+      // Sparkle once when entering phase 4
+      if (isPhase4 && !prevPhase4) {
+        clearTimeout(sparkleTimer);
+        sparkleTimer = setTimeout(triggerSparkles, 300);
+      }
+      prevPhase4 = isPhase4;
+    }
+
+    /* ── Attach listeners ─────────────────────────────────────── */
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // Initial call
+  })();
+  </script>
+
+  <script>
+    (function() {
+      var header = document.querySelector('.header');
+      var floatingContact = document.querySelector('.floating-contact');
+      if (floatingContact) {
+        floatingContact.style.opacity = '0';
+        floatingContact.style.transform = 'translateY(20px) scale(0.9)';
+        floatingContact.style.pointerEvents = 'none';
+        floatingContact.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      }
+      var lastScroll = 0;
+      window.addEventListener('scroll', function() {
+        var currentScroll = window.pageYOffset;
+        if (currentScroll > 150) {
+          if (currentScroll > lastScroll) {
+            header.style.transform = 'translateY(-100%)';
+          } else {
+            header.style.transform = 'translateY(0)';
+          }
+        } else {
+          header.style.transform = 'translateY(0)';
+        }
+        
+        if (floatingContact) {
+          if (currentScroll > 600) {
+            floatingContact.style.opacity = '1';
+            floatingContact.style.transform = 'translateY(0) scale(1)';
+            floatingContact.style.pointerEvents = 'auto';
+          } else {
+            floatingContact.style.opacity = '0';
+            floatingContact.style.transform = 'translateY(20px) scale(0.9)';
+            floatingContact.style.pointerEvents = 'none';
+          }
+        }
+        lastScroll = currentScroll;
+      }, { passive: true });
+    })();
+  </script>
+
+  <!-- Reviews Slider Script -->
+  <script>
+  (function() {
+    var track = document.getElementById('reviews-track');
+    var dotsWrap = document.getElementById('reviews-dots');
+    if (!track) return;
+    var cards = track.querySelectorAll('.review-card');
+    var perView = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 600 ? 2 : 1;
+    var total = Math.ceil(cards.length / perView);
+    var current = 0;
+    var autoTimer;
+
+    function buildDots() {
+      dotsWrap.innerHTML = '';
+      for (var i = 0; i < total; i++) {
+        var d = document.createElement('button');
+        d.setAttribute('role','tab');
+        d.setAttribute('aria-label','Review page ' + (i+1));
+        d.className = 'rev-dot' + (i === 0 ? ' rev-dot--active' : '');
+        d.dataset.i = i;
+        dotsWrap.appendChild(d);
+      }
+      dotsWrap.addEventListener('click', function(e) {
+        if (e.target.dataset.i !== undefined) { goTo(+e.target.dataset.i); }
+      });
+    }
+
+    function goTo(idx) {
+      current = (idx + total) % total;
+      var cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(track).gap);
+      track.style.transform = 'translateX(-' + (current * perView * cardWidth) + 'px)';
+      dotsWrap.querySelectorAll('.rev-dot').forEach(function(d,i) {
+        d.classList.toggle('rev-dot--active', i === current);
+      });
+    }
+
+    function startAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(function() { goTo(current + 1); }, 5000);
+    }
+
+    buildDots();
+    startAuto();
+
+    document.getElementById('rev-prev').addEventListener('click', function() { goTo(current - 1); startAuto(); });
+    document.getElementById('rev-next').addEventListener('click', function() { goTo(current + 1); startAuto(); });
+
+    window.addEventListener('resize', function() {
+      var np = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 600 ? 2 : 1;
+      if (np !== perView) { perView = np; total = Math.ceil(cards.length / perView); current = 0; buildDots(); goTo(0); }
+    });
+
+    track.addEventListener('mouseenter', function() { clearInterval(autoTimer); });
+    track.addEventListener('mouseleave', startAuto);
+
+    var touchX = null;
+    track.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
+      touchX = null;
+    }, { passive: true });
+  })();
+  </script>
+
+</body>
+</html>

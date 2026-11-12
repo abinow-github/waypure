@@ -1,25 +1,33 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Waypure Checkout / Order Placement API
+ * Pure Core PHP 8.4+ Architecture
  */
-require_once __DIR__ . '/../db.php';
+
+require_once __DIR__ . '/../includes/functions.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
 try {
     $pdo = getDb();
-    $sessionId = getSessionId();
+    $sessionId = getVisitorSessionId();
 
-    $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+    $rawInput = file_get_contents('php://input');
+    $input = json_decode($rawInput, true);
+    if (!is_array($input)) {
+        $input = $_POST;
+    }
 
-    $name = trim($input['name'] ?? '');
-    $phone = trim($input['phone'] ?? '');
-    $email = trim($input['email'] ?? '');
-    $address = trim($input['address'] ?? '');
-    $city = trim($input['city'] ?? '');
-    $pincode = trim($input['pincode'] ?? '');
-    $paymentMethod = trim($input['payment_method'] ?? 'cod');
-    $notes = trim($input['notes'] ?? '');
+    $name = trim((string)($input['name'] ?? ''));
+    $phone = trim((string)($input['phone'] ?? ''));
+    $email = trim((string)($input['email'] ?? ''));
+    $address = trim((string)($input['address'] ?? ''));
+    $city = trim((string)($input['city'] ?? ''));
+    $pincode = trim((string)($input['pincode'] ?? ''));
+    $paymentMethod = trim((string)($input['payment_method'] ?? 'cod'));
+    $notes = trim((string)($input['notes'] ?? ''));
 
     if (empty($name) || empty($phone) || empty($address) || empty($city)) {
         jsonResponse([
@@ -38,30 +46,10 @@ try {
     }
 
     // Generate unique order code
-    $orderCode = 'WP-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -4));
+    $orderCode = 'WP-ORD-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(2)));
 
-    // Save order
-    $stmt = $pdo->prepare("
-        INSERT INTO `orders` 
-        (`order_code`, `session_id`, `customer_name`, `customer_phone`, `customer_email`, `address`, `city`, `pincode`, `payment_method`, `total_amount`, `items_json`, `notes`)
-        VALUES
-        (:code, :session_id, :name, :phone, :email, :address, :city, :pincode, :pay, :total, :items, :notes)
-    ");
-
-    $stmt->execute([
-        ':code' => $orderCode,
-        ':session_id' => $sessionId,
-        ':name' => $name,
-        ':phone' => $phone,
-        ':email' => $email,
-        ':address' => $address,
-        ':city' => $city,
-        ':pincode' => $pincode,
-        ':pay' => $paymentMethod,
-        ':total' => $cart['subtotal'],
-        ':items' => json_encode($cart['items'], JSON_UNESCAPED_UNICODE),
-        ':notes' => $notes
-    ]);
+    $adminWhatsApp = getSetting($pdo, 'admin_whatsapp', '919895301810');
+    $storeName = getSetting($pdo, 'store_name', 'Waypure');
 
     // Build WhatsApp Order Message
     $itemsText = "";
@@ -69,21 +57,73 @@ try {
         $itemsText .= "• {$it['brand']} {$it['name']} (Qty: {$it['quantity']}) — ₹" . number_format($it['subtotal']) . "\n";
     }
 
-    $waMessage = "WAYPURE — NEW ORDER CONFIRMATION\n"
-               . "Order ID: {$orderCode}\n\n"
-               . "Items:\n" . $itemsText . "\n"
-               . "Total Amount: ₹" . number_format($cart['subtotal']) . "\n"
-               . "Payment: " . strtoupper($paymentMethod) . "\n\n"
-               . "Delivery Address:\n"
-               . "Name: {$name}\n"
-               . "Phone: {$phone}\n"
-               . "Address: {$address}, {$city} - {$pincode}\n";
+    $waMessage = "🌊 *{$storeName} — NEW ORDER CONFIRMATION*\n"
+               . "----------------------------------------\n"
+               . "*Order ID:* {$orderCode}\n\n"
+               . "*Items Requested:*\n" . $itemsText . "\n"
+               . "*Total Amount:* ₹" . number_format($cart['subtotal']) . " (Free Delivery & Installation)\n"
+               . "*Payment Method:* " . strtoupper($paymentMethod) . "\n\n"
+               . "*Delivery Address:*\n"
+               . "• Name: {$name}\n"
+               . "• Phone: {$phone}\n"
+               . "• Address: {$address}, {$city}" . ($pincode ? " - {$pincode}" : "") . "\n";
     if ($notes) {
-        $waMessage .= "Note: {$notes}\n";
+        $waMessage .= "• Note: {$notes}\n";
     }
-    $waMessage .= "\nPlease confirm my order and share dispatch details.";
+    $waMessage .= "\nPlease confirm order dispatch and technician arrival.";
 
-    $waUrl = "https://wa.me/919895301810?text=" . urlencode($waMessage);
+    $waUrl = buildWhatsAppUrl($adminWhatsApp, $waMessage);
+
+    // Save into enquiries table for unified admin management
+    $stmtEnq = $pdo->prepare("
+        INSERT INTO `enquiries` 
+        (`enquiry_code`, `session_id`, `type`, `customer_name`, `customer_phone`, `customer_email`, `city`, `address`, `pincode`, `product_name`, `quantity`, `total_amount`, `payment_method`, `message`, `items_json`, `status`, `whatsapp_url`)
+        VALUES
+        (:code, :session_id, 'whatsapp_order', :name, :phone, :email, :city, :address, :pincode, :pname, :qty, :total, :pay, :notes, :items, 'new', :wa_url)
+    ");
+    $stmtEnq->execute([
+        ':code' => $orderCode,
+        ':session_id' => $sessionId,
+        ':name' => $name,
+        ':phone' => $phone,
+        ':email' => $email ?: null,
+        ':city' => $city,
+        ':address' => $address,
+        ':pincode' => $pincode ?: null,
+        ':pname' => sprintf('%d purifiers in cart', $cart['count']),
+        ':qty' => $cart['count'],
+        ':total' => $cart['subtotal'],
+        ':pay' => $paymentMethod,
+        ':notes' => $notes ?: null,
+        ':items' => json_encode($cart['items'], JSON_UNESCAPED_UNICODE),
+        ':wa_url' => $waUrl
+    ]);
+
+    // Also save into orders table if table exists
+    try {
+        $stmtOrd = $pdo->prepare("
+            INSERT INTO `orders` 
+            (`order_code`, `session_id`, `customer_name`, `customer_phone`, `customer_email`, `address`, `city`, `pincode`, `payment_method`, `total_amount`, `items_json`, `notes`)
+            VALUES
+            (:code, :session_id, :name, :phone, :email, :address, :city, :pincode, :pay, :total, :items, :notes)
+        ");
+        $stmtOrd->execute([
+            ':code' => $orderCode,
+            ':session_id' => $sessionId,
+            ':name' => $name,
+            ':phone' => $phone,
+            ':email' => $email ?: null,
+            ':address' => $address,
+            ':city' => $city,
+            ':pincode' => $pincode ?: null,
+            ':pay' => $paymentMethod,
+            ':total' => $cart['subtotal'],
+            ':items' => json_encode($cart['items'], JSON_UNESCAPED_UNICODE),
+            ':notes' => $notes ?: null
+        ]);
+    } catch (PDOException) {
+        // Table optional
+    }
 
     // Clear cart after order is successfully placed
     $clear = $pdo->prepare("DELETE FROM `cart` WHERE `session_id` = :s");
@@ -94,10 +134,14 @@ try {
         'message' => 'Order placed successfully!',
         'order_code' => $orderCode,
         'total' => $cart['subtotal'],
-        'formatted_total' => '₹' . number_format($cart['subtotal']),
+        'formatted_total' => formatPrice($cart['subtotal']),
         'whatsapp_url' => $waUrl
     ]);
 
-} catch (Exception $e) {
-    jsonResponse(['success' => false, 'message' => $e->getMessage()], 500);
+} catch (Throwable $e) {
+    error_log('[Waypure Checkout API Error] ' . $e->getMessage());
+    jsonResponse([
+        'success' => false,
+        'message' => 'Error placing order. Please try again.'
+    ], 500);
 }
